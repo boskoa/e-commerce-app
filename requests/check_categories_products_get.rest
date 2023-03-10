@@ -1,0 +1,2 @@
+GET http://localhost:3003/api/categories/category-products
+Content-Type: application/json

@@ -1,0 +1,11 @@
+POST http://localhost:3003/api/products
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJrb2NrbyIsImlhdCI6MTY3ODQ4NDU5OH0.x5bnBEogm0A9Hgd6WG953UNrSlodB_2_f5dQWR87D30
+
+{
+  "title": "Some pants",
+  "description": "Pants with holes, modern holes",
+  "sizes": ["XS", "S", "M", "L", "XL"],
+  "colors": ["red", "blue"],
+  "price": 19.99
+}
