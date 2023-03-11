@@ -19,7 +19,7 @@ Order.init(
       },
     },
     amount: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL,
       defaultValue: 0,
     },
     status: {

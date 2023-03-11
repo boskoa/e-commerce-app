@@ -28,7 +28,7 @@ OrderedProduct.init(
     },
     orderId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: "orders",
         key: "id",

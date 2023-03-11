@@ -7,6 +7,10 @@ const { router: productsRouter } = require("./controllers/products");
 const { router: categoriesRouter } = require("./controllers/categories");
 const { router: usersRouter } = require("./controllers/users");
 const { router: loginRouter } = require("./controllers/login");
+const {
+  router: orderedProductsRouter,
+} = require("./controllers/orderedProducts");
+const { router: ordersRouter } = require("./controllers/orders");
 
 const app = express();
 
@@ -20,6 +24,8 @@ app.use("/api/products", productsRouter);
 app.use("/api/categories", categoriesRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/login", loginRouter);
+app.use("/api/selected-products", orderedProductsRouter);
+app.use("/api/orders", ordersRouter);
 
 app.all("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));

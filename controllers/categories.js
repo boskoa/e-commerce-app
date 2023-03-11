@@ -1,4 +1,5 @@
 const { Category, Product, User } = require("../models");
+const { Product_Category } = require("../models/ProductCategories");
 const { tokenExtractor } = require("../utils/tokenExtractor");
 const router = require("express").Router();
 
@@ -34,6 +35,21 @@ router.post("/", tokenExtractor, async (req, res, next) => {
       ...req.body,
     });
     return res.status(200).json(category);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete("/:id", tokenExtractor, async (req, res, next) => {
+  const user = await User.findByPk(req.decodedToken.id);
+  if (!user?.admin) {
+    return res.status(401).json({ error: "Not authorized" });
+  }
+
+  try {
+    await Product_Category.destroy({ where: { categoryId: req.params.id } });
+    await Category.destroy({ where: { id: req.params.id } });
+    return res.status(200).end();
   } catch (error) {
     next(error);
   }

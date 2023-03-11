@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
-const { User } = require("../models");
+const { Op } = require("sequelize");
+const { User, Order, OrderedProduct, Product } = require("../models");
 const { tokenExtractor } = require("../utils/tokenExtractor");
 
 router.get("/", tokenExtractor, async (req, res, next) => {
@@ -28,6 +29,7 @@ router.get("/:id", tokenExtractor, async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id, {
       attributes: { exclude: ["passwordHash"] },
+      include: Order,
     });
     return res.status(200).json(user);
   } catch (error) {
@@ -89,6 +91,25 @@ router.patch("/:id", tokenExtractor, async (req, res, next) => {
       attributes: { exclude: ["passwordHash"] },
     });
     return res.status(200).json(changedUser);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/:id/cart", tokenExtractor, async (req, res, next) => {
+  const user = await User.findByPk(req.decodedToken.id);
+  if (!user?.admin && req.params.id !== req.decodedToken.id) {
+    return res.status(401).json({ error: "Not authorized" });
+  }
+
+  try {
+    const cart = await OrderedProduct.findAll({
+      where: {
+        [Op.and]: [{ userId: req.params.id }, { orderId: { [Op.is]: null } }],
+      },
+      include: Product,
+    });
+    return res.status(200).json(cart);
   } catch (error) {
     next(error);
   }
