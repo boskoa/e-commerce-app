@@ -1,5 +1,5 @@
-import { Send } from "@mui/icons-material";
 import styled from "styled-components";
+import InputComponent from "./InputComponent";
 
 const Container = styled.div`
   height: 40vh;
@@ -9,6 +9,7 @@ const Container = styled.div`
   justify-content: center;
   flex-direction: column;
   gap: 10px;
+  width: 100%;
 `;
 
 const Title = styled.h1`
@@ -18,37 +19,7 @@ const Title = styled.h1`
 const Description = styled.p`
   font-size: 20px;
   font-weight: 300;
-`;
-
-const InputContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 50%;
-  height: 40px;
-  background-color: ${({ theme }) => theme.bg};
-  border: 1px solid lightgrey;
-`;
-
-const Input = styled.input`
-  border: none;
-  height: 100%;
-  flex: 1;
-  font-size: 100%;
-  padding-left: 5px;
-`;
-
-const Button = styled.button`
-  border: none;
-  background-color: inherit;
-  cursor: pointer;
-  margin: 0 5px;
-  transition: all 0.3s;
-  color: ${({ theme }) => theme.color};
-
-  &:active {
-    transform: scale(0.9);
-  }
+  text-align: center;
 `;
 
 function Newsletter() {
@@ -56,12 +27,7 @@ function Newsletter() {
     <Container>
       <Title>Newsletter</Title>
       <Description>Get updates about your favorite products</Description>
-      <InputContainer>
-        <Input placeholder="Your email" />
-        <Button>
-          <Send />
-        </Button>
-      </InputContainer>
+      <InputComponent />
     </Container>
   );
 }

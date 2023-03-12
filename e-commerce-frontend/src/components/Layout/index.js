@@ -7,12 +7,13 @@ import Newsletter from "./Newsletter";
 
 const Container = styled.div`
   min-height: 100vh;
+  min-width: 320px;
 `;
 
-function Layout() {
+function Layout({ handleTheme }) {
   return (
     <Container>
-      <NavBar />
+      <NavBar handleTheme={handleTheme} />
       <Announcement />
       <Outlet />
       <Newsletter />

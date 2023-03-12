@@ -2,4 +2,4 @@
 **/.env
 **/public/data
 **/build
-./requests
+**/requests

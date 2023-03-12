@@ -1,72 +1,82 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { ThemeProvider } from "styled-components";
 import HomePage from "./components/HomePage";
 import Layout from "./components/Layout";
 import { dark, light } from "./themes";
+import { alreadyLogged } from "./features/login/loginSlice";
 
 const ProductList = lazy(() => import("./components/ProductList"));
 const SingleProduct = lazy(() => import("./components/SingleProduct"));
 const Register = lazy(() => import("./components/Register"));
-const Login = lazy(() => import("./components/Login"));
+const Login = lazy(() => import("./features/login/Login"));
 const Cart = lazy(() => import("./components/Cart"));
-
-const router = createBrowserRouter([
-  {
-    path: "/register",
-    element: (
-      <Suspense fallback="Loading...">
-        <Register />
-      </Suspense>
-    ),
-  },
-  {
-    path: "/login",
-    element: (
-      <Suspense fallback="Loading...">
-        <Login />
-      </Suspense>
-    ),
-  },
-  {
-    path: "/",
-    element: <Layout />,
-    children: [
-      {
-        index: true,
-        element: <HomePage />,
-      },
-      {
-        path: "cart/:id",
-        element: (
-          <Suspense fallback="Loading">
-            <Cart />
-          </Suspense>
-        ),
-      },
-      {
-        path: "products/:id",
-        element: (
-          <Suspense fallback="Loading">
-            <SingleProduct />
-          </Suspense>
-        ),
-      },
-      {
-        path: "products",
-        element: (
-          <Suspense fallback="Loading">
-            <ProductList />
-          </Suspense>
-        ),
-        children: [],
-      },
-    ],
-  },
-]);
 
 function App() {
   const [theme, setTheme] = useState("light");
+  const dispatch = useDispatch();
+
+  const router = createBrowserRouter([
+    {
+      path: "/register",
+      element: (
+        <Suspense fallback="Loading...">
+          <Register />
+        </Suspense>
+      ),
+    },
+    {
+      path: "/login",
+      element: (
+        <Suspense fallback="Loading...">
+          <Login />
+        </Suspense>
+      ),
+    },
+    {
+      path: "/",
+      element: <Layout handleTheme={handleTheme} />,
+      children: [
+        {
+          index: true,
+          element: <HomePage />,
+        },
+        {
+          path: "cart/:id",
+          element: (
+            <Suspense fallback="Loading">
+              <Cart />
+            </Suspense>
+          ),
+        },
+        {
+          path: "products/:id",
+          element: (
+            <Suspense fallback="Loading">
+              <SingleProduct />
+            </Suspense>
+          ),
+        },
+        {
+          path: "products",
+          element: (
+            <Suspense fallback="Loading">
+              <ProductList />
+            </Suspense>
+          ),
+          children: [],
+        },
+      ],
+    },
+  ]);
+
+  useEffect(() => {
+    const loggedUser = window.localStorage.getItem("loggedECommerceAppser");
+    if (loggedUser) {
+      dispatch(alreadyLogged(loggedUser));
+    }
+  }, [dispatch]);
 
   useEffect(() => {
     const prevTheme = window.localStorage.getItem("eCommerceTheme");

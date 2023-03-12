@@ -1,8 +1,9 @@
 import styled from "styled-components";
+import InputBox from "./InputBox";
 
 const Container = styled.div`
   height: 100vh;
-  width: 100vw;
+  min-width: 320px;
   background: linear-gradient(
       rgba(255, 255, 255, 0.5),
       rgba(255, 255, 255, 0.1)
@@ -17,46 +18,16 @@ const Container = styled.div`
 const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.bg};
   padding: 10px;
-  max-width: 350px;
+  width: 300px;
+  height: 260px;
   box-shadow: 1px 1px 10px 2px black;
 `;
 
 const Title = styled.h2`
   margin-bottom: 20px;
   text-align: center;
-`;
-
-const InputData = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-`;
-
-const Input = styled.input`
-  border: 1px solid ${({ theme }) => theme.color};
   color: ${({ theme }) => theme.color};
-  height: 30px;
-  padding: 5px;
-`;
-
-const Button = styled.button`
-  padding: 5px;
-  background-color: inherit;
-  color: ${({ theme }) => theme.color};
-  border: 1px solid ${({ theme }) => theme.color};
-  cursor: pointer;
-  transition: all 0.3s;
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.2);
-  }
-`;
-
-const Forgot = styled.p`
-  font-size: 14px;
-  cursor: pointer;
+  background-color: ${({ theme }) => theme.bg};
 `;
 
 function Login() {
@@ -64,12 +35,7 @@ function Login() {
     <Container>
       <Wrapper>
         <Title>Log in</Title>
-        <InputData>
-          <Input placeholder="username"></Input>
-          <Input placeholder="password"></Input>
-          <Button>Log in</Button>
-          <Forgot>Forgot password?</Forgot>
-        </InputData>
+        <InputBox />
       </Wrapper>
     </Container>
   );

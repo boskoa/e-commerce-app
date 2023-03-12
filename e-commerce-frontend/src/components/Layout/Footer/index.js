@@ -13,11 +13,12 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
 
   @media (max-width: 610px) {
     flex-direction: column;
     align-items: start;
-  } ;
+  }
 `;
 
 const Left = styled.div`
@@ -26,6 +27,14 @@ const Left = styled.div`
   flex-direction: column;
   padding: 20px;
   gap: 20px;
+
+  @media (max-width: 610px) {
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
+    align-items: center;
+  }
 `;
 
 const Center = styled.div`
@@ -67,6 +76,7 @@ const Logo = styled.h1`
 
 const Desc = styled.p`
   font-size: 12px;
+  max-width: 150px;
 `;
 
 const Social = styled.div`
@@ -108,8 +118,11 @@ function Footer() {
   return (
     <Container>
       <Left>
-        <Logo>Sales</Logo>
-        <Desc>Lorem gypsum</Desc>
+        <Logo>Rags!</Logo>
+        <Desc>
+          Hide your shame! Protect yourself from the elements!{" "}
+          <b>We've got you covered!</b>
+        </Desc>
         <Social>
           <SocialIcon color="#3B5999">
             <Facebook />

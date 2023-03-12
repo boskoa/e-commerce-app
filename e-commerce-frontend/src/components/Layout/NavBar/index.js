@@ -1,13 +1,21 @@
-import { Search, ShoppingCartOutlined } from "@mui/icons-material";
-import { Badge } from "@mui/material";
 import styled from "styled-components";
+import CenterSection from "./CenterSection";
+import RightSection from "./RightSection";
+import LeftSection from "./LeftSection";
+import { useEffect, useRef, useState } from "react";
 
 const Container = styled.div`
   height: 60px;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: all 0.5s;
 `;
 
 const Wrapper = styled.div`
-  padding: 10px 20px;
+  height: 100%;
+  padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -15,78 +23,38 @@ const Wrapper = styled.div`
   color: ${({ theme }) => theme.color};
 `;
 
-const Left = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-`;
-const Center = styled.div`
-  flex: 1;
-`;
-const Right = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-`;
+function NavBar({ handleTheme }) {
+  const [inputActive, setInputActive] = useState(false);
+  const nav = useRef(null);
 
-const Language = styled.span`
-  font-size: 14px;
-  cursor: pointer;
-`;
+  useEffect(() => {
+    let lastPosition = 0;
 
-const SearchContainer = styled.div`
-  border: 0.5px solid grey;
-  display: flex;
-  align-items: center;
-  margin-left: 25px;
-  height: 30px;
-`;
+    function handleChange() {
+      let newPosition = window.scrollY;
+      if (newPosition >= lastPosition) {
+        nav.current.style.top = "-60px";
+      } else {
+        nav.current.style.top = "0px";
+      }
 
-const Input = styled.input`
-  border: none;
-  height: 100%;
-`;
+      lastPosition = newPosition <= 0 ? 0 : newPosition;
+    }
+    document.addEventListener("scroll", handleChange);
 
-const Logo = styled.h1`
-  font-weight: bold;
-  text-align: center;
-`;
+    return () => document.removeEventListener("scroll", handleChange);
+  }, []);
 
-const MenuItem = styled.div`
-  font-size: 14px;
-  cursor: pointer;
-  margin-left: 25px;
-`;
-
-function NavBar() {
   return (
-    <Container>
+    <Container ref={nav}>
       <Wrapper>
-        <Left>
-          <Language>EN</Language>
-          <SearchContainer>
-            <Input />
-            <Search
-              style={{ color: "grey", fontSize: "18px", margin: "0 5px" }}
-            />
-          </SearchContainer>
-        </Left>
-        <Center>
-          <Logo>Sales</Logo>
-        </Center>
-        <Right>
-          <MenuItem>Register</MenuItem>
-          <MenuItem>Sign in</MenuItem>
-          <MenuItem>
-            <Badge badgeContent={4} color="primary">
-              <ShoppingCartOutlined
-                style={{ color: "grey", fontSize: "18px" }}
-                color="action"
-              />
-            </Badge>
-          </MenuItem>
-        </Right>
+        <LeftSection
+          handleTheme={handleTheme}
+          inputActive={inputActive}
+          setInputActive={setInputActive}
+        />
+        <CenterSection inputActive={inputActive} />
+        <RightSection inputActive={inputActive} />
       </Wrapper>
     </Container>
   );
