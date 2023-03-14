@@ -31,6 +31,9 @@ function InputBox() {
     passwordConfirm,
     setPasswordConfirm,
     handlePasswordConfirmCheck,
+    address,
+    setAddress,
+    handleAddressCheck,
     error,
     setError,
     handleRegister,
@@ -41,30 +44,48 @@ function InputBox() {
   return (
     <InputData>
       <Input
+        style={{ borderColor: inputErrors?.n && "red" }}
+        type="text"
         placeholder="name"
         value={name}
         onChange={(e) => setName(e.target.value)}
         onBlur={handleNameCheck}
       ></Input>
       <Input
+        style={{ borderColor: inputErrors?.u && "red" }}
+        type="text"
         placeholder="username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         onBlur={handleUsernameCheck}
       ></Input>
       <Input
+        style={{ borderColor: inputErrors?.e && "red" }}
+        type="text"
         placeholder="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         onBlur={handleEmailCheck}
       ></Input>
       <Input
+        style={{ borderColor: inputErrors?.a && "red" }}
+        type="text"
+        placeholder="address"
+        value={address}
+        onChange={(e) => setAddress(e.target.value)}
+        onBlur={handleAddressCheck}
+      ></Input>
+      <Input
+        style={{ borderColor: inputErrors?.p && "red" }}
+        type="password"
         placeholder="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         onBlur={handlePasswordCheck}
       ></Input>
       <Input
+        style={{ borderColor: inputErrors?.c && "red" }}
+        type="password"
         placeholder="confirm password"
         value={passwordConfirm}
         onChange={(e) => setPasswordConfirm(e.target.value)}
@@ -83,7 +104,10 @@ function InputBox() {
         >
           Cancel
         </Button>
-        <Button disabled={inputErrors?.length > 0} onClick={handleRegister}>
+        <Button
+          disabled={Object.keys(inputErrors)?.length > 0}
+          onClick={handleRegister}
+        >
           Submit
         </Button>
       </ButtonGroup>

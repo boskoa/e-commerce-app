@@ -49,6 +49,7 @@ export const Error = styled.p`
   font-size: 14px;
   color: red;
   background-color: ${({ theme }) => theme.bg};
+  text-align: center;
 `;
 
 function InputBox() {

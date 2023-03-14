@@ -19,7 +19,7 @@ const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.bg};
   padding: 10px;
   width: 300px;
-  height: 430px;
+  height: 480px;
   box-shadow: 1px 1px 10px 2px black;
 `;
 

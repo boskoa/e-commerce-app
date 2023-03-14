@@ -16,6 +16,9 @@ router.get("/", tokenExtractor, async (req, res, next) => {
     });
     return res.status(200).json(users);
   } catch (error) {
+    res.status(400).json({
+      error: "Can't respond",
+    });
     next(error);
   }
 });
@@ -31,9 +34,23 @@ router.get("/:id", tokenExtractor, async (req, res, next) => {
       attributes: { exclude: ["passwordHash"] },
       include: Order,
     });
+    if (!user) {
+      res.status(404).json({
+        error: "No such user",
+      });
+    }
     return res.status(200).json(user);
   } catch (error) {
     next(error);
+  }
+});
+
+router.post("/check-username", async (req, res) => {
+  const user = await User.findAll({ where: { username: req.body.username } });
+  try {
+    return res.status(200).json(user.length);
+  } catch {
+    return res.status(400).json({ error: "Could not check username" });
   }
 });
 
@@ -56,7 +73,10 @@ router.post("/", async (req, res, next) => {
     });
     return res.status(200).json(newUser);
   } catch (error) {
-    res.status(401).json({ error: "Invalid user data" });
+    res.status(400).json({
+      error:
+        "Registration failed. Check your data formating/try another username",
+    });
     next(error);
   }
 });
@@ -92,6 +112,9 @@ router.patch("/:id", tokenExtractor, async (req, res, next) => {
     });
     return res.status(200).json(changedUser);
   } catch (error) {
+    res.status(400).json({
+      error: "Can't change user",
+    });
     next(error);
   }
 });
