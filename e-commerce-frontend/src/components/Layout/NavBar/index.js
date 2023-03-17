@@ -21,6 +21,7 @@ const Wrapper = styled.div`
   align-items: center;
   background-color: ${({ theme }) => theme.bg};
   color: ${({ theme }) => theme.color};
+  transition: all 0.5s;
 `;
 
 function NavBar({ handleTheme }) {

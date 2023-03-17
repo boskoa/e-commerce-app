@@ -42,6 +42,17 @@ function useLogin() {
       setError("Username and password are required");
       return;
     }
+
+    if (username.length > 20 || username.length < 2) {
+      setError("Username must be between 2 and 20 characters long");
+      return;
+    }
+
+    if (password.length > 20 || password.length < 6) {
+      setError("Password must be between 6 and 20 characters long");
+      return;
+    }
+
     dispatch(loginUser({ username, password }));
   }
 

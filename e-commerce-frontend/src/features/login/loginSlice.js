@@ -9,14 +9,21 @@ const initialState = {
   error: null,
 };
 
-export const loginUser = createAsyncThunk("login/loginser", async (serData) => {
-  const response = await axios.post(LOGIN_URL, { ...serData });
-  window.localStorage.setItem(
-    "loggedECommerceAppser",
-    JSON.stringify({ ...response.data })
-  );
-  return response.data;
-});
+export const loginUser = createAsyncThunk(
+  "login/loginser",
+  async (userData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(LOGIN_URL, { ...userData });
+      window.localStorage.setItem(
+        "loggedECommerceAppser",
+        JSON.stringify({ ...response.data })
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 const loginSlice = createSlice({
   name: "login",
@@ -41,7 +48,7 @@ const loginSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = action.payload.error;
       });
   },
 });

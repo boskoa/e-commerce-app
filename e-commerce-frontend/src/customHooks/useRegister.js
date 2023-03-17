@@ -119,8 +119,8 @@ function useRegister() {
   email - povećati dužinu i minimum
   */
   function handleEmailCheck() {
-    if (email.length < 2 || email.length > 20) {
-      // popraviti
+    const validEmail = /^\S+\w{1}@[a-z0-9-]+.[a-z]{2,4}$/i.test(email);
+    if (!validEmail) {
       setError("Please, enter a valid email");
       setInputErrors((prev) => ({ ...prev, e: "red" }));
       return;
@@ -136,7 +136,6 @@ function useRegister() {
 
   function handlePasswordCheck() {
     if (password.length < 6 || password.length > 20) {
-      // popraviti
       setError("Password must be between 6 and 20 characters long");
       setInputErrors((prev) => ({ ...prev, p: "red" }));
       return;
@@ -166,9 +165,12 @@ function useRegister() {
   }
 
   function handleAddressCheck() {
-    if (address.length < 2 || address.length > 20) {
-      // popraviti
-      setError("Please, enter a valid address");
+    const validAddress =
+      /^[a-z]+( [a-z]+){0,5} {1}\d{1,4}, \d{1,8} [a-z]+( [a-z]+){0,5}, [a-z]+( [a-z]+){0,3}$/i.test(
+        address
+      );
+    if (!validAddress) {
+      setError("Address format: Street name 42, 123 City, Country");
       setInputErrors((prev) => ({ ...prev, a: "red" }));
       return;
     }

@@ -15,7 +15,7 @@ router.post("/", async (req, res, next) => {
   }
 
   try {
-    const passwordCorrect = bcrypt.compare(
+    const passwordCorrect = await bcrypt.compare(
       req.body.password,
       user.passwordHash
     );
