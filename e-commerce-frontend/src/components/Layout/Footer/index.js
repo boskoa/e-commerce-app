@@ -17,7 +17,6 @@ const Container = styled.div`
 
   @media (max-width: 610px) {
     flex-direction: column;
-    align-items: start;
   }
 `;
 
@@ -25,20 +24,20 @@ const Left = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: 20px;
   gap: 20px;
 
-  @media (max-width: 610px) {
+  @media only screen and (max-width: 610px) {
     flex-direction: row;
-    justify-content: center;
     width: 100%;
     flex-wrap: wrap;
-    align-items: center;
   }
 `;
 
 const Center = styled.div`
-  flex: 2;
+  flex: 1;
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -47,7 +46,7 @@ const Center = styled.div`
 `;
 
 const Right = styled.div`
-  flex: 2;
+  flex: 1;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -102,6 +101,14 @@ const SocialIcon = styled.div`
   }
 `;
 
+const ContactData = styled.div`
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+`;
+
 const ContactItem = styled.div`
   font-size: 14px;
   display: flex;
@@ -153,19 +160,21 @@ function Footer() {
         </List>
       </Center>
       <Right>
-        <Title>Contact</Title>
-        <ContactItem>
-          <Room />
-          Some Street no. 5, Someville
-        </ContactItem>
-        <ContactItem>
-          <Phone />
-          +123 45 678 910
-        </ContactItem>
-        <ContactItem>
-          <Mail />
-          info@example.com
-        </ContactItem>
+        <ContactData>
+          <Title>Contact</Title>
+          <ContactItem>
+            <Room />
+            Some Street no. 5, Someville
+          </ContactItem>
+          <ContactItem>
+            <Phone />
+            +123 45 678 910
+          </ContactItem>
+          <ContactItem>
+            <Mail />
+            info@example.com
+          </ContactItem>
+        </ContactData>
         <Payment
           alt="payment methods"
           src="https://resources.cimaware.com/img/visa-mastercard-amex.svg"

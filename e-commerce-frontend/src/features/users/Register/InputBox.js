@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import useRegister from "../../customHooks/useRegister";
+import useRegister from "../../../customHooks/useRegister";
 import {
   Button,
   ButtonGroup,
   Error,
   Input,
   InputData,
-} from "../../features/login/Login/InputBox";
+} from "../../login/Login/InputBox";
 
 const Agreement = styled.span`
   font-size: 12px;

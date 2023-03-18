@@ -37,7 +37,7 @@ function useRegister() {
 
   useEffect(() => {
     if (usersError) {
-      setError(usersError);
+      setError("Registration failed");
     }
 
     return () => dispatch(resetError());

@@ -10,7 +10,7 @@ function LoggedInItems() {
   const navigate = useNavigate();
 
   function handleLogout() {
-    window.localStorage.removeItem("loggedECommerceAppser");
+    window.localStorage.removeItem("loggedECommerceAppUser");
     dispatch(logout());
     navigate("/");
   }

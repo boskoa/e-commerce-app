@@ -6,10 +6,11 @@ import HomePage from "./components/HomePage";
 import Layout from "./components/Layout";
 import { dark, light } from "./themes";
 import { alreadyLogged } from "./features/login/loginSlice";
+import { getAllAnnouncements } from "./features/announcements/announcementsSlice";
 
 const ProductList = lazy(() => import("./components/ProductList"));
 const SingleProduct = lazy(() => import("./components/SingleProduct"));
-const Register = lazy(() => import("./components/Register"));
+const Register = lazy(() => import("./features/users/Register"));
 const Login = lazy(() => import("./features/login/Login"));
 const Cart = lazy(() => import("./components/Cart"));
 
@@ -72,7 +73,7 @@ function App() {
   ]);
 
   useEffect(() => {
-    const loggedUser = window.localStorage.getItem("loggedECommerceAppser");
+    const loggedUser = window.localStorage.getItem("loggedECommerceAppUser");
     if (loggedUser) {
       dispatch(alreadyLogged(loggedUser));
     }
@@ -82,6 +83,10 @@ function App() {
     const prevTheme = window.localStorage.getItem("eCommerceTheme");
     setTheme(prevTheme);
   }, []);
+
+  useEffect(() => {
+    dispatch(getAllAnnouncements());
+  }, [dispatch]);
 
   function handleTheme() {
     setTheme((prev) => (prev === "light" ? "dark" : "light"));

@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
-import Announcement from "./Announcement";
+import Announcement from "../../features/announcements/Announcement";
 import Footer from "./Footer";
 import NavBar from "./NavBar";
 import Newsletter from "./Newsletter";

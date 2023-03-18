@@ -10,18 +10,14 @@ const initialState = {
 };
 
 export const loginUser = createAsyncThunk(
-  "login/loginser",
-  async (userData, { rejectWithValue }) => {
-    try {
-      const response = await axios.post(LOGIN_URL, { ...userData });
-      window.localStorage.setItem(
-        "loggedECommerceAppser",
-        JSON.stringify({ ...response.data })
-      );
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
+  "login/loginUser",
+  async (userData) => {
+    const response = await axios.post(LOGIN_URL, { ...userData });
+    window.localStorage.setItem(
+      "loggedECommerceAppUser",
+      JSON.stringify({ ...response.data })
+    );
+    return response.data;
   }
 );
 
@@ -48,7 +44,7 @@ const loginSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload.error;
+        state.error = action.error.message;
       });
   },
 });

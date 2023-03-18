@@ -22,9 +22,10 @@ const Input = styled.input`
   height: 100%;
   background-color: inherit;
   color: inherit;
+  width: 120px;
   transition: all 0.5s;
 
-  @media (max-width: 500px) {
+  @media (max-width: 520px) {
     width: ${({ inputActive }) => (inputActive ? "150px" : "40px")};
   }
 `;
@@ -44,7 +45,7 @@ function LeftSection({ handleTheme, inputActive, setInputActive }) {
   }, [setInputActive]);
 
   function handleInput() {
-    if (window.innerWidth <= 500) {
+    if (window.innerWidth <= 520) {
       setInputActive(true);
     }
   }

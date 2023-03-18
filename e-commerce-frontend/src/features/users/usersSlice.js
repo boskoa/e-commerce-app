@@ -19,30 +19,22 @@ const initialState = usersAdapter.getInitialState({
 
 export const getAllUsers = createAsyncThunk(
   "users/getAllUsers",
-  async (token, { rejectWithValue }) => {
-    try {
-      const config = {
-        headers: {
-          Authorization: `bearer ${token}`,
-        },
-      };
-      const response = await axios.get(USERS_URL, config);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
+  async (token) => {
+    const config = {
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    };
+    const response = await axios.get(USERS_URL, config);
+    return response.data;
   }
 );
 
 export const createUser = createAsyncThunk(
   "users/createUser",
-  async (userData, { rejectWithValue }) => {
-    try {
-      const response = await axios.post(USERS_URL, userData);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
+  async (userData) => {
+    const response = await axios.post(USERS_URL, userData);
+    return response.data;
   }
 );
 
@@ -70,7 +62,7 @@ const usersSlice = createSlice({
       })
       .addCase(getAllUsers.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload.error;
+        state.error = action.error.message;
       })
       .addCase(createUser.pending, (state) => {
         state.error = null;
@@ -86,7 +78,7 @@ const usersSlice = createSlice({
       .addCase(createUser.rejected, (state, action) => {
         state.loading = false;
         state.success = false;
-        state.error = action.payload.error;
+        state.error = action.error.message;
       });
   },
 });

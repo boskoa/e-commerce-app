@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { sliderItems } from "../../tempData";
 
 const Container = styled.div`
-  height: 100vh;
   width: 100%;
   background-color: ${({ theme }) => theme.bg};
   color: ${({ theme }) => theme.color};
@@ -37,36 +36,45 @@ const Arrow = styled.div`
 `;
 
 const Wrapper = styled.div`
-  height: 100%;
   display: flex;
+  align-items: start;
   transform: translateX(${({ currentSlide }) => currentSlide * -100}vw);
   transition: all 1s;
 `;
 
 const Slide = styled.div`
   display: flex;
-  align-items: center;
+  flex-direction: row;
+  align-items: start;
   width: 100vw;
-  height: 100vh;
+  min-width: 320px;
   background-color: ${({ bg }) => bg};
+
+  @media only screen and (max-width: 560px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const ImgContainer = styled.div`
   flex: 1;
-  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Image = styled.img`
-  height: 80%;
+  max-height: 80vh;
+  max-width: 100%;
 `;
 
 const InfoContainer = styled.div`
   flex: 1;
-  padding: 50px;
+  padding: 30px;
 `;
 
 const Title = styled.h2`
-  font-size: 72px;
+  font-size: 60px;
 `;
 
 const Description = styled.p`
@@ -79,8 +87,18 @@ const Description = styled.p`
 const Button = styled.button`
   padding: 10px;
   font-size: 20px;
-  background-color: transparent;
+  background-color: ${({ theme }) => theme.bg};
+  color: ${({ theme }) => theme.color};
+  border: none;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px 0 grey;
   cursor: pointer;
+  transition: all 0.2s;
+
+  &:active {
+    box-shadow: none;
+    transform: translate(1px, 1px);
+  }
 `;
 
 function Slider() {
