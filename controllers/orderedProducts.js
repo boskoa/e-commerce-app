@@ -8,7 +8,7 @@ router.get("/popular", async (req, res, next) => {
   try {
     const popularProducts = await OrderedProduct.findAll({
       attributes: [
-        "product_id",
+        ["product_id", "id"],
         [sequelize.fn("SUM", sequelize.col("quantity")), "count_products"],
       ],
       where: { orderId: { [Op.not]: null } },

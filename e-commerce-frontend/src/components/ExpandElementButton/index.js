@@ -42,9 +42,14 @@ const AnimationContainer = styled.div`
   }
 `;
 
-function ExpandElementButton({ showAll, setShowAll }) {
+function ExpandElementButton({ element, showAll, setShowAll }) {
   return (
-    <IconContainer onClick={() => setShowAll((prev) => !prev)}>
+    <IconContainer
+      onClick={() => {
+        setShowAll((prev) => !prev);
+        showAll && element?.scrollIntoView({ behavior: "smooth" });
+      }}
+    >
       <AnimationContainer>
         {showAll ? (
           <KeyboardArrowUpIcon fontSize="large" style={{ color: "white" }} />

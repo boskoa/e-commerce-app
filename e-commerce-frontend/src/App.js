@@ -8,6 +8,12 @@ import { dark, light } from "./themes";
 import { alreadyLogged } from "./features/login/loginSlice";
 import { getAllAnnouncements } from "./features/announcements/announcementsSlice";
 import { getAllCategories } from "./features/categories/categoriesSlice";
+import { getAllPopular } from "./features/popular/popularSlice";
+import {
+  getAllProducts,
+  getLatestProducts,
+} from "./features/products/productsSlice";
+import Spinner from "./components/Spinner";
 
 const ProductList = lazy(() => import("./components/ProductList"));
 const SingleProduct = lazy(() => import("./components/SingleProduct"));
@@ -23,7 +29,7 @@ function App() {
     {
       path: "/register",
       element: (
-        <Suspense fallback="Loading...">
+        <Suspense fallback={<Spinner />}>
           <Register />
         </Suspense>
       ),
@@ -31,7 +37,7 @@ function App() {
     {
       path: "/login",
       element: (
-        <Suspense fallback="Loading...">
+        <Suspense fallback={<Spinner />}>
           <Login />
         </Suspense>
       ),
@@ -47,7 +53,7 @@ function App() {
         {
           path: "cart/:id",
           element: (
-            <Suspense fallback="Loading">
+            <Suspense fallback={<Spinner />}>
               <Cart />
             </Suspense>
           ),
@@ -55,7 +61,7 @@ function App() {
         {
           path: "products/:id",
           element: (
-            <Suspense fallback="Loading">
+            <Suspense fallback={<Spinner />}>
               <SingleProduct />
             </Suspense>
           ),
@@ -63,7 +69,7 @@ function App() {
         {
           path: "products",
           element: (
-            <Suspense fallback="Loading">
+            <Suspense fallback={<Spinner />}>
               <ProductList />
             </Suspense>
           ),
@@ -88,6 +94,9 @@ function App() {
   useEffect(() => {
     dispatch(getAllAnnouncements());
     dispatch(getAllCategories());
+    dispatch(getAllPopular());
+    dispatch(getAllProducts());
+    dispatch(getLatestProducts());
   }, [dispatch]);
 
   function handleTheme() {

@@ -28,9 +28,23 @@ router.get("/", async (req, res, next) => {
     const products = await Product.findAll({
       where,
       order,
-      pagination,
+      ...pagination,
       include: { model: Category, attributes: ["name"] },
     });
+    return res.status(200).json(products);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/latest", async (req, res, next) => {
+  try {
+    const products = await Product.findAll({
+      order: [["created_at", "DESC"]],
+      offset: 0,
+      limit: 6,
+    });
+    console.log("LATEST", JSON.stringify(products));
     return res.status(200).json(products);
   } catch (error) {
     next(error);

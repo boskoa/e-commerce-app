@@ -1,6 +1,6 @@
 import Categories from "../../features/categories/Categories";
-import PopularProducts from "../PopularProducts";
-import Slider from "../Slider";
+import PopularProducts from "../../features/popular/PopularProducts";
+import Slider from "../../features/products/Slider";
 
 function HomePage() {
   return (

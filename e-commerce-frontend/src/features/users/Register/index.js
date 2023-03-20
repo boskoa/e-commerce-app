@@ -8,7 +8,7 @@ const Container = styled.div`
       rgba(255, 255, 255, 0.5),
       rgba(255, 255, 255, 0.1)
     ),
-    url("https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Women%27s_clothes_store_%28Unsplash%29.jpg/2560px-Women%27s_clothes_store_%28Unsplash%29.jpg");
+    url(/data/defaults/backgrounds/login-register.webp);
   background-size: cover;
   display: flex;
   justify-content: center;

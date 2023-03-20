@@ -1,8 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import ExpandElementButton from "../../../components/ExpandElementButton";
-import { selectAllCategories } from "../categoriesSlice";
+import Spinner from "../../../components/Spinner";
+import {
+  selectAllCategories,
+  selectCategoriesLoading,
+} from "../categoriesSlice";
 import Category from "./Category";
 
 const Container = styled.div`
@@ -21,19 +25,22 @@ function Categories() {
   const categories = useSelector(selectAllCategories);
   const [showAll, setShowAll] = useState(false);
   const categoriesRef = useRef(null);
+  const categoriesLoading = useSelector(selectCategoriesLoading);
 
-  useEffect(() => {
-    if (!showAll) {
-      categoriesRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [showAll]);
+  if (categoriesLoading) {
+    return <Spinner />;
+  }
 
   return (
     <Container showAll={showAll} ref={categoriesRef}>
       {categories.map((c) => (
         <Category key={c.id} category={c} />
       ))}
-      <ExpandElementButton showAll={showAll} setShowAll={setShowAll} />
+      <ExpandElementButton
+        element={categoriesRef.current}
+        showAll={showAll}
+        setShowAll={setShowAll}
+      />
     </Container>
   );
 }

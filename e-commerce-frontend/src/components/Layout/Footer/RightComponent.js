@@ -51,10 +51,7 @@ function RightComponent() {
           info@example.com
         </ContactItem>
       </ContactData>
-      <Payment
-        alt="payment methods"
-        src="https://resources.cimaware.com/img/visa-mastercard-amex.svg"
-      />
+      <Payment alt="payment methods" src="/data/defaults/cards.svg" />
     </Right>
   );
 }

@@ -1,8 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { popularProducts } from "../../tempData";
-import ExpandElementButton from "../ExpandElementButton";
+import { selectAllPopular, selectPopularLoading } from "../popularSlice";
+import ExpandElementButton from "../../../components/ExpandElementButton";
 import PopularProduct from "./PopularProduct";
+import Spinner from "../../../components/Spinner";
 
 const MainContainer = styled.div`
   position: relative;
@@ -29,13 +31,13 @@ const ProductsContainer = styled.div`
 
 function PopularProducts() {
   const [showAll, setShowAll] = useState(false);
+  const popularProducts = useSelector(selectAllPopular);
   const popularProductsRef = useRef(null);
+  const popularLoading = useSelector(selectPopularLoading);
 
-  useEffect(() => {
-    if (!showAll) {
-      popularProductsRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [showAll]);
+  if (popularLoading) {
+    return <Spinner />;
+  }
 
   return (
     <MainContainer ref={popularProductsRef}>
@@ -44,7 +46,11 @@ function PopularProducts() {
         {popularProducts.map((p) => (
           <PopularProduct key={p.id} product={p} />
         ))}
-        <ExpandElementButton showAll={showAll} setShowAll={setShowAll} />
+        <ExpandElementButton
+          element={popularProductsRef.current}
+          showAll={showAll}
+          setShowAll={setShowAll}
+        />
       </ProductsContainer>
     </MainContainer>
   );

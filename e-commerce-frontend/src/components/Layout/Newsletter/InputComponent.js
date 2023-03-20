@@ -9,7 +9,7 @@ const InputContainer = styled.div`
   height: 40px;
   padding: 2px;
   background-color: ${({ theme }) => theme.bg};
-  border: 1px solid lightgrey;
+  transition: all 0.3s;
 `;
 
 const Input = styled.input`

@@ -76,7 +76,10 @@ const Icon = styled.div`
 function PopularProduct({ product }) {
   return (
     <Container>
-      <Image src={product.img} alt={"product image " + product.id} />
+      <Image
+        src={`/data/uploads/products/${product.id}.webp`}
+        alt={"product image " + product.id}
+      />
       <Info>
         <Icon>
           <ShoppingCartOutlined />

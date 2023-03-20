@@ -7,7 +7,7 @@ const Slide = styled.div`
   align-items: start;
   width: 100vw;
   min-width: 320px;
-  background-color: ${({ bg }) => bg};
+  background-color: ${({ i, theme }) => theme.slider[i]};
 
   @media only screen and (max-width: 560px) {
     flex-direction: column;
@@ -23,8 +23,9 @@ const ImgContainer = styled.div`
 `;
 
 const Image = styled.img`
-  max-height: 80vh;
+  height: 80vh;
   max-width: 100%;
+  object-fit: cover;
 `;
 
 const InfoContainer = styled.div`
@@ -43,15 +44,18 @@ const Description = styled.p`
   letter-spacing: 3px;
 `;
 
-function SlideComponent({ i }) {
+function SlideComponent({ p, i }) {
   return (
-    <Slide bg={i.bg} key={i.id}>
+    <Slide i={i}>
       <ImgContainer>
-        <Image src={i.img} alt={`product image ${i.id}`} />
+        <Image
+          src={`/data/uploads/products/${p.id}.webp`}
+          alt={`product image ${p.id}`}
+        />
       </ImgContainer>
       <InfoContainer>
-        <Title>{i.title}</Title>
-        <Description>{i.desc}</Description>
+        <Title>{p.title}</Title>
+        <Description>{p.description}</Description>
         <Button>Show now</Button>
       </InfoContainer>
     </Slide>

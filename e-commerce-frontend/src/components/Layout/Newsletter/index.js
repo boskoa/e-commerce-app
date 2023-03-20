@@ -4,12 +4,14 @@ import InputComponent from "./InputComponent";
 const Container = styled.div`
   height: 40vh;
   background-color: ${({ theme }) => theme.newsletter};
+  color: ${({ theme }) => theme.color};
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   gap: 10px;
   width: 100%;
+  transition: all 0.3s;
 `;
 
 const Title = styled.h1`

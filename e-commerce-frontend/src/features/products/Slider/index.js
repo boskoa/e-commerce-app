@@ -1,7 +1,9 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@mui/icons-material";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { sliderItems } from "../../tempData";
+import Spinner from "../../../components/Spinner";
+import { selectLatestProducts, selectProductsLoading } from "../productsSlice";
 import SlideComponent from "./SlideComponent";
 
 const Container = styled.div`
@@ -49,7 +51,7 @@ export const Button = styled.button`
   background-color: ${({ theme }) => theme.bg};
   color: ${({ theme }) => theme.color};
   border: none;
-  box-shadow: 2px 2px 5px 0 grey;
+  box-shadow: 2px 2px 4px 0 black;
   cursor: pointer;
   transition: all 0.2s;
 
@@ -65,11 +67,16 @@ const SeeAllButton = styled(Button)`
   position: absolute;
   top: 5px;
   right: 10px;
-  box-shadow: 4px 4px 5px 0 black;
 `;
 
 function Slider() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const latestProducts = useSelector(selectLatestProducts);
+  const productsLoading = useSelector(selectProductsLoading);
+
+  if (productsLoading) {
+    return <Spinner />;
+  }
 
   return (
     <Container>
@@ -77,22 +84,22 @@ function Slider() {
         side="left"
         onClick={() =>
           setCurrentSlide((prev) =>
-            prev < 1 ? sliderItems.length - 1 : prev - 1
+            prev < 1 ? latestProducts.length - 1 : prev - 1
           )
         }
       >
         <ArrowLeftOutlined />
       </Arrow>
       <Wrapper currentSlide={currentSlide}>
-        {sliderItems.map((i) => (
-          <SlideComponent bg={i.bg} key={i.id} i={i} />
+        {latestProducts.map((p, i) => (
+          <SlideComponent i={i} key={p.id} p={p} />
         ))}
       </Wrapper>
       <Arrow
         side="right"
         onClick={() =>
           setCurrentSlide((prev) =>
-            prev > sliderItems.length - 2 ? 0 : prev + 1
+            prev > latestProducts.length - 2 ? 0 : prev + 1
           )
         }
       >
