@@ -25,7 +25,7 @@ const Input = styled.input`
   width: 120px;
   transition: all 0.5s;
 
-  @media (max-width: 520px) {
+  @media only screen and (max-width: 520px) {
     width: ${({ inputActive }) => (inputActive ? "150px" : "40px")};
   }
 `;

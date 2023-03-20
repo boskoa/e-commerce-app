@@ -1,7 +1,26 @@
+const sequelize = require("sequelize");
+const { Op } = require("sequelize");
 const { User, OrderedProduct, Product } = require("../models");
 const { tokenExtractor } = require("../utils/tokenExtractor");
-
 const router = require("express").Router();
+
+router.get("/popular", async (req, res, next) => {
+  try {
+    const popularProducts = await OrderedProduct.findAll({
+      attributes: [
+        "product_id",
+        [sequelize.fn("SUM", sequelize.col("quantity")), "count_products"],
+      ],
+      where: { orderId: { [Op.not]: null } },
+      group: "product_id",
+      order: [["count_products", "DESC"]],
+      limit: 6,
+    });
+    return res.status(200).json(popularProducts);
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.get("/", tokenExtractor, async (req, res, next) => {
   const user = await User.findByPk(req.decodedToken.id);

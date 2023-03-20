@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Products from "../Products";
+import Products from "../PopularProducts";
 
 const Container = styled.div`
   display: flex;

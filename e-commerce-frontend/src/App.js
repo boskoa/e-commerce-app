@@ -7,6 +7,7 @@ import Layout from "./components/Layout";
 import { dark, light } from "./themes";
 import { alreadyLogged } from "./features/login/loginSlice";
 import { getAllAnnouncements } from "./features/announcements/announcementsSlice";
+import { getAllCategories } from "./features/categories/categoriesSlice";
 
 const ProductList = lazy(() => import("./components/ProductList"));
 const SingleProduct = lazy(() => import("./components/SingleProduct"));
@@ -86,6 +87,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getAllAnnouncements());
+    dispatch(getAllCategories());
   }, [dispatch]);
 
   function handleTheme() {

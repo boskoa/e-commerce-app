@@ -1,5 +1,5 @@
-import Categories from "../Categories";
-import Products from "../Products";
+import Categories from "../../features/categories/Categories";
+import PopularProducts from "../PopularProducts";
 import Slider from "../Slider";
 
 function HomePage() {
@@ -7,7 +7,7 @@ function HomePage() {
     <div style={{ width: "100%" }}>
       <Slider />
       <Categories />
-      <Products />
+      <PopularProducts />
     </div>
   );
 }

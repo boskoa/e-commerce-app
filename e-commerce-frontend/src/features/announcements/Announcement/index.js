@@ -36,21 +36,15 @@ function Announcement() {
   const [show, setShow] = useState(true);
   const [currentMessage, setCurrentMessage] = useState(0);
   const announcements = useSelector(selectAllAnnouncements);
-  console.log("RENDERING");
-
-  useEffect(() => {
-    console.log("CURRENT", currentMessage);
-  }, [currentMessage]);
 
   useEffect(() => {
     let index;
     if (show) {
       index = setTimeout(
         () =>
-          setCurrentMessage((prev) => {
-            console.log("JUZ", prev, announcements.length);
-            return prev < announcements.length - 1 ? prev + 1 : 0;
-          }),
+          setCurrentMessage((prev) =>
+            prev < announcements.length - 1 ? prev + 1 : 0
+          ),
         10000
       );
     }

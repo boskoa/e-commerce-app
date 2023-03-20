@@ -2,6 +2,7 @@ import { ArrowLeftOutlined, ArrowRightOutlined } from "@mui/icons-material";
 import { useState } from "react";
 import styled from "styled-components";
 import { sliderItems } from "../../tempData";
+import SlideComponent from "./SlideComponent";
 
 const Container = styled.div`
   width: 100%;
@@ -42,55 +43,12 @@ const Wrapper = styled.div`
   transition: all 1s;
 `;
 
-const Slide = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: start;
-  width: 100vw;
-  min-width: 320px;
-  background-color: ${({ bg }) => bg};
-
-  @media only screen and (max-width: 560px) {
-    flex-direction: column;
-    align-items: center;
-  }
-`;
-
-const ImgContainer = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Image = styled.img`
-  max-height: 80vh;
-  max-width: 100%;
-`;
-
-const InfoContainer = styled.div`
-  flex: 1;
-  padding: 30px;
-`;
-
-const Title = styled.h2`
-  font-size: 60px;
-`;
-
-const Description = styled.p`
-  margin: 50px 0;
-  font-size: 20px;
-  font-weight: 500;
-  letter-spacing: 3px;
-`;
-
-const Button = styled.button`
+export const Button = styled.button`
   padding: 10px;
   font-size: 20px;
   background-color: ${({ theme }) => theme.bg};
   color: ${({ theme }) => theme.color};
   border: none;
-  border-radius: 5px;
   box-shadow: 2px 2px 5px 0 grey;
   cursor: pointer;
   transition: all 0.2s;
@@ -99,6 +57,15 @@ const Button = styled.button`
     box-shadow: none;
     transform: translate(1px, 1px);
   }
+`;
+
+const SeeAllButton = styled(Button)`
+  background-color: red;
+  color: white;
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  box-shadow: 4px 4px 5px 0 black;
 `;
 
 function Slider() {
@@ -118,16 +85,7 @@ function Slider() {
       </Arrow>
       <Wrapper currentSlide={currentSlide}>
         {sliderItems.map((i) => (
-          <Slide bg={i.bg} key={i.id}>
-            <ImgContainer>
-              <Image src={i.img} alt={`product image ${i.id}`} />
-            </ImgContainer>
-            <InfoContainer>
-              <Title>{i.title}</Title>
-              <Description>{i.desc}</Description>
-              <Button>Show now</Button>
-            </InfoContainer>
-          </Slide>
+          <SlideComponent bg={i.bg} key={i.id} i={i} />
         ))}
       </Wrapper>
       <Arrow
@@ -140,6 +98,7 @@ function Slider() {
       >
         <ArrowRightOutlined />
       </Arrow>
+      <SeeAllButton>All products</SeeAllButton>
     </Container>
   );
 }

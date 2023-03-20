@@ -1,13 +1,7 @@
-import {
-  Facebook,
-  Instagram,
-  Mail,
-  Phone,
-  Pinterest,
-  Room,
-  Twitter,
-} from "@mui/icons-material";
 import styled from "styled-components";
+import CenterComponent from "./CenterComponent";
+import LeftComponent from "./LeftComponent";
+import RightComponent from "./RightComponent";
 
 const Container = styled.div`
   display: flex;
@@ -15,171 +9,19 @@ const Container = styled.div`
   justify-content: space-between;
   width: 100%;
 
-  @media (max-width: 610px) {
+  @media only screen and (max-width: 610px) {
     flex-direction: column;
   }
 `;
 
-const Left = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  gap: 20px;
-
-  @media only screen and (max-width: 610px) {
-    flex-direction: row;
-    width: 100%;
-    flex-wrap: wrap;
-  }
-`;
-
-const Center = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  gap: 10px;
-  min-width: 250px;
-`;
-
-const Right = styled.div`
-  flex: 1;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-`;
-
-const Title = styled.h4``;
-
-const List = styled.ul`
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-`;
-
-const ListItem = styled.li`
-  font-size: 14px;
-  width: 50%;
-`;
-
-const Logo = styled.h1`
-  font-weight: bold;
-  text-align: center;
-`;
-
-const Desc = styled.p`
-  font-size: 12px;
-  max-width: 150px;
-`;
-
-const Social = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-`;
-
-const SocialIcon = styled.div`
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background-color: white;
-  color: ${({ color }) => color};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.1s;
-
-  &:hover {
-    transform: scale(1.1);
-  }
-`;
-
-const ContactData = styled.div`
-  flex: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-`;
-
-const ContactItem = styled.div`
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-`;
-
-const Payment = styled.img`
-  height: 30px;
-  width: 100%;
-`;
+export const Title = styled.h4``;
 
 function Footer() {
   return (
     <Container>
-      <Left>
-        <Logo>Rags!</Logo>
-        <Desc>
-          Hide your shame! Protect yourself from the elements!{" "}
-          <b>We've got you covered!</b>
-        </Desc>
-        <Social>
-          <SocialIcon color="#3B5999">
-            <Facebook />
-          </SocialIcon>
-          <SocialIcon color="#E4405F">
-            <Instagram />
-          </SocialIcon>
-          <SocialIcon color="#55ACEE">
-            <Twitter />
-          </SocialIcon>
-          <SocialIcon color="#E60023">
-            <Pinterest />
-          </SocialIcon>
-        </Social>
-      </Left>
-      <Center>
-        <Title>Useful links</Title>
-        <List>
-          <ListItem>Home</ListItem>
-          <ListItem>Cart</ListItem>
-          <ListItem>Men fashion</ListItem>
-          <ListItem>Women fashion</ListItem>
-          <ListItem>Accessories</ListItem>
-          <ListItem>My account</ListItem>
-          <ListItem>Order tracking</ListItem>
-          <ListItem>Wishlist</ListItem>
-          <ListItem>Terms</ListItem>
-        </List>
-      </Center>
-      <Right>
-        <ContactData>
-          <Title>Contact</Title>
-          <ContactItem>
-            <Room />
-            Some Street no. 5, Someville
-          </ContactItem>
-          <ContactItem>
-            <Phone />
-            +123 45 678 910
-          </ContactItem>
-          <ContactItem>
-            <Mail />
-            info@example.com
-          </ContactItem>
-        </ContactData>
-        <Payment
-          alt="payment methods"
-          src="https://resources.cimaware.com/img/visa-mastercard-amex.svg"
-        />
-      </Right>
+      <LeftComponent />
+      <CenterComponent />
+      <RightComponent />
     </Container>
   );
 }

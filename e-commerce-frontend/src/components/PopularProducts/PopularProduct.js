@@ -73,7 +73,7 @@ const Icon = styled.div`
   }
 `;
 
-function Product({ product }) {
+function PopularProduct({ product }) {
   return (
     <Container>
       <Image src={product.img} alt={"product image " + product.id} />
@@ -94,4 +94,4 @@ function Product({ product }) {
   );
 }
 
-export default Product;
+export default PopularProduct;

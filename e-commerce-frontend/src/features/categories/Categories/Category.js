@@ -6,6 +6,7 @@ const Container = styled.div`
   flex: 1;
   margin: 5px;
   height: 50vh;
+  min-width: 200px;
   transition: all 0.3s;
 
   &:hover {
@@ -22,19 +23,21 @@ const Image = styled.img`
 
 const Info = styled.div`
   position: absolute;
-  width: 100%;
   height: 100%;
+  width: 100%;
   top: 0;
   left: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 10px;
 `;
 
 const Title = styled.h2`
   font-size: 40px;
   font-weight: 800;
+  -webkit-text-stroke: 2px black;
   color: rgba(255, 255, 255, 1);
 `;
 
@@ -50,9 +53,12 @@ const Button = styled.button`
 function Category({ category }) {
   return (
     <Container>
-      <Image src={category.img} alt={"category image" + category.id} />
+      <Image
+        src={`/data/defaults/categories/${category.id}.webp`}
+        alt={"category image" + category.id}
+      />
       <Info>
-        <Title>{category.title}</Title>
+        <Title>{category.name}</Title>
         <Button>SHOP NOW</Button>
       </Info>
     </Container>
