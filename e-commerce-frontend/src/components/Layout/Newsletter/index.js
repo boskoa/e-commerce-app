@@ -2,7 +2,7 @@ import styled from "styled-components";
 import InputComponent from "./InputComponent";
 
 const Container = styled.div`
-  height: 40vh;
+  height: 30vh;
   background-color: ${({ theme }) => theme.newsletter};
   color: ${({ theme }) => theme.color};
   display: flex;

@@ -11,6 +11,8 @@ const Container = styled.div`
   gap: 15px;
   padding: 20px;
   width: 100%;
+  color: ${({ theme }) => theme.color};
+  transition: all 0.3s;
 `;
 
 const Title = styled.h2`

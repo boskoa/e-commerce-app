@@ -8,6 +8,10 @@ import Newsletter from "./Newsletter";
 const Container = styled.div`
   min-height: 100vh;
   min-width: 320px;
+  background-image: ${({ theme }) =>
+    `linear-gradient(to bottom right, ${theme.base[0]} 20%, ${theme.base[1]} 50%)`};
+  color: ${({ theme }) => theme.color};
+  transition: all 0.3s;
 `;
 
 function Layout({ handleTheme }) {

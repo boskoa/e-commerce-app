@@ -11,7 +11,7 @@ const Container = styled.div`
 
   &:hover {
     transform: scale(1.01);
-    box-shadow: 2px 2px 10px 0;
+    box-shadow: 2px 2px 10px 0 black;
   }
 `;
 

@@ -13,7 +13,7 @@ const IconContainer = styled.div`
   align-items: center;
   background-color: ${({ theme }) => theme.primary};
   cursor: pointer;
-  box-shadow: 1px 1px 15px 0;
+  box-shadow: 1px 1px 15px 0 black;
   border-radius: 5px;
   z-index: 20;
 `;

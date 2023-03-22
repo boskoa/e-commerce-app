@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Button } from ".";
 
@@ -56,7 +57,9 @@ function SlideComponent({ p, i }) {
       <InfoContainer>
         <Title>{p.title}</Title>
         <Description>{p.description}</Description>
-        <Button>Show now</Button>
+        <Link to={`/products/${p.id}`}>
+          <Button>Show now</Button>
+        </Link>
       </InfoContainer>
     </Slide>
   );

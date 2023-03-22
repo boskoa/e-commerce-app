@@ -16,12 +16,13 @@ const initialState = productsAdapter.getInitialState({
   loading: false,
   error: null,
   latest: [],
+  selected: {},
 });
 
 export const getAllProducts = createAsyncThunk(
   "products/getAllProducts",
-  async () => {
-    const response = await axios.get(BASE_URL);
+  async (query) => {
+    const response = await axios.get(BASE_URL + query);
     return response.data;
   }
 );
@@ -30,6 +31,14 @@ export const getLatestProducts = createAsyncThunk(
   "products/getLatestProducts",
   async () => {
     const response = await axios.get(`${BASE_URL}/latest`);
+    return response.data;
+  }
+);
+
+export const getSelectedProduct = createAsyncThunk(
+  "products/getSelectedProduct",
+  async (id) => {
+    const response = await axios.get(`${BASE_URL}/${id}`);
     return response.data;
   }
 );
@@ -65,6 +74,19 @@ const productsSlice = createSlice({
       .addCase(getLatestProducts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(getSelectedProduct.pending, (state) => {
+        state.error = null;
+        state.loading = true;
+      })
+      .addCase(getSelectedProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.selected = action.payload;
+      })
+      .addCase(getSelectedProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
 });
@@ -85,6 +107,10 @@ export function selectProductsError(state) {
 
 export function selectLatestProducts(state) {
   return state.products.latest;
+}
+
+export function selectSelectedProduct(state) {
+  return state.products.selected;
 }
 
 export default productsSlice.reducer;

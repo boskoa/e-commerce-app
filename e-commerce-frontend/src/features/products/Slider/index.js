@@ -8,7 +8,6 @@ import SlideComponent from "./SlideComponent";
 
 const Container = styled.div`
   width: 100%;
-  background-color: ${({ theme }) => theme.bg};
   color: ${({ theme }) => theme.color};
   display: flex;
   position: relative;

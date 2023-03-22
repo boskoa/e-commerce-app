@@ -9,14 +9,11 @@ import { alreadyLogged } from "./features/login/loginSlice";
 import { getAllAnnouncements } from "./features/announcements/announcementsSlice";
 import { getAllCategories } from "./features/categories/categoriesSlice";
 import { getAllPopular } from "./features/popular/popularSlice";
-import {
-  getAllProducts,
-  getLatestProducts,
-} from "./features/products/productsSlice";
+import { getLatestProducts } from "./features/products/productsSlice";
 import Spinner from "./components/Spinner";
 
-const ProductList = lazy(() => import("./components/ProductList"));
-const SingleProduct = lazy(() => import("./components/SingleProduct"));
+const ProductList = lazy(() => import("./features/products/ProductList"));
+const SingleProduct = lazy(() => import("./features/products/SingleProduct"));
 const Register = lazy(() => import("./features/users/Register"));
 const Login = lazy(() => import("./features/login/Login"));
 const Cart = lazy(() => import("./components/Cart"));
@@ -95,7 +92,6 @@ function App() {
     dispatch(getAllAnnouncements());
     dispatch(getAllCategories());
     dispatch(getAllPopular());
-    dispatch(getAllProducts());
     dispatch(getLatestProducts());
   }, [dispatch]);
 

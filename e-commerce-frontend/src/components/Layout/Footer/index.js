@@ -8,6 +8,9 @@ const Container = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  background-color: ${({ theme }) => theme.bg};
+  color: ${({ theme }) => theme.color};
+  transition: all 0.3s;
 
   @media only screen and (max-width: 610px) {
     flex-direction: column;
