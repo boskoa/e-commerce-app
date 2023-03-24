@@ -79,7 +79,7 @@ function App() {
   useEffect(() => {
     const loggedUser = window.localStorage.getItem("loggedECommerceAppUser");
     if (loggedUser) {
-      dispatch(alreadyLogged(loggedUser));
+      dispatch(alreadyLogged(JSON.parse(loggedUser)));
     }
   }, [dispatch]);
 

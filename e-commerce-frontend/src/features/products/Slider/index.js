@@ -1,6 +1,7 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@mui/icons-material";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Spinner from "../../../components/Spinner";
 import { selectLatestProducts, selectProductsLoading } from "../productsSlice";
@@ -60,7 +61,7 @@ export const Button = styled.button`
   }
 `;
 
-const SeeAllButton = styled(Button)`
+export const SeeAllButton = styled(Button)`
   background-color: red;
   color: white;
   position: absolute;
@@ -104,7 +105,9 @@ function Slider() {
       >
         <ArrowRightOutlined />
       </Arrow>
-      <SeeAllButton>All products</SeeAllButton>
+      <Link to="/products">
+        <SeeAllButton>All products</SeeAllButton>
+      </Link>
     </Container>
   );
 }

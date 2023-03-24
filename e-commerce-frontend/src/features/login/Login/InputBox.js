@@ -79,7 +79,7 @@ function InputBox() {
         onChange={(e) => setPassword(e.target.value)}
       ></Input>
       <ButtonGroup>
-        <Button onClick={() => navigate("/")}>Cancel</Button>
+        <Button onClick={() => navigate(-1)}>Cancel</Button>
         <Button onClick={handleLogin}>Log in</Button>
       </ButtonGroup>
       <Forgot onClick={() => setError("Tough luck")}>Forgot password?</Forgot>

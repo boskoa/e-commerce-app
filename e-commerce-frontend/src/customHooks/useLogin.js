@@ -33,7 +33,7 @@ function useLogin() {
 
   useEffect(() => {
     if (loggedUser) {
-      navigate("/");
+      navigate(-1, { replace: true });
     }
   }, [loggedUser, navigate]);
 

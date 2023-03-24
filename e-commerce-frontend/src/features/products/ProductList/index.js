@@ -1,22 +1,24 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Spinner from "../../../components/Spinner";
 import useIntersectionObserver from "../../../customHooks/useIntersectionObserver";
-import Products from "../../popular/PopularProducts";
 import {
   getAllProducts,
   selectAllProducts,
   selectProductsLoading,
 } from "../productsSlice";
+import Product from "./Product";
+import SelectComponent from "./SelectComponent";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: stretch;
   justify-content: start;
-  gap: 5px;
+  gap: 20px;
   min-height: 100vh;
+  width: 100%;
   padding: 20px;
   background-image: ${({ theme }) =>
     `linear-gradient(-200deg, ${theme.base[0]}, ${theme.base[1]} 30%)`};
@@ -33,26 +35,37 @@ const FilterContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
+  gap: 20px;
+
+  @media only screen and (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
 const Filter = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
+
+  @media only screen and (max-width: 400px) {
+    flex-direction: column;
+    align-items: start;
+  }
 `;
 
 const FilterText = styled.p`
   font-size: 18px;
 `;
 
-const Select = styled.select`
-  background-color: inherit;
-  color: inherit;
-  border: 1px solid ${({ theme }) => theme.color};
-  padding: 5px;
+const ProductContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  gap: 15px;
+  min-height: 100%;
+  transition: all 0.3s;
 `;
-
-const Option = styled.option``;
 
 const SpinnerContainer = styled.div`
   display: flex;
@@ -72,6 +85,20 @@ function ProductList() {
   const endRef = useRef(null);
   const intersecting = useIntersectionObserver(endRef);
   const limit = 4;
+  const [category, setCategory] = useState(""); //selektor svih kategorija (iz slajsa)
+  const [color, setColor] = useState("");
+  const [size, setSize] = useState("");
+  const [sort, setSort] = useState(""); //napraviti erej [cena naviše, cena naniže, najnovije, najstarije]
+  const options = useMemo(() => {
+    /*
+    axios za izvlačenje svih boja
+    axios za izvlačenje svih veličina
+    */
+  });
+
+  useEffect(() => {
+    console.log(category);
+  }, [category]);
 
   useEffect(() => {
     if (intersecting && !stopLoading) {
@@ -95,47 +122,24 @@ function ProductList() {
 
   return (
     <Container>
-      <Title>Cats</Title>
+      <Title>All products</Title>
       <FilterContainer>
         <Filter>
           <FilterText>Filter products</FilterText>
-          <Select defaultValue="color">
-            <Option value="color" disabled>
-              Color
-            </Option>
-            <Option value="red">Red</Option>
-            <Option value="green">Green</Option>
-            <Option value="blue">Blue</Option>
-          </Select>
-          <Select defaultValue="size">
-            <Option value="size" disabled>
-              Size
-            </Option>
-            <Option>Small</Option>
-            <Option>Medium</Option>
-            <Option>Large</Option>
-          </Select>
+          <SelectComponent defaultValue="category" setValue={setCategory} />
+          <SelectComponent defaultValue="color" />
+          <SelectComponent defaultValue="size" />
         </Filter>
         <Filter>
           <FilterText>Sort by</FilterText>
-          <Select>
-            <Option>Newest</Option>
-            <Option>Price (asc)</Option>
-            <Option>Price (desc)</Option>
-          </Select>
+          <SelectComponent defaultValue="criterium" />
         </Filter>
       </FilterContainer>
-      {/*<Products />*/}
-      {products.map((p) => (
-        <div key={p.id} style={{ height: "400px" }}>
-          {p.title}
-          <img
-            height="100px"
-            src={`/data/uploads/products/${p.id}.webp`}
-            alt={p.id}
-          />
-        </div>
-      ))}
+      <ProductContainer>
+        {products.map((p) => (
+          <Product key={p.id} product={p} />
+        ))}
+      </ProductContainer>
       <SpinnerContainer ref={endRef}>{loading && <Spinner />}</SpinnerContainer>
     </Container>
   );

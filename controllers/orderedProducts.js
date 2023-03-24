@@ -84,7 +84,7 @@ router.post("/", tokenExtractor, async (req, res, next) => {
   if (!user?.admin) {
     return res.status(401).json({ error: "Not authorized" });
   }
-
+  console.log("FOOOOO", req.body);
   try {
     const addedProduct = await OrderedProduct.create({ ...req.body });
     return res.status(200).json(addedProduct);
