@@ -14,9 +14,13 @@ const Container = styled.div`
   height: 250px;
   width: 100%;
   color: ${({ theme }) => theme.color};
-  border: 1px solid ${({ theme }) => theme.color};
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.7);
+  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.7);
   transition: all 0.3s;
+
+  &:hover {
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.7);
+    transform: scale(1.005);
+  }
 `;
 
 const Button = styled(SeeAllButton)`
@@ -30,7 +34,7 @@ const Button = styled(SeeAllButton)`
 function Product({ product }) {
   return (
     <Container>
-      <ImageComponent product={product} height="248px" />
+      <ImageComponent product={product} height="250px" />
       <InfoComponent product={product} />
       <Link to={`/products/${product.id}`}>
         <Button>See product</Button>

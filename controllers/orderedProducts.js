@@ -62,12 +62,13 @@ router.get("/", tokenExtractor, async (req, res, next) => {
 
 router.get("/:id", tokenExtractor, async (req, res, next) => {
   const user = await User.findByPk(req.decodedToken.id);
-  if (!user?.admin) {
+  if (!user?.admin && user.id !== req.decodedToken.id) {
     return res.status(401).json({ error: "Not authorized" });
   }
 
   try {
-    const selectedProduct = await OrderedProduct.findByPk(req.params.id, {
+    const selectedProduct = await OrderedProduct.findAll({
+      where: { userId: req.params.id },
       include: Product,
     });
     if (!selectedProduct) {
@@ -84,7 +85,7 @@ router.post("/", tokenExtractor, async (req, res, next) => {
   if (!user?.admin) {
     return res.status(401).json({ error: "Not authorized" });
   }
-  console.log("FOOOOO", req.body);
+
   try {
     const addedProduct = await OrderedProduct.create({ ...req.body });
     return res.status(200).json(addedProduct);

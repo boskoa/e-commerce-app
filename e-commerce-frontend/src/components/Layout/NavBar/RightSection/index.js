@@ -30,7 +30,7 @@ function RightSection({ inputActive }) {
 
   return (
     <Right inputActive={inputActive}>
-      {loggedUser ? <LoggedInItems /> : <LoggedOutItems />}
+      {loggedUser ? <LoggedInItems id={loggedUser.id} /> : <LoggedOutItems />}
     </Right>
   );
 }

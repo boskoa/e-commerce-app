@@ -1,9 +1,12 @@
+import axios from "axios";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Spinner from "../../../components/Spinner";
 import useIntersectionObserver from "../../../customHooks/useIntersectionObserver";
+import { selectAllCategories } from "../../categories/categoriesSlice";
 import {
+  emptyProducts,
   getAllProducts,
   selectAllProducts,
   selectProductsLoading,
@@ -85,24 +88,41 @@ function ProductList() {
   const endRef = useRef(null);
   const intersecting = useIntersectionObserver(endRef);
   const limit = 4;
-  const [category, setCategory] = useState(""); //selektor svih kategorija (iz slajsa)
+  const categories = useSelector(selectAllCategories).map((c) => c.name);
+  const [colors, setColors] = useState([]);
+  const [sizes, setSizes] = useState([]);
+  const sorts = useMemo(
+    () => ({
+      "price (asc)": ["price,ASC"],
+      "price (desc)": ["price,DESC"],
+      newest: ["createdAt,DESC"],
+      oldest: ["createdAt,ASC"],
+    }),
+    []
+  );
+  const [category, setCategory] = useState("");
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
-  const [sort, setSort] = useState(""); //napraviti erej [cena naviše, cena naniže, najnovije, najstarije]
-  const options = useMemo(() => {
-    /*
-    axios za izvlačenje svih boja
-    axios za izvlačenje svih veličina
-    */
-  });
+  const [sort, setSort] = useState("");
 
   useEffect(() => {
-    console.log(category);
-  }, [category]);
+    setOffset(0);
+    dispatch(emptyProducts());
+  }, [category, color, size, sort, dispatch]);
+
+  useEffect(() => {
+    async function fetchColorsSizes() {
+      const response = await axios.get("/api/products/colors-sizes");
+      setColors(response.data.uniqueColors);
+      setSizes(response.data.uniqueSizes);
+    }
+    fetchColorsSizes();
+  }, []);
 
   useEffect(() => {
     if (intersecting && !stopLoading) {
       setOffset((prev) => prev + limit);
+      console.log("INTERSECTING", offset, products.length);
     }
   }, [intersecting, stopLoading]);
 
@@ -116,9 +136,25 @@ function ProductList() {
 
   useEffect(() => {
     if (offset === products.length) {
-      dispatch(getAllProducts(`?pagination=${offset},${limit}`));
+      dispatch(
+        getAllProducts(
+          `?pagination=${offset},${limit}${
+            category ? `&category=${category}` : ""
+          }${color ? `&color=${color}` : ""}${size ? `&size=${size}` : ""}${
+            sort ? `&order=${sorts[sort]}` : ""
+          }`
+        )
+      );
+      console.log(
+        "BAAAAAR",
+        `?pagination=${offset},${limit}${
+          category ? `&category=${category}` : ""
+        }${color ? `&color=${color}` : ""}${size ? `&size=${size}` : ""}${
+          sort ? `&order=${sorts[sort]}` : ""
+        }`
+      );
     }
-  }, [offset, products.length, dispatch]);
+  }, [offset, products.length, category, color, size, sort, sorts, dispatch]);
 
   return (
     <Container>
@@ -126,13 +162,29 @@ function ProductList() {
       <FilterContainer>
         <Filter>
           <FilterText>Filter products</FilterText>
-          <SelectComponent defaultValue="category" setValue={setCategory} />
-          <SelectComponent defaultValue="color" />
-          <SelectComponent defaultValue="size" />
+          <SelectComponent
+            defaultValue="categories"
+            setValue={setCategory}
+            values={categories}
+          />
+          <SelectComponent
+            defaultValue="colors"
+            setValue={setColor}
+            values={colors}
+          />
+          <SelectComponent
+            defaultValue="sizes"
+            setValue={setSize}
+            values={sizes}
+          />
         </Filter>
         <Filter>
           <FilterText>Sort by</FilterText>
-          <SelectComponent defaultValue="criterium" />
+          <SelectComponent
+            defaultValue="criterium"
+            setValue={setSort}
+            values={Object.keys(sorts)}
+          />
         </Filter>
       </FilterContainer>
       <ProductContainer>

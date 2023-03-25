@@ -22,7 +22,7 @@ const ProductsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  max-height: ${({ showAll }) => (showAll ? "3000px" : "53vh")};
+  max-height: ${({ showAll, maxHeight }) => (showAll ? maxHeight : "53vh")};
   overflow: hidden;
   padding: 0 20px 20px 20px;
   gap: 1.6vh;
@@ -42,7 +42,10 @@ function PopularProducts() {
   return (
     <MainContainer ref={popularProductsRef}>
       <Title>Popular products</Title>
-      <ProductsContainer showAll={showAll}>
+      <ProductsContainer
+        showAll={showAll}
+        maxHeight={`${popularProducts.length * 55}vh`}
+      >
         {popularProducts.map((p) => (
           <PopularProduct key={p.id} product={p} />
         ))}

@@ -9,18 +9,15 @@ const Select = styled.select`
 
 const Option = styled.option``;
 
-function SelectComponent({ defaultValue, setValue }) {
+function SelectComponent({ defaultValue, setValue, values }) {
   return (
-    <Select
-      defaultValue={defaultValue}
-      onChange={(e) => setValue(e.target.value)}
-    >
-      <Option value={defaultValue} disabled>
-        {defaultValue}
-      </Option>
-      <Option value="pants">Pants</Option>
-      <Option value="sweaters">Sweaters</Option>
-      <Option value="hats">Hats</Option>
+    <Select onChange={(e) => setValue(e.target.value)}>
+      <Option value="">{defaultValue}</Option>
+      {values.map((v) => (
+        <Option key={v} value={v}>
+          {v}
+        </Option>
+      ))}
     </Select>
   );
 }

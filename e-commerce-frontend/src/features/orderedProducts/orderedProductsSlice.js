@@ -16,6 +16,21 @@ const initialState = orderedProductsAdapter.getInitialState({
   error: null,
 });
 
+export const getUsersOrderedProducts = createAsyncThunk(
+  "orderedProducts/getUsersOrderedProducts",
+  async (data) => {
+    const { id, token } = data;
+    const config = {
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    };
+
+    const response = await axios.get(`${BASE_URL}/${id}`, config);
+    return response.data;
+  }
+);
+
 export const createOrderedProduct = createAsyncThunk(
   "orderedProducts/createOrderedProduct",
   async (data) => {
@@ -36,6 +51,19 @@ const orderedProductsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(getUsersOrderedProducts.pending, (state) => {
+        state.error = null;
+        state.loading = true;
+      })
+      .addCase(getUsersOrderedProducts.fulfilled, (state, action) => {
+        state.error = null;
+        state.loading = false;
+        orderedProductsAdapter.upsertMany(state, action.payload);
+      })
+      .addCase(getUsersOrderedProducts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
       .addCase(createOrderedProduct.pending, (state) => {
         state.error = null;
         state.loading = true;

@@ -8,9 +8,7 @@ const {
 
 const BASE_URL = "/api/products";
 
-const productsAdapter = createEntityAdapter({
-  sortComparer: (a, b) => a.createdAt.localeCompare(b.createdAt),
-});
+const productsAdapter = createEntityAdapter();
 
 const initialState = productsAdapter.getInitialState({
   loading: false,
@@ -46,7 +44,9 @@ export const getSelectedProduct = createAsyncThunk(
 const productsSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {},
+  reducers: {
+    emptyProducts: () => initialState,
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getAllProducts.pending, (state) => {
@@ -112,5 +112,7 @@ export function selectLatestProducts(state) {
 export function selectSelectedProduct(state) {
   return state.products.selected;
 }
+
+export const { emptyProducts } = productsSlice.actions;
 
 export default productsSlice.reducer;

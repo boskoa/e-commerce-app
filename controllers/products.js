@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 const { Op } = require("sequelize");
 const { Product, Category, User, OrderedProduct } = require("../models");
 const { Product_Category } = require("../models/ProductCategories");
@@ -8,15 +9,30 @@ router.get("/", async (req, res, next) => {
   let where = {};
   let order = [];
   let pagination = {};
+  let categoryWhere = {};
 
-  if (req.query.search) {
-    const [field, term] = req.query.search.split(",");
-    where = { [field]: { [Op.substring]: term } };
+  if (req.query.title) {
+    where = { ...where, title: { [Op.iLike]: `%${req.query.title}%` } };
+  }
+
+  if (req.query.color) {
+    where = { ...where, colors: { [Op.contains]: [req.query.color] } };
+  }
+
+  if (req.query.size) {
+    where = { ...where, sizes: { [Op.contains]: [req.query.size] } };
+  }
+
+  if (req.query.category) {
+    categoryWhere.name = req.query.category;
   }
 
   if (req.query.order) {
     const [field, criterium] = req.query.order.split(",");
-    order = [[field, criterium.toUpperCase()]];
+    order = [
+      [field, criterium.toUpperCase()],
+      ["id", "ASC"],
+    ];
   }
 
   if (req.query.pagination) {
@@ -29,7 +45,11 @@ router.get("/", async (req, res, next) => {
       where,
       order,
       ...pagination,
-      include: { model: Category, attributes: ["name"] },
+      include: {
+        model: Category,
+        attributes: ["name"],
+        [Object.keys(categoryWhere).length > 0 && "where"]: categoryWhere,
+      },
     });
     return res.status(200).json(products);
   } catch (error) {
@@ -46,6 +66,19 @@ router.get("/latest", async (req, res, next) => {
     });
     console.log("LATEST", JSON.stringify(products));
     return res.status(200).json(products);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/colors-sizes", async (req, res, next) => {
+  try {
+    const products = await Product.findAll({ attributes: ["colors", "sizes"] });
+    const colors = products.reduce((p, c) => p.concat(c.colors), []);
+    const uniqueColors = [...new Set(colors)];
+    const sizes = products.reduce((p, c) => p.concat(c.sizes), []);
+    const uniqueSizes = [...new Set(sizes)];
+    return res.status(200).json({ uniqueColors, uniqueSizes });
   } catch (error) {
     next(error);
   }
