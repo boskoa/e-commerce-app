@@ -45,6 +45,34 @@ export const createOrderedProduct = createAsyncThunk(
   }
 );
 
+export const updateOrderedProduct = createAsyncThunk(
+  "orderedProducts/updateOrderedProduct",
+  async (data) => {
+    const { newData, id, token } = data;
+    const config = {
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    };
+    const response = await axios.patch(`${BASE_URL}/${id}`, newData, config);
+    return response.data;
+  }
+);
+
+export const deleteOrderedProduct = createAsyncThunk(
+  "orderedProducts/deleteOrderedProduct",
+  async (data) => {
+    const { id, token } = data;
+    const config = {
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    };
+    const response = await axios.delete(`${BASE_URL}/${id}`, config);
+    return response.data;
+  }
+);
+
 const orderedProductsSlice = createSlice({
   name: "orderedProducts",
   initialState,
@@ -74,6 +102,32 @@ const orderedProductsSlice = createSlice({
         orderedProductsAdapter.upsertOne(state, action.payload);
       })
       .addCase(createOrderedProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(updateOrderedProduct.pending, (state) => {
+        state.error = null;
+        state.loading = true;
+      })
+      .addCase(updateOrderedProduct.fulfilled, (state, action) => {
+        state.error = null;
+        state.loading = false;
+        orderedProductsAdapter.upsertOne(state, action.payload);
+      })
+      .addCase(updateOrderedProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(deleteOrderedProduct.pending, (state) => {
+        state.error = null;
+        state.loading = true;
+      })
+      .addCase(deleteOrderedProduct.fulfilled, (state, action) => {
+        state.error = null;
+        state.loading = false;
+        orderedProductsAdapter.removeOne(state, Number(action.payload.id));
+      })
+      .addCase(deleteOrderedProduct.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

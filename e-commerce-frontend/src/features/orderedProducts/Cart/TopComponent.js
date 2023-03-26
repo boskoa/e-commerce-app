@@ -1,4 +1,8 @@
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { selectLoggedUser } from "../../login/loginSlice";
+import { selectOrderedProductIds } from "../orderedProductsSlice";
 
 const Top = styled.div`
   display: flex;
@@ -36,15 +40,23 @@ const TextContainer = styled.div`
 
 const Text = styled.span`
   cursor: pointer;
+  color: ${({ theme }) => theme.color};
 `;
 
 function TopComponent() {
+  const id = useSelector(selectLoggedUser).id;
+  const cartItems = useSelector(selectOrderedProductIds).length;
+
   return (
     <Top>
       <TopButton>Continue shopping</TopButton>
       <TextContainer>
-        <Text>Shopping bag (1)</Text>
-        <Text>Your wishlist (0)</Text>
+        <Link style={{ textDecoration: "none" }} to={`/cart/${id}`}>
+          <Text>Shopping bag ({cartItems})</Text>
+        </Link>
+        <Link style={{ textDecoration: "none" }} to={`/cart/${id}/wishlist`}>
+          <Text>Your wishlist (0)</Text>
+        </Link>
       </TextContainer>
       <TopButton type="checkout">Checkout now</TopButton>
     </Top>

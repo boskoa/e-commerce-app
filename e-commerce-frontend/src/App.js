@@ -11,12 +11,13 @@ import { getAllCategories } from "./features/categories/categoriesSlice";
 import { getAllPopular } from "./features/popular/popularSlice";
 import { getLatestProducts } from "./features/products/productsSlice";
 import Spinner from "./components/Spinner";
+import ShoppingBag from "./features/orderedProducts/Cart/ShoppingBag";
 
 const ProductList = lazy(() => import("./features/products/ProductList"));
 const SingleProduct = lazy(() => import("./features/products/SingleProduct"));
 const Register = lazy(() => import("./features/users/Register"));
 const Login = lazy(() => import("./features/login/Login"));
-const Cart = lazy(() => import("./components/Cart"));
+const Cart = lazy(() => import("./features/orderedProducts/Cart"));
 
 function App() {
   const [theme, setTheme] = useState("light");
@@ -54,6 +55,16 @@ function App() {
               <Cart />
             </Suspense>
           ),
+          children: [
+            {
+              index: true,
+              element: <ShoppingBag />,
+            },
+            {
+              path: "wishlist",
+              element: <Suspense fallback={<Spinner />}></Suspense>,
+            },
+          ],
         },
         {
           path: "products/:id",

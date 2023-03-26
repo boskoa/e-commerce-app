@@ -68,7 +68,7 @@ router.get("/:id", tokenExtractor, async (req, res, next) => {
 
   try {
     const selectedProduct = await OrderedProduct.findAll({
-      where: { userId: req.params.id },
+      where: { userId: req.params.id, orderId: { [Op.eq]: null } },
       include: Product,
     });
     if (!selectedProduct) {
@@ -131,8 +131,10 @@ router.delete("/:id", tokenExtractor, async (req, res, next) => {
   }
 
   try {
-    await OrderedProduct.destroy({ where: { productId: req.params.id } });
-    return res.status(200).end();
+    await OrderedProduct.destroy({
+      where: { id: Number(req.params.id) },
+    });
+    return res.status(200).json({ id: req.params.id });
   } catch (error) {
     next(error);
   }

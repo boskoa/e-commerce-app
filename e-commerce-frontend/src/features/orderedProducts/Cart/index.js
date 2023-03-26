@@ -1,5 +1,5 @@
+import { Outlet } from "react-router-dom";
 import styled from "styled-components";
-import BottomComponent from "./BottomComponent";
 import TopComponent from "./TopComponent";
 
 const Container = styled.div`
@@ -26,7 +26,7 @@ function Cart() {
     <Container>
       <Title>Your cart</Title>
       <TopComponent />
-      <BottomComponent />
+      <Outlet />
     </Container>
   );
 }
