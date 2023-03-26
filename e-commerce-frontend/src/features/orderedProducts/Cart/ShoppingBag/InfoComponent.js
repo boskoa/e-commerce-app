@@ -11,6 +11,7 @@ import {
   deleteOrderedProduct,
   updateOrderedProduct,
 } from "../../orderedProductsSlice";
+import Spinner from "../../../../components/Spinner";
 
 const Product = styled.div`
   position: relative;
@@ -104,7 +105,7 @@ const Button = styled.button`
   }
 `;
 
-function InfoComponent({ p, last }) {
+function InfoComponent({ p, last, checked, setChecked }) {
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
   const [quantity, setQuantity] = useState(1);
@@ -133,6 +134,14 @@ function InfoComponent({ p, last }) {
     setQuantity(p.quantity);
   }, [p]);
 
+  function handleChecked() {
+    if (checked.includes(p.id)) {
+      setChecked((prev) => prev.filter((c) => c !== p.id));
+    } else {
+      setChecked((prev) => [...prev, p.id]);
+    }
+  }
+
   useEffect(() => {
     if (color.length && size.length && quantity > 0) {
       if (p.color !== color || p.size !== size || p.quantity !== quantity) {
@@ -141,6 +150,10 @@ function InfoComponent({ p, last }) {
       }
     }
   }, [color, size, quantity, p]);
+
+  if (!p.product) {
+    return <Spinner />;
+  }
 
   return (
     <Product last={last}>
@@ -186,6 +199,9 @@ function InfoComponent({ p, last }) {
           />
         </AmountContainer>
         <Price>${p.product.price}</Price>
+        <Button changed={checked.includes(p.id)} onClick={handleChecked}>
+          {checked.includes(p.id) ? "Remove" : "Add"}
+        </Button>
       </BuyDetails>
       <DeleteIcon
         style={{

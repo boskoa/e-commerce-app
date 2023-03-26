@@ -16,17 +16,17 @@ const Summary = styled.div`
   gap: 6px;
 `;
 
-function SummaryComponent({ selectedProducts }) {
+function SummaryComponent({ checkedProducts }) {
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
   });
 
-  const subtotal = selectedProducts.reduce(
+  const subtotal = checkedProducts.reduce(
     (p, c) => c.price * c.quantity + p,
     0
   );
-  const shipping = selectedProducts.reduce(
+  const shipping = checkedProducts.reduce(
     (p, c) => 10 + (10 / c.price) * c.quantity + p,
     0
   );

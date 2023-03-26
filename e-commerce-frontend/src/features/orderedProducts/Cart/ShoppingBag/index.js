@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { selectAllOrderedProducts } from "../../orderedProductsSlice";
@@ -25,6 +26,10 @@ const ProductsContainer = styled.div`
 
 function ShoppingBag() {
   const selectedProducts = useSelector(selectAllOrderedProducts);
+  const [checked, setChecked] = useState([]);
+  const checkedProducts = selectedProducts.filter((o) =>
+    checked.includes(o.id)
+  );
 
   return (
     <Bottom>
@@ -34,10 +39,12 @@ function ShoppingBag() {
             key={p.id}
             p={p}
             last={selectedProducts.length === i + 1}
+            checked={checked}
+            setChecked={setChecked}
           />
         ))}
       </ProductsContainer>
-      <SummaryComponent selectedProducts={selectedProducts} />
+      <SummaryComponent checkedProducts={checkedProducts} />
     </Bottom>
   );
 }
