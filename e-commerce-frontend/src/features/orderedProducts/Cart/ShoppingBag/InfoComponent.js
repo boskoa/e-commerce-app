@@ -107,7 +107,7 @@ const Button = styled.button`
 function InfoComponent({ p, last }) {
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
-  const [quantity, setQuantity] = useState("");
+  const [quantity, setQuantity] = useState(1);
   const [changed, setChanged] = useState(false);
   const loggedUser = useSelector(selectLoggedUser);
   const dispatch = useDispatch();

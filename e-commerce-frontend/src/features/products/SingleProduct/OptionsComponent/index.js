@@ -47,14 +47,16 @@ const Error = styled.div`
   background-color: inherit;
   color: red;
   height: 16px;
+  width: 120px;
+  text-align: center;
   transition: all 0.3s;
 `;
 
 function OptionsComponent({ product }) {
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
-  const [quantity, setQuantity] = useState(0);
-  const [error, setError] = useState("");
+  const [quantity, setQuantity] = useState(1);
+  const [message, setMessage] = useState("");
   const loggedUser = useSelector(selectLoggedUser);
   const orderedProductError = useSelector(selectOrderedProductsError);
   const navigate = useNavigate();
@@ -63,16 +65,16 @@ function OptionsComponent({ product }) {
   useEffect(() => {
     let index;
 
-    if (error.length > 0) {
-      index = setTimeout(() => setError(""), 4000);
+    if (message.length > 0) {
+      index = setTimeout(() => setMessage(""), 4000);
     }
 
     return () => clearTimeout(index);
-  }, [error]);
+  }, [message]);
 
   useEffect(() => {
     if (orderedProductError !== null) {
-      setError("Action failed");
+      setMessage("Action failed");
     }
   }, [orderedProductError]);
 
@@ -85,10 +87,10 @@ function OptionsComponent({ product }) {
       navigate("/login");
     }
 
-    if (color.length === 0 || size.length === 0 || quantity < 1) {
-      setError("Select options");
+    if (color.length === 0 || size.length === 0) {
+      return setMessage("Select options");
     } else {
-      setError("");
+      setMessage("");
     }
 
     const orderedProduct = {
@@ -100,23 +102,27 @@ function OptionsComponent({ product }) {
       price: product.price,
     };
 
-    dispatch(createOrderedProduct({ orderedProduct, token: loggedUser.token }));
-    setQuantity(0);
+    dispatch(
+      createOrderedProduct({ orderedProduct, token: loggedUser.token })
+    ).then((r) => r.payload.id && setMessage("Product added"));
+    setQuantity(1);
+    setColor("");
+    setSize("");
   }
 
   return (
     <OptionsContainer>
       <Filter style={{ marginRight: "5px" }}>
         <FilterText>Color</FilterText>
-        <ColorsComponent product={product} setColor={setColor} />
+        <ColorsComponent product={product} setColor={setColor} color={color} />
       </Filter>
       <Filter>
         <FilterText>Size</FilterText>
-        <SizesComponent product={product} setSize={setSize} />
+        <SizesComponent product={product} setSize={setSize} size={size} />
       </Filter>
       <AmountComponent quantity={quantity} setQuantity={setQuantity} />
       <Button onClick={handleOrder}>Add to cart</Button>
-      <Error>{error}</Error>
+      <Error>{message}</Error>
     </OptionsContainer>
   );
 }

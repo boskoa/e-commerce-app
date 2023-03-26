@@ -20,7 +20,7 @@ function AmountComponent({ quantity, setQuantity }) {
     <AmountContainer>
       <Remove
         style={{ cursor: "pointer" }}
-        onClick={() => setQuantity((prev) => (prev > 0 ? prev - 1 : 0))}
+        onClick={() => setQuantity((prev) => (prev > 1 ? prev - 1 : 1))}
       />
       <Quantity>{quantity}</Quantity>
       <Add

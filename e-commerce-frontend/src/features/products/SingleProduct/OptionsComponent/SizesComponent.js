@@ -9,12 +9,10 @@ const Select = styled.select`
 
 const Option = styled.option``;
 
-function SizesComponent({ product, setSize }) {
+function SizesComponent({ product, setSize, size }) {
   return (
-    <Select defaultValue="size">
-      <Option value="size" disabled>
-        Size
-      </Option>
+    <Select defaultValue={size} value={size}>
+      <Option value="" disabled />
       {product.sizes.map((s) => (
         <Option key={s} value={s} onClick={(e) => setSize(e.target.value)}>
           {s}

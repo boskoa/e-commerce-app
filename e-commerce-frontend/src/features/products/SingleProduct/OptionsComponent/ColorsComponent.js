@@ -21,7 +21,7 @@ const Color = styled.input`
   }
 `;
 
-function ColorsComponent({ product, setColor }) {
+function ColorsComponent({ product, setColor, color }) {
   return (
     <ColorContainer>
       {product.colors.map((c, i) => (
@@ -31,6 +31,7 @@ function ColorsComponent({ product, setColor }) {
           id={`color${i}`}
           name="color"
           value={c}
+          checked={c === color}
           onClick={(e) => setColor(e.target.value)}
         />
       ))}
