@@ -18,6 +18,7 @@ const SingleProduct = lazy(() => import("./features/products/SingleProduct"));
 const Register = lazy(() => import("./features/users/Register"));
 const Login = lazy(() => import("./features/login/Login"));
 const Cart = lazy(() => import("./features/orderedProducts/Cart"));
+const Checkout = lazy(() => import("./features/orders/Checkout"));
 
 function App() {
   const [theme, setTheme] = useState("light");
@@ -82,6 +83,14 @@ function App() {
             </Suspense>
           ),
           children: [],
+        },
+        {
+          path: "orders/:id",
+          element: (
+            <Suspense fallback={<Spinner />}>
+              <Checkout />
+            </Suspense>
+          ),
         },
       ],
     },

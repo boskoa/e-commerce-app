@@ -29,7 +29,7 @@ router.get("/", tokenExtractor, async (req, res, next) => {
   }
 
   try {
-    const orderedProducts = await Order.findAll({
+    const orders = await Order.findAll({
       where,
       order,
       pagination,
@@ -38,7 +38,46 @@ router.get("/", tokenExtractor, async (req, res, next) => {
         { model: OrderedProduct, include: Product },
       ],
     });
-    return res.status(200).json(orderedProducts);
+    return res.status(200).json(orders);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/user-orders", tokenExtractor, async (req, res, next) => {
+  const user = await User.findByPk(req.decodedToken.id);
+  if (!user) {
+    return res.status(401).json({ error: "Not authorized" });
+  }
+
+  try {
+    const orders = await Order.findAll({
+      where: { userId: req.decodedToken.id },
+      include: [
+        { model: User, attributes: { exclude: ["passwordHash"] } },
+        { model: OrderedProduct, include: Product },
+      ],
+    });
+    return res.status(200).json(orders);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/:id", tokenExtractor, async (req, res, next) => {
+  const user = await User.findByPk(req.decodedToken.id);
+  if (!user) {
+    return res.status(401).json({ error: "Not authorized" });
+  }
+
+  try {
+    const orders = await Order.findByPk(req.params.id, {
+      include: [
+        { model: User, attributes: { exclude: ["passwordHash"] } },
+        { model: OrderedProduct, include: Product },
+      ],
+    });
+    return res.status(200).json(orders);
   } catch (error) {
     next(error);
   }

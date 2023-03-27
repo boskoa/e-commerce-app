@@ -24,7 +24,7 @@ Order.init(
     },
     status: {
       type: DataTypes.BOOLEAN,
-      defaultValue: true,
+      defaultValue: false,
     },
   },
   {

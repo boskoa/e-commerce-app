@@ -32,7 +32,7 @@ function ColorsComponent({ product, setColor, color }) {
           name="color"
           value={c}
           checked={c === color}
-          onClick={(e) => setColor(e.target.value)}
+          onChange={(e) => setColor(e.target.value)}
         />
       ))}
     </ColorContainer>

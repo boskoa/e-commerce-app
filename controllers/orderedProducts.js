@@ -88,7 +88,10 @@ router.post("/", tokenExtractor, async (req, res, next) => {
 
   try {
     const addedProduct = await OrderedProduct.create({ ...req.body });
-    return res.status(200).json(addedProduct);
+    const orderedProduct = await OrderedProduct.findByPk(addedProduct.id, {
+      include: Product,
+    });
+    return res.status(200).json(orderedProduct);
   } catch (error) {
     next(error);
   }

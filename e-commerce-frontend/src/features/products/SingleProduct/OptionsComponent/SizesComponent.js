@@ -11,10 +11,10 @@ const Option = styled.option``;
 
 function SizesComponent({ product, setSize, size }) {
   return (
-    <Select defaultValue={size} value={size}>
+    <Select value={size} onChange={(e) => setSize(e.target.value)}>
       <Option value="" disabled />
       {product.sizes.map((s) => (
-        <Option key={s} value={s} onClick={(e) => setSize(e.target.value)}>
+        <Option key={s} value={s}>
           {s}
         </Option>
       ))}

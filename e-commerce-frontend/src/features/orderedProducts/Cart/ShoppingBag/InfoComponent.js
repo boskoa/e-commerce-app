@@ -199,7 +199,11 @@ function InfoComponent({ p, last, checked, setChecked }) {
           />
         </AmountContainer>
         <Price>${p.product.price}</Price>
-        <Button changed={checked.includes(p.id)} onClick={handleChecked}>
+        <Button
+          disabled={changed}
+          changed={checked.includes(p.id)}
+          onClick={handleChecked}
+        >
           {checked.includes(p.id) ? "Remove" : "Add"}
         </Button>
       </BuyDetails>

@@ -44,6 +44,7 @@ const SocialIcon = styled.div`
   align-items: center;
   justify-content: center;
   transition: all 0.1s;
+  cursor: pointer;
 
   &:hover {
     transform: scale(1.1);
