@@ -122,7 +122,6 @@ function ProductList() {
   useEffect(() => {
     if (intersecting && !stopLoading) {
       setOffset((prev) => prev + limit);
-      console.log("INTERSECTING", offset, products.length);
     }
   }, [intersecting, stopLoading]);
 

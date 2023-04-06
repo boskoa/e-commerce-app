@@ -12,6 +12,7 @@ import { getAllPopular } from "./features/popular/popularSlice";
 import { getLatestProducts } from "./features/products/productsSlice";
 import Spinner from "./components/Spinner";
 import ShoppingBag from "./features/orderedProducts/Cart/ShoppingBag";
+import Completion from "./features/orders/Checkout/Completion";
 
 const ProductList = lazy(() => import("./features/products/ProductList"));
 const SingleProduct = lazy(() => import("./features/products/SingleProduct"));
@@ -91,6 +92,10 @@ function App() {
               <Checkout />
             </Suspense>
           ),
+        },
+        {
+          path: "completion",
+          element: <Completion />,
         },
       ],
     },

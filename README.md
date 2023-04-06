@@ -1,4 +1,4 @@
-## Web-shop app, loosely based on Lama Dev tutorial
+## Web-shop app
 
 ### 1) `npm install` inside root and frontend directory
 

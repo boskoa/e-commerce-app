@@ -12,6 +12,7 @@ const {
 } = require("./controllers/orderedProducts");
 const { router: ordersRouter } = require("./controllers/orders");
 const { router: announcementsRouter } = require("./controllers/announcements");
+const { router: paymentRouter } = require("./controllers/payment");
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use("/api/login", loginRouter);
 app.use("/api/selected-products", orderedProductsRouter);
 app.use("/api/orders", ordersRouter);
 app.use("/api/announcements", announcementsRouter);
+app.use("/api/payment", paymentRouter);
 
 app.all("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));
