@@ -4,6 +4,13 @@ import styled from "styled-components";
 import { selectAllOrderedProducts } from "../../orderedProductsSlice";
 import InfoComponent from "./InfoComponent";
 import SummaryComponent from "./SummaryComponent";
+import TopComponent from "./TopComponent";
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
 
 const Bottom = styled.div`
   display: flex;
@@ -32,20 +39,23 @@ function ShoppingBag() {
   );
 
   return (
-    <Bottom>
-      <ProductsContainer>
-        {selectedProducts?.map((p, i) => (
-          <InfoComponent
-            key={p.id}
-            p={p}
-            last={selectedProducts.length === i + 1}
-            checked={checked}
-            setChecked={setChecked}
-          />
-        ))}
-      </ProductsContainer>
-      <SummaryComponent checkedProducts={checkedProducts} />
-    </Bottom>
+    <Container>
+      <TopComponent setChecked={setChecked} checkedProducts={checkedProducts} />
+      <Bottom>
+        <ProductsContainer>
+          {selectedProducts?.map((p, i) => (
+            <InfoComponent
+              key={p.id}
+              p={p}
+              last={selectedProducts.length === i + 1}
+              checked={checked}
+              setChecked={setChecked}
+            />
+          ))}
+        </ProductsContainer>
+        <SummaryComponent checkedProducts={checkedProducts} />
+      </Bottom>
+    </Container>
   );
 }
 

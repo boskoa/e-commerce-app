@@ -12,6 +12,7 @@ const ordersAdapter = createEntityAdapter();
 const initialState = ordersAdapter.getInitialState({
   loading: false,
   error: null,
+  lastOrder: null,
 });
 
 export const getUsersOrders = createAsyncThunk(
@@ -41,6 +42,24 @@ export const getSelectedOrder = createAsyncThunk(
   }
 );
 
+export const createOrder = createAsyncThunk(
+  "orders/createOrder",
+  async (data) => {
+    const { token, orderedProducts, amount } = data;
+    const config = {
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    };
+    const response = await axios.post(
+      BASE_URL,
+      { orderedProducts, amount },
+      config
+    );
+    return response.data;
+  }
+);
+/*ovo je neka greška?
 export const createdOrder = createAsyncThunk(
   "orders/createdOrder",
   async (data) => {
@@ -54,7 +73,7 @@ export const createdOrder = createAsyncThunk(
     return response.data;
   }
 );
-
+*/
 const ordersSlice = createSlice({
   name: "orders",
   initialState,
@@ -87,6 +106,7 @@ const ordersSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
+      /*
       .addCase(createdOrder.pending, (state) => {
         state.error = null;
         state.loading = true;
@@ -94,9 +114,24 @@ const ordersSlice = createSlice({
       .addCase(createdOrder.fulfilled, (state, action) => {
         state.error = null;
         state.loading = false;
-        ordersAdapter.upsertOne(state, action.payload);
+        //ordersAdapter.upsertOne(state, action.payload);
       })
       .addCase(createdOrder.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      */
+      .addCase(createOrder.pending, (state) => {
+        state.error = null;
+        state.loading = true;
+      })
+      .addCase(createOrder.fulfilled, (state, action) => {
+        state.error = null;
+        state.loading = false;
+        ordersAdapter.upsertOne(state, action.payload);
+        state.lastOrder = action.payload.id;
+      })
+      .addCase(createOrder.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });
@@ -115,6 +150,10 @@ export function selectOrdersLoading(state) {
 
 export function selectOrdersError(state) {
   return state.orders.error;
+}
+
+export function selectCreatedOrderId(state) {
+  return state.orders.lastOrder;
 }
 
 export default ordersSlice.reducer;

@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
-import TopComponent from "./TopComponent";
+import BagWishlist from "./BagWishlist";
 
 const Container = styled.div`
   display: flex;
@@ -24,8 +24,8 @@ const Title = styled.h2`
 function Cart() {
   return (
     <Container>
+      <BagWishlist />
       <Title>Your cart</Title>
-      <TopComponent />
       <Outlet />
     </Container>
   );

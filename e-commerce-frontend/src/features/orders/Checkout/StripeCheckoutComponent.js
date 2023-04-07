@@ -2,8 +2,13 @@ import { useEffect, useState } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
 import { loadStripe } from "@stripe/stripe-js";
+import styled from "styled-components";
 
-function StripeCheckoutComponent() {
+const Container = styled.div`
+  max-width: 500px;
+`;
+
+function StripeCheckoutComponent({ bottomRef, setShowStripe }) {
   const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
 
@@ -25,17 +30,17 @@ function StripeCheckoutComponent() {
   }, []);
 
   return (
-    <>
+    <Container ref={bottomRef}>
       {clientSecret.length > 0 && stripePromise && (
         <Elements
           stripe={stripePromise}
           options={{ clientSecret }}
           key={clientSecret}
         >
-          <CheckoutForm />
+          <CheckoutForm setShowStripe={setShowStripe} />
         </Elements>
       )}
-    </>
+    </Container>
   );
 }
 

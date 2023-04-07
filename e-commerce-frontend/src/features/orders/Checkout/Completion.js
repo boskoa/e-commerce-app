@@ -1,5 +1,13 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+`;
 
 function Completion() {
   const navigate = useNavigate();
@@ -8,7 +16,11 @@ function Completion() {
     setTimeout(() => navigate("/"), 4000);
   }, [navigate]);
 
-  return <h4>Payment was successful</h4>;
+  return (
+    <Container>
+      <h4>Payment was successful</h4>
+    </Container>
+  );
 }
 
 export default Completion;
