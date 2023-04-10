@@ -3,12 +3,13 @@ import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
 import { loadStripe } from "@stripe/stripe-js";
 import styled from "styled-components";
+import axios from "axios";
 
 const Container = styled.div`
   max-width: 500px;
 `;
 
-function StripeCheckoutComponent({ bottomRef, setShowStripe }) {
+function StripeCheckoutComponent({ bottomRef, setShowStripe, order }) {
   const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
 
@@ -20,14 +21,17 @@ function StripeCheckoutComponent({ bottomRef, setShowStripe }) {
   }, []);
 
   useEffect(() => {
-    fetch("/api/payment/create-payment-intent", {
-      method: "POST",
-      body: JSON.stringify({}),
-    }).then(async (result) => {
-      var { clientSecret } = await result.json();
+    async function createPaymentIntent() {
+      const response = await axios.post("/api/payment/create-payment-intent", {
+        amount: order.amount,
+      });
+      const { clientSecret } = response.data;
       setClientSecret(clientSecret);
-    });
-  }, []);
+    }
+    if (order.amount) {
+      createPaymentIntent();
+    }
+  }, [order.amount]);
 
   return (
     <Container ref={bottomRef}>
@@ -37,7 +41,7 @@ function StripeCheckoutComponent({ bottomRef, setShowStripe }) {
           options={{ clientSecret }}
           key={clientSecret}
         >
-          <CheckoutForm setShowStripe={setShowStripe} />
+          <CheckoutForm setShowStripe={setShowStripe} orderId={order.id} />
         </Elements>
       )}
     </Container>

@@ -20,6 +20,7 @@ const Register = lazy(() => import("./features/users/Register"));
 const Login = lazy(() => import("./features/login/Login"));
 const Cart = lazy(() => import("./features/orderedProducts/Cart"));
 const Checkout = lazy(() => import("./features/orders/Checkout"));
+const UsersOrders = lazy(() => import("./features/orders/UsersOrders"));
 
 function App() {
   const [theme, setTheme] = useState("light");
@@ -96,6 +97,14 @@ function App() {
         {
           path: "completion",
           element: <Completion />,
+        },
+        {
+          path: "users-orders",
+          element: (
+            <Suspense fallback={<Spinner />}>
+              <UsersOrders />
+            </Suspense>
+          ),
         },
       ],
     },

@@ -13,7 +13,7 @@ function Completion() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setTimeout(() => navigate("/"), 4000);
+    setTimeout(() => navigate("/"), 8000);
   }, [navigate]);
 
   return (

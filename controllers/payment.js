@@ -7,11 +7,11 @@ router.get("/config", (_req, res) => {
   return res.status(200).send({ publishableKey: STRIPE_TEST });
 });
 
-router.post("/create-payment-intent", async (_req, res) => {
+router.post("/create-payment-intent", async (req, res) => {
   try {
     const paymentIntent = await stripe.paymentIntents.create({
       currency: "USD",
-      amount: 1999,
+      amount: req.body.amount * 100,
       automatic_payment_methods: { enabled: true },
     });
 

@@ -6,6 +6,9 @@ import {
 import { useState } from "react";
 import { TopButton } from "../../orderedProducts/Cart/ShoppingBag/TopComponent";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { updateOrder } from "../ordersSlice";
+import { selectLoggedUser } from "../../login/loginSlice";
 
 const Form = styled.form`
   background-color: white;
@@ -28,11 +31,13 @@ const StripeButton = styled(TopButton)`
   border-radius: 3px;
 `;
 
-function CheckoutForm({ setShowStripe }) {
+function CheckoutForm({ setShowStripe, orderId }) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [message, setMessage] = useState("");
   const stripe = useStripe();
   const elements = useElements();
+  const token = useSelector(selectLoggedUser).token;
+  const dispatch = useDispatch();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -40,6 +45,8 @@ function CheckoutForm({ setShowStripe }) {
     if (!stripe || !elements) {
       return;
     }
+
+    dispatch(updateOrder({ token, orderId, changedData: { status: true } }));
 
     setIsProcessing(true);
 

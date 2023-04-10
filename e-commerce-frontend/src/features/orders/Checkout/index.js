@@ -21,6 +21,9 @@ const Container = styled.div`
 const Data = styled.div`
   display: flex;
   flex-direction: column;
+  border: 1px solid ${({ theme }) => theme.color};
+  border-radius: 5px;
+  padding: 5px;
 `;
 
 function Checkout() {
@@ -70,7 +73,7 @@ function Checkout() {
         <p>Status: {order.status ? "completed" : "pending"}</p>
       </Data>
       <TopButton
-        disabled={showStripe}
+        disabled={showStripe || order.status}
         onClick={() => {
           setShowStripe(true);
         }}
@@ -82,6 +85,7 @@ function Checkout() {
           bottomRef={bottomRef}
           setShowStripe={setShowStripe}
           loggedUser={loggedUser}
+          order={order}
         />
       )}
     </Container>

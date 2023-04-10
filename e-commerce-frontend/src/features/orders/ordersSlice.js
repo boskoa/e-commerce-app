@@ -59,6 +59,24 @@ export const createOrder = createAsyncThunk(
     return response.data;
   }
 );
+
+export const updateOrder = createAsyncThunk(
+  "orders/updateOrder",
+  async (data) => {
+    const { token, orderId, changedData } = data;
+    const config = {
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    };
+    const response = await axios.patch(
+      `${BASE_URL}/${orderId}`,
+      { ...changedData },
+      config
+    );
+    return response.data;
+  }
+);
 /*ovo je neka greška?
 export const createdOrder = createAsyncThunk(
   "orders/createdOrder",
@@ -132,6 +150,19 @@ const ordersSlice = createSlice({
         state.lastOrder = action.payload.id;
       })
       .addCase(createOrder.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(updateOrder.pending, (state) => {
+        state.error = null;
+        state.loading = true;
+      })
+      .addCase(updateOrder.fulfilled, (state, action) => {
+        state.error = null;
+        state.loading = false;
+        ordersAdapter.upsertOne(state, action.payload);
+      })
+      .addCase(updateOrder.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });
