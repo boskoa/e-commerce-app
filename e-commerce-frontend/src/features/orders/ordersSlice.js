@@ -7,7 +7,9 @@ import axios from "axios";
 
 const BASE_URL = "/api/orders";
 
-const ordersAdapter = createEntityAdapter();
+const ordersAdapter = createEntityAdapter({
+  sortComparer: (a, b) => a.createdAt.localeCompare(b.createdAt),
+});
 
 const initialState = ordersAdapter.getInitialState({
   loading: false,
