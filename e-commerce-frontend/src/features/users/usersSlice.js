@@ -5,7 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const USERS_URL = "/api/users";
+export const BASE_URL = "/api/users";
 
 const usersAdapter = createEntityAdapter({
   sortComparer: (a, b) => a.name.localeCompare(b.name),
@@ -25,7 +25,7 @@ export const getAllUsers = createAsyncThunk(
         Authorization: `bearer ${token}`,
       },
     };
-    const response = await axios.get(USERS_URL, config);
+    const response = await axios.get(BASE_URL, config);
     return response.data;
   }
 );
@@ -33,10 +33,25 @@ export const getAllUsers = createAsyncThunk(
 export const createUser = createAsyncThunk(
   "users/createUser",
   async (userData) => {
-    const response = await axios.post(USERS_URL, userData);
+    const response = await axios.post(BASE_URL, userData);
     return response.data;
   }
 );
+
+export const updateUser = createAsyncThunk("users/updateUser", async (data) => {
+  const { token, newData, id } = data;
+  const config = {
+    headers: {
+      Authorization: `bearer ${token}`,
+    },
+  };
+  const response = await axios.patch(
+    `${BASE_URL}/${id}`,
+    { ...newData },
+    config
+  );
+  return response.data;
+});
 
 const usersSlice = createSlice({
   name: "users",
@@ -76,6 +91,22 @@ const usersSlice = createSlice({
         usersAdapter.upsertOne(state, action.payload);
       })
       .addCase(createUser.rejected, (state, action) => {
+        state.loading = false;
+        state.success = false;
+        state.error = action.error.message;
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.error = null;
+        state.success = false;
+        state.loading = true;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.error = null;
+        state.loading = false;
+        state.success = true;
+        usersAdapter.upsertOne(state, action.payload);
+      })
+      .addCase(updateUser.rejected, (state, action) => {
         state.loading = false;
         state.success = false;
         state.error = action.error.message;

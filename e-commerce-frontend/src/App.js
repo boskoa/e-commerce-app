@@ -21,6 +21,7 @@ const Login = lazy(() => import("./features/login/Login"));
 const Cart = lazy(() => import("./features/orderedProducts/Cart"));
 const Checkout = lazy(() => import("./features/orders/Checkout"));
 const UsersOrders = lazy(() => import("./features/orders/UsersOrders"));
+const UserSettings = lazy(() => import("./features/users/UserSettings"));
 
 function App() {
   const [theme, setTheme] = useState("light");
@@ -103,6 +104,14 @@ function App() {
           element: (
             <Suspense fallback={<Spinner />}>
               <UsersOrders />
+            </Suspense>
+          ),
+        },
+        {
+          path: "user-settings",
+          element: (
+            <Suspense fallback={<Spinner />}>
+              <UserSettings />
             </Suspense>
           ),
         },

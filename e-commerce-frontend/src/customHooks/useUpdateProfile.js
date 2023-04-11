@@ -1,30 +1,37 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import {
   resetError,
-  createUser,
   selectUserCreated,
   selectUsersError,
   resetSuccess,
   BASE_URL,
+  updateUser,
 } from "../features/users/usersSlice";
+import { logout } from "../features/login/loginSlice";
 
-function useRegister() {
+function useUpdateProfile(loggedUser) {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [address, setAddress] = useState("");
   const [error, setError] = useState("");
   const [inputErrors, setInputErrors] = useState({});
   const [usernameExists, setUsernameExists] = useState(false);
   const usersError = useSelector(selectUsersError);
-  const registrationSuccess = useSelector(selectUserCreated);
-  const navigate = useNavigate();
+  const updateSuccess = useSelector(selectUserCreated);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (loggedUser) {
+      setName(loggedUser.name);
+      setUsername(loggedUser.username);
+      setEmail(loggedUser.email);
+      setAddress(loggedUser.address);
+    }
+  }, [loggedUser, setName, setUsername, setEmail, setAddress]);
 
   useEffect(() => {
     let index;
@@ -44,12 +51,12 @@ function useRegister() {
   }, [usersError, dispatch]);
 
   useEffect(() => {
-    if (registrationSuccess) {
-      navigate("/login");
+    if (updateSuccess) {
+      dispatch(logout());
     }
 
     return () => dispatch(resetSuccess());
-  }, [registrationSuccess, navigate, dispatch]);
+  }, [updateSuccess, dispatch]);
 
   useEffect(() => {
     async function checkExistingUsername() {
@@ -79,8 +86,10 @@ function useRegister() {
       }
     }
 
-    checkExistingUsername();
-  }, [username]);
+    if (username !== loggedUser?.username) {
+      checkExistingUsername();
+    }
+  }, [username, loggedUser]);
 
   function handleNameCheck() {
     if (name.length < 2 || name.length > 20) {
@@ -130,7 +139,10 @@ function useRegister() {
   }
 
   function handlePasswordCheck() {
-    if (password.length < 6 || password.length > 20) {
+    if (
+      (newPassword.length > 0 && newPassword.length < 6) ||
+      newPassword.length > 20
+    ) {
       setError("Password must be between 6 and 20 characters long");
       setInputErrors((prev) => ({ ...prev, p: "red" }));
       return;
@@ -139,21 +151,6 @@ function useRegister() {
     inputErrors.p &&
       setInputErrors((prev) => {
         const { p, ...rest } = prev;
-        return rest;
-      });
-    return;
-  }
-
-  function handlePasswordConfirmCheck() {
-    if (password !== passwordConfirm) {
-      setError("Password confirmation failed");
-      setInputErrors((prev) => ({ ...prev, c: "red" }));
-      return;
-    }
-
-    inputErrors.c &&
-      setInputErrors((prev) => {
-        const { c, ...rest } = prev;
         return rest;
       });
     return;
@@ -178,12 +175,39 @@ function useRegister() {
     return;
   }
 
-  function handleRegister() {
-    if (inputErrors.size > 0 || !(name && username && email && password)) {
+  function handleUpdate() {
+    if (inputErrors.size > 0 || !(name && username && email)) {
       setError("Invalid inputs");
       return;
     }
-    dispatch(createUser({ name, username, email, address, password }));
+
+    if (
+      name === loggedUser.name &&
+      username === loggedUser.username &&
+      email === loggedUser.email &&
+      address === loggedUser.address &&
+      !newPassword
+    ) {
+      setError("Nothing to change");
+      return;
+    }
+    if (!newPassword) {
+      dispatch(
+        updateUser({
+          token: loggedUser.token,
+          newData: { name, username, email, address },
+          id: loggedUser.id,
+        })
+      );
+    } else {
+      dispatch(
+        updateUser({
+          token: loggedUser.token,
+          newData: { name, username, email, address, password: newPassword },
+          id: loggedUser.id,
+        })
+      );
+    }
   }
 
   return {
@@ -196,20 +220,17 @@ function useRegister() {
     email,
     setEmail,
     handleEmailCheck,
-    password,
-    setPassword,
+    newPassword,
+    setNewPassword,
     handlePasswordCheck,
-    passwordConfirm,
-    setPasswordConfirm,
-    handlePasswordConfirmCheck,
     address,
     setAddress,
     handleAddressCheck,
     error,
     setError,
-    handleRegister,
+    handleUpdate,
     inputErrors,
   };
 }
 
-export default useRegister;
+export default useUpdateProfile;

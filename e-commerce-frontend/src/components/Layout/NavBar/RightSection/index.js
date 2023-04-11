@@ -5,6 +5,7 @@ import LoggedInItems from "./LoggedInItems";
 import LoggedOutItems from "./LoggedOutItems";
 
 const Right = styled.div`
+  position: relative;
   flex: 2;
   display: flex;
   align-items: center;

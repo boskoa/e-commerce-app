@@ -23,7 +23,6 @@ function Filter({ setFilter, filter }) {
     } else {
       setFilter(e.target.value);
     }
-    console.log("FOO", filter, e.target.value);
   }
 
   return (
