@@ -44,7 +44,7 @@ function useUpdateProfile(loggedUser) {
 
   useEffect(() => {
     if (usersError) {
-      setError("Registration failed");
+      setError("Update failed");
     }
 
     return () => dispatch(resetError());
@@ -56,7 +56,7 @@ function useUpdateProfile(loggedUser) {
     }
 
     return () => dispatch(resetSuccess());
-  }, [updateSuccess, dispatch]);
+  }, [updateSuccess, newPassword, dispatch]);
 
   useEffect(() => {
     async function checkExistingUsername() {

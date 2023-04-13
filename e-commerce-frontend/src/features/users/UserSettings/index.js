@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import UserData from "./UserData";
+import Avatar from "./Avatar";
 
 const UserContainer = styled.div`
   display: flex;
@@ -18,6 +19,7 @@ const AllData = styled.div`
   display: flex;
   width: 80%;
   justify-content: space-around;
+  gap: 10px;
 
   @media only screen and (max-width: 520px) {
     flex-direction: column;
@@ -42,7 +44,12 @@ function UserSettings() {
       <Title>Update profile</Title>
       <AllData>
         <UserData user={loggedUser} />
-        <div style={{ width: "50%", border: "1px solid white" }}>avatar</div>
+        <Avatar
+          loggedUser={loggedUser}
+          style={{ width: "50%", border: "1px solid white" }}
+        >
+          avatar
+        </Avatar>
       </AllData>
     </UserContainer>
   );

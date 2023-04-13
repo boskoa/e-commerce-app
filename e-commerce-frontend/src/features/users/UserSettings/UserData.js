@@ -1,14 +1,15 @@
 import { useNavigate } from "react-router-dom";
-import { Button } from "../../login/Login/InputBox";
 import styled from "styled-components";
 import useUpdateProfile from "../../../customHooks/useUpdateProfile";
 
 const InputData = styled.div`
+  flex: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
   width: 50%;
+  min-height: 360px;
 `;
 
 const Input = styled.input`
@@ -20,12 +21,18 @@ const Input = styled.input`
   padding: 5px;
 `;
 
-const ButtonGroup = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  min-width: 50%;
+const Button = styled.button`
+  padding: 5px;
+  width: 140px;
+  background-color: inherit;
+  color: ${({ theme }) => theme.color};
+  border: 1px solid ${({ theme }) => theme.color};
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
 `;
 
 const Error = styled.div`
@@ -101,22 +108,20 @@ function UserData({ user }) {
         onChange={(e) => setNewPassword(e.target.value)}
         onBlur={handlePasswordCheck}
       ></Input>
-      <ButtonGroup>
-        <Button
-          onClick={() => {
-            setError("");
-            navigate("/");
-          }}
-        >
-          Cancel
-        </Button>
-        <Button
-          disabled={Object.keys(inputErrors)?.length > 0}
-          onClick={handleUpdate}
-        >
-          Update
-        </Button>
-      </ButtonGroup>
+      <Button
+        disabled={Object.keys(inputErrors)?.length > 0}
+        onClick={handleUpdate}
+      >
+        Update
+      </Button>
+      <Button
+        onClick={() => {
+          setError("");
+          navigate("/");
+        }}
+      >
+        Back
+      </Button>
       <Error>{error}</Error>
     </InputData>
   );

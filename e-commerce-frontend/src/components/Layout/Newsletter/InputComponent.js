@@ -1,4 +1,5 @@
 import { Send } from "@mui/icons-material";
+import { useState } from "react";
 import styled from "styled-components";
 
 const InputContainer = styled.div`
@@ -35,10 +36,16 @@ const Button = styled.button`
 `;
 
 function InputComponent() {
+  const [mail, setMail] = useState("");
+
   return (
     <InputContainer>
-      <Input placeholder="Your email" />
-      <Button>
+      <Input
+        placeholder="Your email"
+        value={mail}
+        onChange={(e) => setMail(e.target.value)}
+      />
+      <Button onClick={() => setMail("")}>
         <Send />
       </Button>
     </InputContainer>

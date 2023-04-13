@@ -87,7 +87,7 @@ router.patch("/:id", tokenExtractor, async (req, res, next) => {
     return res.status(401).json({ error: "Not authorized" });
   }
 
-  if (!user?.admin && req.params.id !== req.decodedToken.id) {
+  if (!user?.admin && Number(req.params.id) !== req.decodedToken.id) {
     return res.status(401).json({ error: "Not authorized" });
   }
 

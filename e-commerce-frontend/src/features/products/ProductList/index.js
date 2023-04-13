@@ -144,14 +144,6 @@ function ProductList() {
           }`
         )
       );
-      console.log(
-        "BAAAAAR",
-        `?pagination=${offset},${limit}${
-          category ? `&category=${category}` : ""
-        }${color ? `&color=${color}` : ""}${size ? `&size=${size}` : ""}${
-          sort ? `&order=${sorts[sort]}` : ""
-        }`
-      );
     }
   }, [offset, products.length, category, color, size, sort, sorts, dispatch]);
 

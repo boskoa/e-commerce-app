@@ -73,10 +73,9 @@ function UserButton({ currentUser }) {
           height={34}
           width={34}
           alt="user avatar"
-          src={
-            currentUser
-              ? `/public/data/uploads/avatars/${currentUser?.id}.webp`
-              : "/data/defaults/user_avatar.webp"
+          src={`/public/data/uploads/avatars/${currentUser?.id}.webp`}
+          onError={(e) =>
+            (e.currentTarget.src = "/data/defaults/user_avatar.webp")
           }
         />
       </ImageContainer>
