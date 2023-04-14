@@ -115,7 +115,6 @@ function PopularProduct({ product, liked }) {
     };
 
     dispatch(createOrderedProduct({ token: loggedUser.token, orderedProduct }));
-    console.log("FOOO", productData);
   }
 
   return (
