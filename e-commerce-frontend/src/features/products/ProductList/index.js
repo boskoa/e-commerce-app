@@ -14,7 +14,7 @@ import {
 import Product from "./Product";
 import SelectComponent from "./SelectComponent";
 
-const Container = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -29,7 +29,7 @@ const Container = styled.div`
   transition: all 0.3s;
 `;
 
-const Title = styled.h2`
+export const Title = styled.h2`
   font-weight: 600;
   font-size: 36px;
 `;
@@ -60,7 +60,7 @@ const FilterText = styled.p`
   font-size: 18px;
 `;
 
-const ProductContainer = styled.div`
+export const ProductContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -70,7 +70,7 @@ const ProductContainer = styled.div`
   transition: all 0.3s;
 `;
 
-const SpinnerContainer = styled.div`
+export const SpinnerContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -59,7 +60,9 @@ function Category({ category }) {
       />
       <Info>
         <Title>{category.name}</Title>
-        <Button>SHOP NOW</Button>
+        <Link to={`/category-products/${category.name}`}>
+          <Button>SHOP NOW</Button>
+        </Link>
       </Info>
     </Container>
   );

@@ -12,7 +12,10 @@ router.get("/", async (req, res, next) => {
   let categoryWhere = {};
 
   if (req.query.title) {
-    where = { ...where, title: { [Op.iLike]: `%${req.query.title}%` } };
+    where = {
+      ...where,
+      title: { [Op.iLike]: `%${req.query.title.split(",").join(" ")}%` },
+    };
   }
 
   if (req.query.color) {
@@ -149,7 +152,7 @@ router.patch("/:id", tokenExtractor, async (req, res, next) => {
         await product.addCategory(category);
       }
     }
-    product.set(req.body.data);
+    product.set(req.body.categories);
     await product.save();
 
     const result = await Product.findOne({

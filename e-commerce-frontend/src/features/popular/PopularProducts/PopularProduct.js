@@ -3,8 +3,18 @@ import {
   SearchOutlined,
   ShoppingCartOutlined,
 } from "@mui/icons-material";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { selectLoggedUser } from "../../login/loginSlice";
+import {
+  createUsersLike,
+  removeUsersLike,
+} from "../../likedProducts/likedProductsSlice";
+import { createOrderedProduct } from "../../orderedProducts/orderedProductsSlice";
+import { useEffect } from "react";
+import { getSelectedProduct } from "../../products/productsSlice";
+import { selectSelectedProduct } from "../../products/productsSlice";
 
 const Image = styled.img`
   width: 100%;
@@ -73,7 +83,41 @@ const Icon = styled.div`
   }
 `;
 
-function PopularProduct({ product }) {
+function PopularProduct({ product, liked }) {
+  const loggedUser = useSelector(selectLoggedUser);
+  const productData = useSelector(selectSelectedProduct);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getSelectedProduct(product.id));
+  }, [dispatch, product]);
+
+  function handleLike() {
+    if (liked) {
+      dispatch(
+        removeUsersLike({ token: loggedUser.token, productId: product.id })
+      );
+    } else {
+      dispatch(
+        createUsersLike({ token: loggedUser.token, productId: product.id })
+      );
+    }
+  }
+
+  function handleCart() {
+    const orderedProduct = {
+      userId: loggedUser.id,
+      productId: product.id,
+      quantity: 1,
+      color: productData.colors?.[0],
+      size: productData.sizes?.[0],
+      price: productData.price,
+    };
+
+    dispatch(createOrderedProduct({ token: loggedUser.token, orderedProduct }));
+    console.log("FOOO", productData);
+  }
+
   return (
     <Container>
       <Image
@@ -81,7 +125,7 @@ function PopularProduct({ product }) {
         alt={"product image " + product.id}
       />
       <Info>
-        <Icon>
+        <Icon onClick={handleCart}>
           <ShoppingCartOutlined />
         </Icon>
         <Link to={`/products/${product.id}`}>
@@ -89,8 +133,8 @@ function PopularProduct({ product }) {
             <SearchOutlined />
           </Icon>
         </Link>
-        <Icon>
-          <FavoriteBorder />
+        <Icon onClick={handleLike}>
+          <FavoriteBorder style={{ color: liked && "red" }} />
         </Icon>
       </Info>
     </Container>

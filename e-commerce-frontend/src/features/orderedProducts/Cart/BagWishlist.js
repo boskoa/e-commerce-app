@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { selectLoggedUser } from "../../login/loginSlice";
 import { selectOrderedProductIds } from "../orderedProductsSlice";
+import { selectLikeIds } from "../../likedProducts/likedProductsSlice";
 
 const TextContainer = styled.div`
   display: flex;
@@ -20,6 +21,7 @@ const Text = styled.span`
 function BagWishlist() {
   const id = useSelector(selectLoggedUser).id;
   const cartItems = useSelector(selectOrderedProductIds).length;
+  const wishlistItems = useSelector(selectLikeIds).length;
 
   return (
     <TextContainer>
@@ -27,7 +29,7 @@ function BagWishlist() {
         <Text>Shopping bag ({cartItems})</Text>
       </Link>
       <Link style={{ textDecoration: "none" }} to={`/cart/${id}/wishlist`}>
-        <Text>Your wishlist (0)</Text>
+        <Text>Your wishlist ({wishlistItems})</Text>
       </Link>
     </TextContainer>
   );

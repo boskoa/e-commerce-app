@@ -97,7 +97,7 @@ const Button = styled.button`
   transition: all 0.3s;
 
   &:hover {
-    background-color: #8a0c03;
+    text-shadow: 0px 0px 5px white;
   }
 
   &:active {

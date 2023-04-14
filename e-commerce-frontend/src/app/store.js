@@ -7,6 +7,7 @@ import popular from "../features/popular/popularSlice";
 import products from "../features/products/productsSlice";
 import orderedProducts from "../features/orderedProducts/orderedProductsSlice";
 import orders from "../features/orders/ordersSlice";
+import likedProducts from "../features/likedProducts/likedProductsSlice";
 
 const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ const store = configureStore({
     products,
     orderedProducts,
     orders,
+    likedProducts,
   },
 });
 

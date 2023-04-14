@@ -5,6 +5,7 @@ import { selectAllPopular, selectPopularLoading } from "../popularSlice";
 import ExpandElementButton from "../../../components/ExpandElementButton";
 import PopularProduct from "./PopularProduct";
 import Spinner from "../../../components/Spinner";
+import { selectAllLikes } from "../../likedProducts/likedProductsSlice";
 
 const MainContainer = styled.div`
   position: relative;
@@ -32,6 +33,7 @@ const ProductsContainer = styled.div`
 function PopularProducts() {
   const [showAll, setShowAll] = useState(false);
   const popularProducts = useSelector(selectAllPopular);
+  const likedProducts = useSelector(selectAllLikes).map((l) => l.productId);
   const popularProductsRef = useRef(null);
   const popularLoading = useSelector(selectPopularLoading);
 
@@ -47,7 +49,11 @@ function PopularProducts() {
         maxHeight={`${popularProducts.length * 55}vh`}
       >
         {popularProducts.map((p) => (
-          <PopularProduct key={p.id} product={p} />
+          <PopularProduct
+            key={p.id}
+            product={p}
+            liked={likedProducts.includes(p.id)}
+          />
         ))}
         <ExpandElementButton
           element={popularProductsRef.current}

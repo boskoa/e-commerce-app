@@ -10,6 +10,7 @@ import {
 } from "../../../../features/orderedProducts/orderedProductsSlice";
 import { useEffect } from "react";
 import UserButton from "./UserButton";
+import { getUsersLikes } from "../../../../features/likedProducts/likedProductsSlice";
 
 function LoggedInItems({ id }) {
   const cartItems = useSelector(selectOrderedProductIds).length;
@@ -20,6 +21,7 @@ function LoggedInItems({ id }) {
     dispatch(
       getUsersOrderedProducts({ id: currentUser.id, token: currentUser.token })
     );
+    dispatch(getUsersLikes(currentUser.token));
   }, [currentUser, dispatch]);
 
   return (

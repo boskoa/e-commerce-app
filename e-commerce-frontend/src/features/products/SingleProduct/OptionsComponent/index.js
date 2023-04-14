@@ -78,10 +78,6 @@ function OptionsComponent({ product }) {
     }
   }, [orderedProductError]);
 
-  useEffect(() => {
-    console.log(color, size, quantity, loggedUser.token);
-  }, [color, size, quantity, loggedUser]);
-
   function handleOrder() {
     if (!loggedUser) {
       navigate("/login");

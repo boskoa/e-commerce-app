@@ -22,6 +22,14 @@ const Cart = lazy(() => import("./features/orderedProducts/Cart"));
 const Checkout = lazy(() => import("./features/orders/Checkout"));
 const UsersOrders = lazy(() => import("./features/orders/UsersOrders"));
 const UserSettings = lazy(() => import("./features/users/UserSettings"));
+const Wishlist = lazy(() => import("./features/orderedProducts/Cart/Wishlist"));
+const CategoryProducts = lazy(() =>
+  import("./features/categories/CategoryProducts")
+);
+const SearchedProducts = lazy(() =>
+  import("./features/products/SearchedProducts")
+);
+const Terms = lazy(() => import("./components/Terms"));
 
 function App() {
   const [theme, setTheme] = useState("light");
@@ -66,7 +74,11 @@ function App() {
             },
             {
               path: "wishlist",
-              element: <Suspense fallback={<Spinner />}></Suspense>,
+              element: (
+                <Suspense fallback={<Spinner />}>
+                  <Wishlist />
+                </Suspense>
+              ),
             },
           ],
         },
@@ -112,6 +124,30 @@ function App() {
           element: (
             <Suspense fallback={<Spinner />}>
               <UserSettings />
+            </Suspense>
+          ),
+        },
+        {
+          path: "category-products/:category",
+          element: (
+            <Suspense fallback={<Spinner />}>
+              <CategoryProducts />
+            </Suspense>
+          ),
+        },
+        {
+          path: "searched-products/:title",
+          element: (
+            <Suspense fallback={<Spinner />}>
+              <SearchedProducts />
+            </Suspense>
+          ),
+        },
+        {
+          path: "terms",
+          element: (
+            <Suspense fallback={<Spinner />}>
+              <Terms />
             </Suspense>
           ),
         },

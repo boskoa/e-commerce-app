@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { Search } from "@mui/icons-material";
 import ThemeButton from "./ThemeButton";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Left = styled.div`
   flex: 2;
@@ -31,6 +32,7 @@ const Input = styled.input`
 `;
 
 function LeftSection({ handleTheme, inputActive, setInputActive }) {
+  const [title, setTitle] = useState("");
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -59,10 +61,14 @@ function LeftSection({ handleTheme, inputActive, setInputActive }) {
             ref={inputRef}
             onClick={handleInput}
             inputActive={inputActive}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
-          <Search
-            style={{ color: "grey", fontSize: "18px", margin: "0 5px" }}
-          />
+          <Link onClick={() => setTitle("")} to={`/searched-products/${title}`}>
+            <Search
+              style={{ color: "grey", fontSize: "18px", margin: "0 5px" }}
+            />
+          </Link>
         </SearchContainer>
       </Left>
     </>
