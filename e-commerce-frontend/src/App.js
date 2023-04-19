@@ -30,6 +30,7 @@ const SearchedProducts = lazy(() =>
   import("./features/products/SearchedProducts")
 );
 const Terms = lazy(() => import("./components/Terms"));
+const AdminPanel = lazy(() => import("./components/AdminPanel"));
 
 function App() {
   const [theme, setTheme] = useState("light");
@@ -150,6 +151,24 @@ function App() {
               <Terms />
             </Suspense>
           ),
+        },
+        {
+          path: ":userId/admin-panel",
+          element: (
+            <Suspense fallback={<Spinner />}>
+              <AdminPanel />
+            </Suspense>
+          ),
+          children: [
+            {
+              index: true,
+              element: <p>Welcome to Admin page</p>,
+            },
+            {
+              path: "products",
+              element: <p>Products</p>,
+            },
+          ],
         },
       ],
     },

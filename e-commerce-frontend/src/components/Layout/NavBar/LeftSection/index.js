@@ -11,7 +11,7 @@ const Left = styled.div`
 `;
 
 const SearchContainer = styled.div`
-  border: 0.5px solid grey;
+  border: 1px solid grey;
   display: flex;
   align-items: center;
   margin-left: 10px;
@@ -66,7 +66,11 @@ function LeftSection({ handleTheme, inputActive, setInputActive }) {
           />
           <Link onClick={() => setTitle("")} to={`/searched-products/${title}`}>
             <Search
-              style={{ color: "grey", fontSize: "18px", margin: "0 5px" }}
+              style={{
+                color: "grey",
+                fontSize: "18px",
+                margin: "3px 5px 0 5px",
+              }}
             />
           </Link>
         </SearchContainer>
