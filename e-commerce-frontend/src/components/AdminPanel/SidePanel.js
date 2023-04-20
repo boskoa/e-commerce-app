@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import CheckroomIcon from "@mui/icons-material/Checkroom";
 import PeopleIcon from "@mui/icons-material/People";
@@ -9,10 +9,14 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 160px;
-  background-color: ${({ theme }) => theme.secondary};
-  color: white;
+  background-color: rgba(0, 0, 0, 0.2);
   gap: 10px;
   padding: 3px;
+  overflow: hidden;
+
+  @media only screen and (max-width: 520px) {
+    width: 30px;
+  }
 `;
 
 const LinkContainer = styled.div`
@@ -24,42 +28,58 @@ const LinkContainer = styled.div`
 function SidePanel({ user }) {
   return (
     <Container>
-      <LinkContainer>
-        <CheckroomIcon />
-        <Link
-          to={`/${user.id}/admin-panel/products`}
-          style={{ textDecoration: "none", color: "inherit" }}
-        >
+      <NavLink
+        to={`/${user.id}/admin-panel/products`}
+        style={({ isActive }) => ({
+          textDecoration: "none",
+          fontWeight: "bold",
+          color: isActive ? "red" : "inherit",
+        })}
+      >
+        <LinkContainer>
+          <CheckroomIcon />
           products
-        </Link>
-      </LinkContainer>
-      <LinkContainer>
-        <PeopleIcon />
-        <Link
-          to={`/${user.id}/admin-panel/users`}
-          style={{ textDecoration: "none", color: "inherit" }}
-        >
+        </LinkContainer>
+      </NavLink>
+      <NavLink
+        to={`/${user.id}/admin-panel/users`}
+        style={({ isActive }) => ({
+          textDecoration: "none",
+          fontWeight: "bold",
+          color: isActive ? "red" : "inherit",
+        })}
+      >
+        <LinkContainer>
+          <PeopleIcon />
           users
-        </Link>
-      </LinkContainer>
-      <LinkContainer>
-        <CampaignIcon />
-        <Link
-          to={`/${user.id}/admin-panel/announcements`}
-          style={{ textDecoration: "none", color: "inherit" }}
-        >
+        </LinkContainer>
+      </NavLink>
+      <NavLink
+        to={`/${user.id}/admin-panel/announcements`}
+        style={({ isActive }) => ({
+          textDecoration: "none",
+          fontWeight: "bold",
+          color: isActive ? "red" : "inherit",
+        })}
+      >
+        <LinkContainer>
+          <CampaignIcon />
           announcements
-        </Link>
-      </LinkContainer>
-      <LinkContainer>
-        <CategoryIcon />
-        <Link
-          to={`/${user.id}/admin-panel/categories`}
-          style={{ textDecoration: "none", color: "inherit" }}
-        >
+        </LinkContainer>
+      </NavLink>
+      <NavLink
+        to={`/${user.id}/admin-panel/categories`}
+        style={({ isActive }) => ({
+          textDecoration: "none",
+          fontWeight: "bold",
+          color: isActive ? "red" : "inherit",
+        })}
+      >
+        <LinkContainer>
+          <CategoryIcon />
           categories
-        </Link>
-      </LinkContainer>
+        </LinkContainer>
+      </NavLink>
     </Container>
   );
 }

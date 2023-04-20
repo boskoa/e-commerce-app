@@ -12,13 +12,14 @@ const Container = styled.div`
 
 const Message = styled.p`
   text-align: center;
+  padding: 50px;
 `;
 
 function AdminPanel() {
   const user = useSelector(selectLoggedUser);
 
   return !user || !user.admin ? (
-    <Message>"You are not authorized"</Message>
+    <Message>You are not authorized</Message>
   ) : (
     <Container>
       <SidePanel user={user} />

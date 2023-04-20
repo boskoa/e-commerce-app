@@ -168,6 +168,18 @@ function App() {
               path: "products",
               element: <p>Products</p>,
             },
+            {
+              path: "users",
+              element: <p>Users</p>,
+            },
+            {
+              path: "announcements",
+              element: <p>Announcements</p>,
+            },
+            {
+              path: "categories",
+              element: <p>Categories</p>,
+            },
           ],
         },
       ],

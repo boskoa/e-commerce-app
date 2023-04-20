@@ -4,6 +4,9 @@ import Announcement from "../../features/announcements/Announcement";
 import Footer from "./Footer";
 import NavBar from "./NavBar";
 import Newsletter from "./Newsletter";
+import { useSelector } from "react-redux";
+import { selectLoggedUser } from "../../features/login/loginSlice";
+import AdminButton from "./AdminButton";
 
 const Container = styled.div`
   min-height: 100vh;
@@ -15,6 +18,8 @@ const Container = styled.div`
 `;
 
 function Layout({ handleTheme }) {
+  const admin = useSelector(selectLoggedUser);
+
   return (
     <Container>
       <NavBar handleTheme={handleTheme} />
@@ -22,6 +27,7 @@ function Layout({ handleTheme }) {
       <Outlet />
       <Newsletter />
       <Footer />
+      {admin?.admin && <AdminButton admin={admin} />}
     </Container>
   );
 }
