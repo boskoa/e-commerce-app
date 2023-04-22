@@ -6,7 +6,7 @@ const {
   createAsyncThunk,
 } = require("@reduxjs/toolkit");
 
-const BASE_URL = "/api/products";
+export const BASE_URL = "/api/products";
 
 const productsAdapter = createEntityAdapter();
 
@@ -37,6 +37,20 @@ export const getSelectedProduct = createAsyncThunk(
   "products/getSelectedProduct",
   async (id) => {
     const response = await axios.get(`${BASE_URL}/${id}`);
+    return response.data;
+  }
+);
+
+export const updateProduct = createAsyncThunk(
+  "products/updateProduct",
+  async (data) => {
+    const { token, id, newData } = data;
+    const config = {
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    };
+    const response = await axios.patch(`${BASE_URL}/${id}`, newData, config);
     return response.data;
   }
 );
@@ -85,6 +99,19 @@ const productsSlice = createSlice({
         state.selected = action.payload;
       })
       .addCase(getSelectedProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(updateProduct.pending, (state) => {
+        state.error = null;
+        state.loading = true;
+      })
+      .addCase(updateProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        productsAdapter.upsertOne(state, action.payload);
+      })
+      .addCase(updateProduct.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

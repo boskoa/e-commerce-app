@@ -31,6 +31,9 @@ const SearchedProducts = lazy(() =>
 );
 const Terms = lazy(() => import("./components/Terms"));
 const AdminPanel = lazy(() => import("./components/AdminPanel"));
+const AdminProducts = lazy(() =>
+  import("./components/AdminPanel/AdminProducts")
+);
 
 function App() {
   const [theme, setTheme] = useState("light");
@@ -166,7 +169,7 @@ function App() {
             },
             {
               path: "products",
-              element: <p>Products</p>,
+              element: <AdminProducts />,
             },
             {
               path: "users",

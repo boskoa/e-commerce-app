@@ -1,21 +1,23 @@
 import { NavLink } from "react-router-dom";
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
 import CheckroomIcon from "@mui/icons-material/Checkroom";
 import PeopleIcon from "@mui/icons-material/People";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import CategoryIcon from "@mui/icons-material/Category";
 
 const Container = styled.div`
+  flex: 0 0 160px;
   display: flex;
   flex-direction: column;
-  width: 160px;
   background-color: rgba(0, 0, 0, 0.2);
   gap: 10px;
   padding: 3px;
   overflow: hidden;
+  box-shadow: 0 0 5px 0 black;
+  clip-path: inset(0 -15px 0 0);
 
   @media only screen and (max-width: 520px) {
-    width: 30px;
+    flex: 0 0 30px;
   }
 `;
 
@@ -26,6 +28,8 @@ const LinkContainer = styled.div`
 `;
 
 function SidePanel({ user }) {
+  const color = useTheme().sidebar;
+
   return (
     <Container>
       <NavLink
@@ -33,7 +37,8 @@ function SidePanel({ user }) {
         style={({ isActive }) => ({
           textDecoration: "none",
           fontWeight: "bold",
-          color: isActive ? "red" : "inherit",
+          color: isActive ? color : "inherit",
+          textShadow: isActive && `0 0 3px ${color}`,
         })}
       >
         <LinkContainer>
@@ -46,7 +51,8 @@ function SidePanel({ user }) {
         style={({ isActive }) => ({
           textDecoration: "none",
           fontWeight: "bold",
-          color: isActive ? "red" : "inherit",
+          color: isActive ? color : "inherit",
+          textShadow: isActive && `0 0 3px ${color}`,
         })}
       >
         <LinkContainer>
@@ -59,7 +65,8 @@ function SidePanel({ user }) {
         style={({ isActive }) => ({
           textDecoration: "none",
           fontWeight: "bold",
-          color: isActive ? "red" : "inherit",
+          color: isActive ? color : "inherit",
+          textShadow: isActive && `0 0 3px ${color}`,
         })}
       >
         <LinkContainer>
@@ -72,7 +79,8 @@ function SidePanel({ user }) {
         style={({ isActive }) => ({
           textDecoration: "none",
           fontWeight: "bold",
-          color: isActive ? "red" : "inherit",
+          color: isActive ? color : "inherit",
+          textShadow: isActive && `0 0 3px ${color}`,
         })}
       >
         <LinkContainer>

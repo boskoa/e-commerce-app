@@ -93,7 +93,7 @@ router.get("/:id", async (req, res, next) => {
       include: { model: Category, attributes: ["name"] },
     });
     if (!product) {
-      return res.status(404).end();
+      return res.status(404).json({ error: "Non-existing ID" });
     }
     return res.status(200).json(product);
   } catch (error) {
@@ -152,7 +152,9 @@ router.patch("/:id", tokenExtractor, async (req, res, next) => {
         await product.addCategory(category);
       }
     }
-    product.set(req.body.categories);
+    const newData = { ...req.body };
+    if (newData.categories) delete newData.categories;
+    product.set(newData);
     await product.save();
 
     const result = await Product.findOne({
