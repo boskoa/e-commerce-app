@@ -1,10 +1,13 @@
 import styled from "styled-components";
-import { Input, Textarea } from "../styledElements";
-import { TopButton } from "../../../features/orderedProducts/Cart/ShoppingBag/TopComponent";
+import { Input, Textarea } from "../../styledElements";
+import { TopButton } from "../../../../features/orderedProducts/Cart/ShoppingBag/TopComponent";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateProduct } from "../../../features/products/productsSlice";
-import { selectLoggedUser } from "../../../features/login/loginSlice";
+import { updateProduct } from "../../../../features/products/productsSlice";
+import { selectLoggedUser } from "../../../../features/login/loginSlice";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { BASE_URL } from "../../../../features/products/productsSlice";
 
 const Container = styled.div`
   display: flex;
@@ -46,7 +49,18 @@ export const Image = styled.img`
   box-shadow: 0 0 5px -1px black;
 `;
 
-function ProductData({ product }) {
+const Error = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: red;
+  width: 100%;
+`;
+
+function ProductData() {
+  const { id } = useParams();
+  const [product, setProduct] = useState({});
+  const [error, setError] = useState("");
   const [title, setTitle] = useState("");
   const [categories, setCategories] = useState("");
   const [colors, setColors] = useState("");
@@ -58,7 +72,26 @@ function ProductData({ product }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (product) {
+    async function handleProductFetch() {
+      if (!id) {
+        setError("ID missing");
+        return;
+      }
+
+      try {
+        const response = await axios.get(`${BASE_URL}/${id}`);
+        setError("");
+        setProduct(response.data);
+      } catch {
+        setError("No such product");
+      }
+    }
+
+    handleProductFetch();
+  }, [id]);
+
+  useEffect(() => {
+    if (product.id) {
       setTitle(product.title);
       setCategories(product.categories.map((c) => c.name).join(", "));
       setColors(product.colors.join(", "));
@@ -133,6 +166,10 @@ function ProductData({ product }) {
         newData: { description },
       })
     );
+  }
+
+  if (error) {
+    return <Error>{error}</Error>;
   }
 
   return (

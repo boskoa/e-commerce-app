@@ -34,6 +34,21 @@ const AdminPanel = lazy(() => import("./components/AdminPanel"));
 const AdminProducts = lazy(() =>
   import("./components/AdminPanel/AdminProducts")
 );
+const SingleProductAdmin = lazy(() =>
+  import("./components/AdminPanel/AdminProducts/SingleProductAdmin")
+);
+const ProductData = lazy(() =>
+  import("./components/AdminPanel/AdminProducts/SingleProductAdmin/ProductData")
+);
+const ProductsAdmin = lazy(() =>
+  import("./components/AdminPanel/AdminProducts/ProductsAdmin")
+);
+const ProductsStatistics = lazy(() =>
+  import("./components/AdminPanel/AdminProducts/ProductsStatistics")
+);
+const SingleProductStats = lazy(() =>
+  import("./components/AdminPanel/AdminProducts/SingleProductStats")
+);
 
 function App() {
   const [theme, setTheme] = useState("light");
@@ -169,7 +184,65 @@ function App() {
             },
             {
               path: "products",
-              element: <AdminProducts />,
+              element: (
+                <Suspense>
+                  <AdminProducts />
+                </Suspense>
+              ),
+              children: [
+                {
+                  path: "single",
+                  element: (
+                    <Suspense>
+                      <SingleProductAdmin />
+                    </Suspense>
+                  ),
+                  children: [
+                    {
+                      path: ":id",
+                      element: (
+                        <Suspense>
+                          <ProductData />
+                        </Suspense>
+                      ),
+                    },
+                  ],
+                },
+                {
+                  path: "all",
+                  element: (
+                    <Suspense>
+                      <ProductsAdmin />
+                    </Suspense>
+                  ),
+                },
+                {
+                  path: "single-stats",
+                  element: (
+                    <Suspense>
+                      <SingleProductStats />
+                    </Suspense>
+                  ),
+                  children: [
+                    {
+                      path: ":id",
+                      element: (
+                        <Suspense>
+                          <p>dodati</p>
+                        </Suspense>
+                      ),
+                    },
+                  ],
+                },
+                {
+                  path: "statistics",
+                  element: (
+                    <Suspense>
+                      <ProductsStatistics />
+                    </Suspense>
+                  ),
+                },
+              ],
             },
             {
               path: "users",

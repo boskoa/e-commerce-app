@@ -23,7 +23,7 @@ const Container = styled.div`
   }
 `;
 
-const Button = styled(SeeAllButton)`
+export const Button = styled(SeeAllButton)`
   top: auto;
   left: auto;
   bottom: 10px;

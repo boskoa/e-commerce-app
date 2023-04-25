@@ -22,6 +22,25 @@ router.get("/popular", async (req, res, next) => {
   }
 });
 
+router.get("/bestsellers", async (req, res, next) => {
+  try {
+    const bestsellers = await OrderedProduct.findAll({
+      attributes: [
+        ["product_id", "id"],
+        [sequelize.fn("SUM", sequelize.col("quantity")), "count_products"],
+      ],
+      where: { orderId: { [Op.not]: null } },
+      group: ["product_id", "product.id"],
+      order: [["count_products", "DESC"]],
+      limit: 20,
+      include: Product,
+    });
+    return res.status(200).json(bestsellers);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get("/", tokenExtractor, async (req, res, next) => {
   const user = await User.findByPk(req.decodedToken.id);
   if (!user?.admin) {

@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { Button } from "../styledElements";
-import { useState } from "react";
-import SingleProductAdmin from "./SingleProductAdmin";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
   margin: 10px;
+  width: 100%;
 `;
 
 const ButtonsContainer = styled.div`
@@ -18,19 +18,23 @@ const ButtonsContainer = styled.div`
 `;
 
 function AdminProducts() {
-  const [option, setOption] = useState("");
+  const navigate = useNavigate();
 
   return (
     <Container>
       <ButtonsContainer>
-        <Button onClick={() => setOption("single")}>Get single product</Button>
-        <Button>Browse products</Button>
-        <Button>foo</Button>
-        <Button>bar</Button>
-        <Button>foo</Button>
-        <Button>bar</Button>
+        <Button onClick={() => navigate("all")}>Browse products</Button>
+        <Button onClick={() => navigate("single")}>
+          Update single product
+        </Button>
+        <Button onClick={() => navigate("statistics")}>
+          Products statistics
+        </Button>
+        <Button onClick={() => navigate("single-stats")}>
+          Single product stats
+        </Button>
       </ButtonsContainer>
-      {option === "single" && <SingleProductAdmin />}
+      <Outlet />
     </Container>
   );
 }
