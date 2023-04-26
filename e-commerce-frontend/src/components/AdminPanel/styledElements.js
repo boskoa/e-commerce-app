@@ -3,6 +3,7 @@ import { TopButton } from "../../features/orderedProducts/Cart/ShoppingBag/TopCo
 
 export const Button = styled(TopButton)`
   width: 150px;
+  box-shadow: ${({ active }) => (active ? "0 0 5px 0 black" : "")};
 `;
 
 export const Input = styled.input`

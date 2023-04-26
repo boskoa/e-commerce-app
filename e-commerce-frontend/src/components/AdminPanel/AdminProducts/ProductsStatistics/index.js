@@ -4,6 +4,7 @@ import { BASE_URL } from "../../../../features/orderedProducts/orderedProductsSl
 
 function ProductsStatistics() {
   const [bestsellers, setBestsellers] = useState([]);
+  const [bestEarners, setBestEarners] = useState([]);
 
   useEffect(() => {
     async function getBestsellers() {
@@ -11,7 +12,13 @@ function ProductsStatistics() {
       setBestsellers(response.data);
     }
 
+    async function getBestEarners() {
+      const response = await axios.get(`${BASE_URL}/best-earners`);
+      setBestEarners(response.data);
+    }
+
     getBestsellers();
+    getBestEarners();
   }, []);
 
   return (
@@ -19,6 +26,11 @@ function ProductsStatistics() {
       {bestsellers.map((b) => (
         <p key={b.id}>
           Name: {b.product.title}, sold: {b.count_products}
+        </p>
+      ))}
+      {bestEarners.map((b) => (
+        <p key={b.id}>
+          Name: {b.title}, revenue: {b.total_amount}
         </p>
       ))}
     </div>

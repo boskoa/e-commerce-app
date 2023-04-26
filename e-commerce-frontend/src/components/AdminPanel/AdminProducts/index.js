@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Button } from "../styledElements";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -19,18 +19,30 @@ const ButtonsContainer = styled.div`
 
 function AdminProducts() {
   const navigate = useNavigate();
+  const location = useLocation().pathname.split("/").pop();
 
   return (
     <Container>
       <ButtonsContainer>
-        <Button onClick={() => navigate("all")}>Browse products</Button>
-        <Button onClick={() => navigate("single")}>
+        <Button active={location === "all"} onClick={() => navigate("all")}>
+          Browse products
+        </Button>
+        <Button
+          active={location === "single"}
+          onClick={() => navigate("single")}
+        >
           Update single product
         </Button>
-        <Button onClick={() => navigate("statistics")}>
+        <Button
+          active={location === "statistics"}
+          onClick={() => navigate("statistics")}
+        >
           Products statistics
         </Button>
-        <Button onClick={() => navigate("single-stats")}>
+        <Button
+          active={location === "single-stats"}
+          onClick={() => navigate("single-stats")}
+        >
           Single product stats
         </Button>
       </ButtonsContainer>

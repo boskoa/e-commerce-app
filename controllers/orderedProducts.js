@@ -1,4 +1,4 @@
-const sequelize = require("sequelize");
+const { sequelize } = require("../utils/db");
 const { Op } = require("sequelize");
 const { User, OrderedProduct, Product } = require("../models");
 const { tokenExtractor } = require("../utils/tokenExtractor");
@@ -36,6 +36,29 @@ router.get("/bestsellers", async (req, res, next) => {
       include: Product,
     });
     return res.status(200).json(bestsellers);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/best-earners", async (req, res, next) => {
+  try {
+    const bestEarners = await sequelize.query(
+      `SELECT
+        product_id AS "id",
+        SUM(quantity * ordered_products.price) AS "total_amount",
+        title
+        FROM ordered_products
+        JOIN products ON product_id=products.id
+        WHERE order_id IS NOT NULL
+        GROUP BY product_id, products.title
+        ORDER BY total_amount DESC
+        LIMIT 20`,
+      {
+        type: sequelize.QueryTypes.SELECT,
+      }
+    );
+    return res.status(200).json(bestEarners);
   } catch (error) {
     next(error);
   }
