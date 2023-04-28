@@ -67,7 +67,6 @@ router.get("/latest", async (req, res, next) => {
       offset: 0,
       limit: 6,
     });
-    console.log("LATEST", JSON.stringify(products));
     return res.status(200).json(products);
   } catch (error) {
     next(error);

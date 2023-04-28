@@ -23,13 +23,33 @@ router.get("/popular", async (req, res, next) => {
 });
 
 router.get("/bestsellers", async (req, res, next) => {
+  let start;
+  let end;
+
+  if (req.query.start === "0") {
+    start = new Date(null);
+  } else {
+    start = new Date(req.query.start);
+  }
+
+  if (req.query.end === "0") {
+    end = new Date();
+  } else {
+    end = new Date(req.query.end);
+  }
+
   try {
     const bestsellers = await OrderedProduct.findAll({
       attributes: [
         ["product_id", "id"],
         [sequelize.fn("SUM", sequelize.col("quantity")), "count_products"],
       ],
-      where: { orderId: { [Op.not]: null } },
+      where: {
+        orderId: { [Op.not]: null },
+        createdAt: {
+          [Op.between]: [start, end],
+        },
+      },
       group: ["product_id", "product.id"],
       order: [["count_products", "DESC"]],
       limit: 20,
@@ -42,6 +62,21 @@ router.get("/bestsellers", async (req, res, next) => {
 });
 
 router.get("/best-earners", async (req, res, next) => {
+  let start;
+  let end;
+
+  if (req.query.start === "0") {
+    start = "2000-01-01";
+  } else {
+    start = req.query.start;
+  }
+
+  if (req.query.end === "0") {
+    end = "2150-01-01";
+  } else {
+    end = req.query.end;
+  }
+
   try {
     const bestEarners = await sequelize.query(
       `SELECT
@@ -51,6 +86,7 @@ router.get("/best-earners", async (req, res, next) => {
         FROM ordered_products
         JOIN products ON product_id=products.id
         WHERE order_id IS NOT NULL
+          AND ordered_products.created_at BETWEEN '${start}' AND '${end}'
         GROUP BY product_id, products.title
         ORDER BY total_amount DESC
         LIMIT 20`,
