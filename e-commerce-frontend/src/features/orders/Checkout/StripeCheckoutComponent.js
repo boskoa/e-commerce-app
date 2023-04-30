@@ -23,7 +23,7 @@ function StripeCheckoutComponent({ bottomRef, setShowStripe, order }) {
   useEffect(() => {
     async function createPaymentIntent() {
       const response = await axios.post("/api/payment/create-payment-intent", {
-        amount: order.amount,
+        amount: order.amount * 100,
       });
       const { clientSecret } = response.data;
       setClientSecret(clientSecret);

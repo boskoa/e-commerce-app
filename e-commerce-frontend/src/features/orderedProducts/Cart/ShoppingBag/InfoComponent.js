@@ -146,7 +146,6 @@ function InfoComponent({ p, last, checked, setChecked }) {
     if (color.length && size.length && quantity > 0) {
       if (p.color !== color || p.size !== size || p.quantity !== quantity) {
         setChanged(true);
-        console.log(p.color, color);
       }
     }
   }, [color, size, quantity, p]);
@@ -159,7 +158,7 @@ function InfoComponent({ p, last, checked, setChecked }) {
     <Product last={last}>
       <ProductDetails>
         <Image
-          src={`/data/uploads/products/${p.product.id}.webp`}
+          src={`/public/data/uploads/products/${p.product.id}.webp`}
           alt={`product image ${p.product.id}`}
         />
         <Details>

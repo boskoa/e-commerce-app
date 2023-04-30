@@ -120,7 +120,7 @@ function PopularProduct({ product, liked }) {
   return (
     <Container>
       <Image
-        src={`/data/uploads/products/${product.id}.webp`}
+        src={`/public/data/uploads/products/${product.id}.webp`}
         alt={"product image " + product.id}
       />
       <Info>

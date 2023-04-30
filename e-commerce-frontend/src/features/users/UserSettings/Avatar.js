@@ -6,14 +6,15 @@ const Container = styled.div`
   flex: 3;
 `;
 
-const Form = styled.form`
+export const Form = styled.form`
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 5px;
+  width: 100%;
 `;
 
-const PseudoButton = styled.div`
+export const PseudoButton = styled.div`
   background-color: ${({ theme }) => theme.secondary};
   font-size: 14px;
   padding: 5px;
@@ -32,7 +33,7 @@ const PseudoButton = styled.div`
   }
 `;
 
-const Button = styled.div`
+export const Button = styled.div`
   background-color: ${({ theme }) => theme.primary};
   font-size: 14px;
   padding: 5px;

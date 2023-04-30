@@ -72,7 +72,7 @@ function ImageComponent({ product, height }) {
       <Image
         height={height}
         alt="product image"
-        src={`/data/uploads/products/${product.id}.webp`}
+        src={`/public/data/uploads/products/${product.id}.webp`}
       />
     </ImageContainer>
   );

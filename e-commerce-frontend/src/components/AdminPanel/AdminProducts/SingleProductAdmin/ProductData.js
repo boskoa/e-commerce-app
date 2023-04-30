@@ -8,6 +8,11 @@ import { selectLoggedUser } from "../../../../features/login/loginSlice";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../../../features/products/productsSlice";
+import {
+  Button,
+  Form,
+  PseudoButton,
+} from "../../../../features/users/UserSettings/Avatar";
 
 const Container = styled.div`
   display: flex;
@@ -49,12 +54,19 @@ export const Image = styled.img`
   box-shadow: 0 0 5px -1px black;
 `;
 
-const Error = styled.div`
+export const Error = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   color: red;
   width: 100%;
+`;
+
+const ImageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 `;
 
 function ProductData() {
@@ -68,8 +80,30 @@ function ProductData() {
   const [price, setPrice] = useState("");
   const [inStock, setInStock] = useState("");
   const [description, setDescription] = useState("");
+  const [name, setName] = useState("Choose avatar");
+  const [file, setFile] = useState();
   const admin = useSelector(selectLoggedUser);
   const dispatch = useDispatch();
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("file", file);
+
+    await axios.post(
+      `http://localhost:3003/api/products/product-image/${product.id}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `bearer ${admin.token}`,
+        },
+      }
+    );
+
+    window.location.reload();
+  }
 
   useEffect(() => {
     async function handleProductFetch() {
@@ -174,10 +208,38 @@ function ProductData() {
 
   return (
     <Container>
-      <Image
-        alt="product image"
-        src={`/data/uploads/products/${product.id}.webp`}
-      />
+      <ImageContainer>
+        <Image
+          alt="product image"
+          src={`/public/data/uploads/products/${product.id}.webp`}
+        />
+        <Form id="product-form" encType="multipart/form-data">
+          <label htmlFor="product" style={{ maxWidth: "70%" }}>
+            <input
+              style={{
+                display: "none",
+              }}
+              id="product"
+              type="file"
+              name="product"
+              onChange={(e) => {
+                setName(product.id);
+                setFile(e.target.files[0]);
+              }}
+            />
+            <PseudoButton>Choose image</PseudoButton>
+          </label>
+          <Button disabled={!file} onClick={(e) => handleSubmit(e)}>
+            Set
+          </Button>
+        </Form>
+        {file && (
+          <Image
+            alt="chosen product image"
+            src={file && URL.createObjectURL(file)}
+          />
+        )}
+      </ImageContainer>
       <ProductInfo>
         <InputContainer>
           <Label htmlFor="title">Product name</Label>

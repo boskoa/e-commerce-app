@@ -8,7 +8,7 @@ const Container = styled.div`
       rgba(255, 255, 255, 0.5),
       rgba(255, 255, 255, 0.1)
     ),
-    url(/data/defaults/backgrounds/login-register.webp);
+    url(/public/data/defaults/backgrounds/login-register.webp);
   background-size: cover;
   display: flex;
   justify-content: center;

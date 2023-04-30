@@ -46,7 +46,7 @@ router.get("/bestsellers", async (req, res, next) => {
       ],
       where: {
         orderId: { [Op.not]: null },
-        createdAt: {
+        updatedAt: {
           [Op.between]: [start, end],
         },
       },
@@ -86,7 +86,7 @@ router.get("/best-earners", async (req, res, next) => {
         FROM ordered_products
         JOIN products ON product_id=products.id
         WHERE order_id IS NOT NULL
-          AND ordered_products.created_at BETWEEN '${start}' AND '${end}'
+          AND ordered_products.updated_at BETWEEN '${start}' AND '${end}'
         GROUP BY product_id, products.title
         ORDER BY total_amount DESC
         LIMIT 20`,
@@ -216,6 +216,26 @@ router.delete("/:id", tokenExtractor, async (req, res, next) => {
       where: { id: Number(req.params.id) },
     });
     return res.status(200).json({ id: req.params.id });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/sales/:id", tokenExtractor, async (req, res, next) => {
+  const user = await User.findByPk(req.decodedToken.id);
+  if (!user?.admin && user.id !== req.decodedToken.id) {
+    return res.status(401).json({ error: "Not authorized" });
+  }
+
+  try {
+    const selectedProductOrders = await OrderedProduct.findAll({
+      where: { productId: req.params.id, orderId: { [Op.ne]: null } },
+    });
+    if (!selectedProductOrders.length) {
+      return res.status(404).end();
+    }
+
+    return res.status(200).json(selectedProductOrders);
   } catch (error) {
     next(error);
   }

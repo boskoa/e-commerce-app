@@ -21,6 +21,10 @@ export const DataItem = styled.div`
   flex: 1;
 `;
 
+export const Line = styled.hr`
+  color: ${({ theme }) => theme.color};
+`;
+
 function Bestsellers({ bestsellers }) {
   const user = useSelector(selectLoggedUser);
 
@@ -30,7 +34,7 @@ function Bestsellers({ bestsellers }) {
       {bestsellers.map((b) => (
         <DataItem key={b.id}>
           <Link
-            to={`/${user.id}/admin-panel/products/statistics/${b.id}`}
+            to={`/${user.id}/admin-panel/products/single-stats/${b.id}`}
             style={{
               textDecoration: "none",
               color: "inherit",
@@ -41,6 +45,17 @@ function Bestsellers({ bestsellers }) {
           <p>{b.count_products} pcs.</p>
         </DataItem>
       ))}
+      <Line />
+      <DataItem>
+        <p>
+          <strong>Total</strong>
+        </p>
+        <p>
+          <strong>
+            {bestsellers.reduce((p, c) => p + Number(c.count_products), 0)} pcs.
+          </strong>
+        </p>
+      </DataItem>
     </Container>
   );
 }

@@ -11,7 +11,7 @@ router.post("/create-payment-intent", async (req, res) => {
   try {
     const paymentIntent = await stripe.paymentIntents.create({
       currency: "USD",
-      amount: req.body.amount * 100,
+      amount: req.body.amount,
       automatic_payment_methods: { enabled: true },
     });
 

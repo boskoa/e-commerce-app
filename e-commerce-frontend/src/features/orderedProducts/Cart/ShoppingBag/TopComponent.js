@@ -48,9 +48,8 @@ function TopComponent({ setChecked, checkedProducts }) {
   function handleCheckout() {
     if (checkedProducts.length < 1) return;
     const orderedProducts = checkedProducts.map((cp) => cp.id);
-    const amount = checkedProducts.reduce(
-      (p, c) => c.price * c.quantity + p,
-      0
+    const amount = Number(
+      checkedProducts.reduce((p, c) => c.price * c.quantity + p, 0).toFixed(2)
     );
     dispatch(createOrder({ token, orderedProducts, amount }));
   }

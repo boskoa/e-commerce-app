@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const { Op } = require("sequelize");
 const { User, Order, OrderedProduct, Product } = require("../models");
 const { tokenExtractor } = require("../utils/tokenExtractor");
+const { sequelize } = require("../utils/db");
 
 router.get("/", tokenExtractor, async (req, res, next) => {
   const user = await User.findByPk(req.decodedToken.id);
@@ -10,9 +11,30 @@ router.get("/", tokenExtractor, async (req, res, next) => {
     return res.status(401).json({ error: "Not authorized" });
   }
 
+  let order = [];
+  let pagination = {};
+
+  if (req.query.order) {
+    const [field, criterium] = req.query.order.split(",");
+    order = [
+      [field, criterium.toUpperCase()],
+      ["id", "ASC"],
+    ];
+  }
+
+  if (req.query.pagination) {
+    const [offset, limit] = req.query.pagination.split(",");
+    pagination = { offset, limit };
+  }
+
   try {
     const users = await User.findAll({
-      attributes: { exclude: ["passwordHash"] },
+      order,
+      ...pagination,
+      attributes: {
+        exclude: ["passwordHash"],
+      },
+      include: Order,
     });
     return res.status(200).json(users);
   } catch (error) {

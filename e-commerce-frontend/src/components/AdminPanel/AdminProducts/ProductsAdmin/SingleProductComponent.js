@@ -44,7 +44,7 @@ const Image = styled.img`
   object-fit: cover;
 `;
 
-const Info = styled.div`
+export const Info = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -53,7 +53,7 @@ const Info = styled.div`
   padding: 10px;
 `;
 
-const Title = styled.p`
+export const Title = styled.p`
   font-size: 20px;
   max-height: 46px;
   overflow: hidden;
@@ -70,7 +70,7 @@ const Price = styled.p`
   font-weight: 800;
 `;
 
-const ButtonsContainer = styled.div`
+export const ButtonsContainer = styled.div`
   position: absolute;
   bottom: 5px;
   right: 5px;
@@ -80,7 +80,7 @@ const ButtonsContainer = styled.div`
   gap: 10px;
 `;
 
-const Button = styled.button`
+export const Button = styled.button`
   background-color: red;
   color: white;
   padding: 2px;
@@ -107,7 +107,7 @@ function SingleProductComponent({ product }) {
       <ImageContainer>
         <Image
           alt="product image"
-          src={`/data/uploads/products/${product.id}.webp`}
+          src={`/public/data/uploads/products/${product.id}.webp`}
         />
       </ImageContainer>
       <Info>
@@ -116,7 +116,9 @@ function SingleProductComponent({ product }) {
         <p>ID: {product.id}</p>
         <Price>${product.price}</Price>
         <ButtonsContainer>
-          <Link to={`/${admin.id}/admin-panel/products/stats/${product.id}`}>
+          <Link
+            to={`/${admin.id}/admin-panel/products/single-stats/${product.id}`}
+          >
             <Button>Stats</Button>
           </Link>
           <Link to={`/${admin.id}/admin-panel/products/single/${product.id}`}>

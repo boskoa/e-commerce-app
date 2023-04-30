@@ -1,23 +1,8 @@
-import styled from "styled-components";
-import { Button } from "../styledElements";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { ButtonsContainer, Container } from "../AdminProducts";
+import { Button } from "../styledElements";
 
-export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin: 10px;
-  width: 100%;
-`;
-
-export const ButtonsContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-`;
-
-function AdminProducts() {
+function AdminUsers() {
   const navigate = useNavigate();
   const locationArray = useLocation().pathname.split("/");
   const location = isNaN(locationArray[locationArray.length - 1])
@@ -28,25 +13,25 @@ function AdminProducts() {
     <Container>
       <ButtonsContainer>
         <Button active={location === "all"} onClick={() => navigate("all")}>
-          Browse products
+          Browse users
         </Button>
         <Button
           active={location === "single"}
           onClick={() => navigate("single")}
         >
-          Update single product
+          Change user profile
         </Button>
         <Button
           active={location === "statistics"}
           onClick={() => navigate("statistics")}
         >
-          Products statistics
+          Users statistics
         </Button>
         <Button
           active={location === "single-stats"}
           onClick={() => navigate("single-stats")}
         >
-          Single product stats
+          Single user stats
         </Button>
       </ButtonsContainer>
       <Outlet />
@@ -54,4 +39,4 @@ function AdminProducts() {
   );
 }
 
-export default AdminProducts;
+export default AdminUsers;

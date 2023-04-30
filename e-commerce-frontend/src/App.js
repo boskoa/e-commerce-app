@@ -49,6 +49,13 @@ const ProductsStatistics = lazy(() =>
 const SingleProductStats = lazy(() =>
   import("./components/AdminPanel/AdminProducts/SingleProductStats")
 );
+const ProductStatsData = lazy(() =>
+  import("./components/AdminPanel/AdminProducts/SingleProductStats/ProductData")
+);
+const AdminUsers = lazy(() => import("./components/AdminPanel/AdminUsers"));
+const UsersAdmin = lazy(() =>
+  import("./components/AdminPanel/AdminUsers/UsersAdmin")
+);
 
 function App() {
   const [theme, setTheme] = useState("light");
@@ -180,7 +187,11 @@ function App() {
           children: [
             {
               index: true,
-              element: <p>Welcome to Admin page</p>,
+              element: (
+                <h4 style={{ margin: 10, textAlign: "center", width: "100%" }}>
+                  Welcome to Admin page
+                </h4>
+              ),
             },
             {
               path: "products",
@@ -228,7 +239,7 @@ function App() {
                       path: ":id",
                       element: (
                         <Suspense>
-                          <p>dodati</p>
+                          <ProductStatsData />
                         </Suspense>
                       ),
                     },
@@ -246,7 +257,61 @@ function App() {
             },
             {
               path: "users",
-              element: <p>Users</p>,
+              element: <AdminUsers />,
+              children: [
+                {
+                  path: "single",
+                  element: (
+                    <Suspense>
+                      <p>Single user (search by username)</p>
+                    </Suspense>
+                  ),
+                  children: [
+                    {
+                      path: ":id",
+                      element: (
+                        <Suspense>
+                          <p>user data to change</p>
+                        </Suspense>
+                      ),
+                    },
+                  ],
+                },
+                {
+                  path: "all",
+                  element: (
+                    <Suspense>
+                      <UsersAdmin />
+                    </Suspense>
+                  ),
+                },
+                {
+                  path: "single-stats",
+                  element: (
+                    <Suspense>
+                      <p>Single user stats (search element)</p>
+                    </Suspense>
+                  ),
+                  children: [
+                    {
+                      path: ":id",
+                      element: (
+                        <Suspense>
+                          <p>Show singlestats with charts</p>
+                        </Suspense>
+                      ),
+                    },
+                  ],
+                },
+                {
+                  path: "statistics",
+                  element: (
+                    <Suspense>
+                      <p>Users statistics</p>
+                    </Suspense>
+                  ),
+                },
+              ],
             },
             {
               path: "announcements",

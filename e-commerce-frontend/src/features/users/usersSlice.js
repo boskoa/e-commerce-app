@@ -7,9 +7,7 @@ import axios from "axios";
 
 export const BASE_URL = "/api/users";
 
-const usersAdapter = createEntityAdapter({
-  sortComparer: (a, b) => a.name.localeCompare(b.name),
-});
+const usersAdapter = createEntityAdapter();
 
 const initialState = usersAdapter.getInitialState({
   loading: false,
@@ -19,13 +17,14 @@ const initialState = usersAdapter.getInitialState({
 
 export const getAllUsers = createAsyncThunk(
   "users/getAllUsers",
-  async (token) => {
+  async (data) => {
+    const { token, query } = data;
     const config = {
       headers: {
         Authorization: `bearer ${token}`,
       },
     };
-    const response = await axios.get(BASE_URL, config);
+    const response = await axios.get(BASE_URL + query, config);
     return response.data;
   }
 );
@@ -63,6 +62,7 @@ const usersSlice = createSlice({
     resetSuccess: (state) => {
       state.success = false;
     },
+    emptyUsers: () => initialState,
   },
   extraReducers: (builder) => {
     builder
@@ -132,6 +132,6 @@ export function selectUserCreated(state) {
   return state.users.success;
 }
 
-export const { resetError, resetSuccess } = usersSlice.actions;
+export const { resetError, resetSuccess, emptyUsers } = usersSlice.actions;
 
 export default usersSlice.reducer;

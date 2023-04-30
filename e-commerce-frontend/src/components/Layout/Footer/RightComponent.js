@@ -51,7 +51,7 @@ function RightComponent() {
           info@example.com
         </ContactItem>
       </ContactData>
-      <Payment alt="payment methods" src="/data/defaults/cards.svg" />
+      <Payment alt="payment methods" src="/public/data/defaults/cards.svg" />
     </Right>
   );
 }

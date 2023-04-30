@@ -5,7 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const BASE_URL = "/api/orders";
+export const BASE_URL = "/api/orders";
 
 const ordersAdapter = createEntityAdapter({
   sortComparer: (a, b) => a.createdAt.localeCompare(b.createdAt),

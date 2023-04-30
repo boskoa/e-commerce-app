@@ -26,11 +26,17 @@ function LoggedInItems({ id }) {
 
   return (
     <>
-      <MenuItem style={{ position: "absolute", right: "60px" }}>
+      <MenuItem
+        style={{ position: "absolute", right: "60px", fontSize: "24px" }}
+      >
         <Link to={`/cart/${id}`}>
-          <Badge max={99} badgeContent={<p>{cartItems}</p>} color="info">
+          <Badge
+            max={99}
+            badgeContent={<p style={{ fontSize: 10 }}>{cartItems}</p>}
+            color="info"
+          >
             <ShoppingCartOutlined
-              style={{ color: "grey", fontSize: "18px" }}
+              style={{ color: "grey", fontSize: "22px" }}
               color="action"
             />
           </Badge>

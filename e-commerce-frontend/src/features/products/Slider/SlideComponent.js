@@ -50,7 +50,7 @@ function SlideComponent({ p, i }) {
     <Slide i={i}>
       <ImgContainer>
         <Image
-          src={`/data/uploads/products/${p.id}.webp`}
+          src={`/public/data/uploads/products/${p.id}.webp`}
           alt={`product image ${p.id}`}
         />
       </ImgContainer>

@@ -14,7 +14,7 @@ import SelectComponent from "../../../../features/products/ProductList/SelectCom
 import Spinner from "../../../Spinner";
 import SingleProductComponent from "./SingleProductComponent";
 
-const Container = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -26,7 +26,7 @@ const Container = styled.div`
   transition: all 0.3s;
 `;
 
-const FilterContainer = styled.div`
+export const FilterContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
@@ -37,7 +37,7 @@ const FilterContainer = styled.div`
   }
 `;
 
-const Filter = styled.div`
+export const Filter = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
@@ -48,7 +48,7 @@ const Filter = styled.div`
   }
 `;
 
-const FilterText = styled.p`
+export const FilterText = styled.p`
   font-size: 18px;
 `;
 
@@ -61,7 +61,7 @@ const ProductContainer = styled.div`
   transition: all 0.3s;
 `;
 
-const SpinnerContainer = styled.div`
+export const SpinnerContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;

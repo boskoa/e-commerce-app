@@ -55,7 +55,7 @@ function Category({ category }) {
   return (
     <Container>
       <Image
-        src={`/data/defaults/categories/${category.id}.webp`}
+        src={`/public/data/defaults/categories/${category.id}.webp`}
         alt={"category image" + category.id}
       />
       <Info>
