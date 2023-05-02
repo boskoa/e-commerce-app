@@ -56,6 +56,27 @@ const AdminUsers = lazy(() => import("./components/AdminPanel/AdminUsers"));
 const UsersAdmin = lazy(() =>
   import("./components/AdminPanel/AdminUsers/UsersAdmin")
 );
+const SingleUserAdmin = lazy(() =>
+  import("./components/AdminPanel/AdminUsers/SingleUserAdmin")
+);
+const UserData = lazy(() =>
+  import("./components/AdminPanel/AdminUsers/SingleUserAdmin/UserData")
+);
+const UsersStatistics = lazy(() =>
+  import("./components/AdminPanel/AdminUsers/UsersStatistics")
+);
+const SingleUserStats = lazy(() =>
+  import("./components/AdminPanel/AdminUsers/SingleUserStats")
+);
+const UserStatsData = lazy(() =>
+  import("./components/AdminPanel/AdminUsers/SingleUserStats/UserData")
+);
+const AdminAnnouncements = lazy(() =>
+  import("./components/AdminPanel/AdminAnnouncements")
+);
+const AdminCategories = lazy(() =>
+  import("./components/AdminPanel/AdminCategories")
+);
 
 function App() {
   const [theme, setTheme] = useState("light");
@@ -263,7 +284,7 @@ function App() {
                   path: "single",
                   element: (
                     <Suspense>
-                      <p>Single user (search by username)</p>
+                      <SingleUserAdmin />
                     </Suspense>
                   ),
                   children: [
@@ -271,7 +292,7 @@ function App() {
                       path: ":id",
                       element: (
                         <Suspense>
-                          <p>user data to change</p>
+                          <UserData />
                         </Suspense>
                       ),
                     },
@@ -289,7 +310,7 @@ function App() {
                   path: "single-stats",
                   element: (
                     <Suspense>
-                      <p>Single user stats (search element)</p>
+                      <SingleUserStats />
                     </Suspense>
                   ),
                   children: [
@@ -297,7 +318,7 @@ function App() {
                       path: ":id",
                       element: (
                         <Suspense>
-                          <p>Show singlestats with charts</p>
+                          <UserStatsData />
                         </Suspense>
                       ),
                     },
@@ -307,7 +328,7 @@ function App() {
                   path: "statistics",
                   element: (
                     <Suspense>
-                      <p>Users statistics</p>
+                      <UsersStatistics />
                     </Suspense>
                   ),
                 },
@@ -315,11 +336,11 @@ function App() {
             },
             {
               path: "announcements",
-              element: <p>Announcements</p>,
+              element: <AdminAnnouncements />,
             },
             {
               path: "categories",
-              element: <p>Categories</p>,
+              element: <AdminCategories />,
             },
           ],
         },

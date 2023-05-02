@@ -10,6 +10,7 @@ import {
 } from "../../AdminProducts/ProductsAdmin/SingleProductComponent";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import BlockIcon from "@mui/icons-material/Block";
+import { Tooltip } from "@mui/material";
 
 const Container = styled.div`
   flex: 1;
@@ -65,9 +66,16 @@ function SingleUserComponent({ user }) {
         <Data>ID: {user.id}</Data>
         <Data>{user.email}</Data>
         <IconContainer>
-          {user.admin && <AdminPanelSettingsIcon sx={{ fontSize: "20px" }} />}
-          {/*dodati tooltip*/}
-          {user.disabled && <BlockIcon sx={{ fontSize: "20px" }} />}
+          {user.admin && (
+            <Tooltip title="Admin">
+              <AdminPanelSettingsIcon sx={{ fontSize: "20px" }} />
+            </Tooltip>
+          )}
+          {user.disabled && (
+            <Tooltip title="Blocked">
+              <BlockIcon sx={{ fontSize: "20px" }} />
+            </Tooltip>
+          )}
         </IconContainer>
         <ButtonsContainer>
           <Link to={`/${admin.id}/admin-panel/users/single-stats/${user.id}`}>
@@ -82,6 +90,9 @@ function SingleUserComponent({ user }) {
         <Image
           alt="user image"
           src={`/public/data/uploads/avatars/${user.id}.webp`}
+          onError={(e) =>
+            (e.currentTarget.src = "/data/defaults/user_avatar.webp")
+          }
         />
       </ImageContainer>
     </Container>

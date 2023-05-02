@@ -3,7 +3,6 @@ const bcrypt = require("bcrypt");
 const { Op } = require("sequelize");
 const { User, Order, OrderedProduct, Product } = require("../models");
 const { tokenExtractor } = require("../utils/tokenExtractor");
-const { sequelize } = require("../utils/db");
 
 router.get("/", tokenExtractor, async (req, res, next) => {
   const user = await User.findByPk(req.decodedToken.id);
@@ -57,7 +56,7 @@ router.get("/:id", tokenExtractor, async (req, res, next) => {
       include: Order,
     });
     if (!user) {
-      res.status(404).json({
+      return res.status(404).json({
         error: "No such user",
       });
     }

@@ -18,7 +18,9 @@ function MonthChart({ sales }) {
 
   for (let i = 30; i > 0; i--) {
     today.setDate(today.getDate() + 1);
-    chartData[`${today.getMonth() + 1}-${today.getDate()}`] = 0;
+    chartData[
+      `${today.getMonth() + 1}-${today.getDate().toString().padStart(2, "0")}`
+    ] = 0;
   }
   const keys = Object.keys(chartData);
   sales.forEach((o) => {
@@ -73,7 +75,7 @@ function MonthChart({ sales }) {
       },
     ],
     title: {
-      text: "Daily revenue for the past 30 days",
+      text: "Daily sales for the past 30 days",
       textStyle: {
         color: theme.color,
         fontSize: "14px",

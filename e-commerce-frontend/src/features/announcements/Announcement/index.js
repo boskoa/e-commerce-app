@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectAllAnnouncements } from "../announcementsSlice";
+import { selectActiveAnnouncements } from "../announcementsSlice";
 import styled from "styled-components";
 import CloseButton from "./CloseButton";
 import Message from "./Message";
@@ -35,7 +35,7 @@ const Wrapper = styled.div`
 function Announcement() {
   const [show, setShow] = useState(true);
   const [currentMessage, setCurrentMessage] = useState(0);
-  const announcements = useSelector(selectAllAnnouncements);
+  const announcements = useSelector(selectActiveAnnouncements);
 
   useEffect(() => {
     let index;

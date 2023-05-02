@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectLoggedUser } from "../../../../features/login/loginSlice";
 
-const Container = styled.div`
+export const Container = styled.div`
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -28,7 +28,7 @@ const Container = styled.div`
   }
 `;
 
-const ImageContainer = styled.div`
+export const ImageContainer = styled.div`
   width: 200px;
   align-self: stretch;
   position: relative;
@@ -38,7 +38,7 @@ const ImageContainer = styled.div`
   }
 `;
 
-const Image = styled.img`
+export const Image = styled.img`
   width: 100%;
   height: 190px;
   object-fit: cover;
@@ -59,7 +59,7 @@ export const Title = styled.p`
   overflow: hidden;
 `;
 
-const Description = styled.p`
+export const Description = styled.p`
   font-size: 14px;
   max-height: 70px;
   overflow: hidden;

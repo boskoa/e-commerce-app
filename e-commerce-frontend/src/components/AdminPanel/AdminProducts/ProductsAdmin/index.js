@@ -97,6 +97,10 @@ function ProductsAdmin() {
   const [sort, setSort] = useState("");
 
   useEffect(() => {
+    return () => window.scroll({ top: 0, left: 0 });
+  }, []);
+
+  useEffect(() => {
     setOffset(0);
     dispatch(emptyProducts());
   }, [category, color, size, sort, dispatch]);

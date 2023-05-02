@@ -45,7 +45,7 @@ function useRegister() {
 
   useEffect(() => {
     if (registrationSuccess) {
-      navigate("/login");
+      navigate("/login", { replace: true });
     }
 
     return () => dispatch(resetSuccess());

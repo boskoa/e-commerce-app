@@ -117,7 +117,7 @@ router.post("/", tokenExtractor, async (req, res, next) => {
 
 router.patch("/:id", tokenExtractor, async (req, res, next) => {
   const user = await User.findByPk(req.decodedToken.id);
-  if (!user?.admin && req.params.id !== req.decodedToken.id) {
+  if (!user?.admin) {
     return res.status(401).json({ error: "Not authorized" });
   }
 

@@ -13,6 +13,7 @@ const initialState = usersAdapter.getInitialState({
   loading: false,
   error: null,
   success: false,
+  single: {},
 });
 
 export const getAllUsers = createAsyncThunk(
@@ -25,6 +26,20 @@ export const getAllUsers = createAsyncThunk(
       },
     };
     const response = await axios.get(BASE_URL + query, config);
+    return response.data;
+  }
+);
+
+export const getSingleUser = createAsyncThunk(
+  "users/getSingleUser",
+  async (data) => {
+    const { token, id } = data;
+    const config = {
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    };
+    const response = await axios.get(`${BASE_URL}/${id}`, config);
     return response.data;
   }
 );
@@ -110,6 +125,19 @@ const usersSlice = createSlice({
         state.loading = false;
         state.success = false;
         state.error = action.error.message;
+      })
+      .addCase(getSingleUser.pending, (state) => {
+        state.error = null;
+        state.loading = true;
+      })
+      .addCase(getSingleUser.fulfilled, (state, action) => {
+        state.error = null;
+        state.loading = false;
+        state.single = action.payload;
+      })
+      .addCase(getSingleUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
 });
@@ -130,6 +158,10 @@ export function selectUsersError(state) {
 
 export function selectUserCreated(state) {
   return state.users.success;
+}
+
+export function selectSingleUser(state) {
+  return state.users.single;
 }
 
 export const { resetError, resetSuccess, emptyUsers } = usersSlice.actions;

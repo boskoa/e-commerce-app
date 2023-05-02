@@ -13,7 +13,7 @@ import MonthChart from "./MonthChart";
 import Trend from "./Trend";
 import Spinner from "../../../Spinner";
 
-const Container = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -21,7 +21,7 @@ const Container = styled.div`
   width: 100%;
 `;
 
-const DataContainer = styled.div`
+export const DataContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: space-between;
@@ -32,14 +32,14 @@ const DataContainer = styled.div`
   box-shadow: 0 0 5px -1px black;
 `;
 
-const Data = styled.div`
+export const Data = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 10px;
 `;
 
-const ChartContainer = styled.div`
+export const ChartContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;

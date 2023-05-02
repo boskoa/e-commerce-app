@@ -2,6 +2,8 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../../../features/login/loginSlice";
 import styled from "styled-components";
+import { resetOrderedProducts } from "../../../../features/orderedProducts/orderedProductsSlice";
+import { resetOrders } from "../../../../features/orders/ordersSlice";
 
 const MenuContainer = styled.div`
   position: absolute;
@@ -59,6 +61,8 @@ function UserButton({ currentUser }) {
   function handleLogout() {
     window.localStorage.removeItem("loggedECommerceAppUser");
     dispatch(logout());
+    dispatch(resetOrderedProducts());
+    dispatch(resetOrders());
     navigate("/");
   }
 

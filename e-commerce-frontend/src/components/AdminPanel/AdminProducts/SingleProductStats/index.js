@@ -4,7 +4,7 @@ import { TopButton } from "../../../../features/orderedProducts/Cart/ShoppingBag
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 
-const Container = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -13,7 +13,7 @@ const Container = styled.div`
   gap: 20px;
 `;
 
-const InputContainer = styled.div`
+export const InputContainer = styled.div`
   display: flex;
   align-items: center;
   align-self: center;

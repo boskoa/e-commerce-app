@@ -100,6 +100,84 @@ router.get("/best-earners", async (req, res, next) => {
   }
 });
 
+router.get("/most-items", async (req, res, next) => {
+  let start;
+  let end;
+
+  if (req.query.start === "0") {
+    start = new Date(null);
+  } else {
+    start = new Date(req.query.start);
+  }
+
+  if (req.query.end === "0") {
+    end = new Date();
+  } else {
+    end = new Date(req.query.end);
+  }
+
+  try {
+    const mostItems = await OrderedProduct.findAll({
+      attributes: [
+        ["user_id", "id"],
+        [sequelize.fn("SUM", sequelize.col("quantity")), "count_products"],
+      ],
+      where: {
+        orderId: { [Op.not]: null },
+        updatedAt: {
+          [Op.between]: [start, end],
+        },
+      },
+      group: ["user_id", "user.id"],
+      order: [["count_products", "DESC"]],
+      limit: 20,
+      include: User,
+    });
+    return res.status(200).json(mostItems);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/money-spent", async (req, res, next) => {
+  let start;
+  let end;
+
+  if (req.query.start === "0") {
+    start = "2000-01-01";
+  } else {
+    start = req.query.start;
+  }
+
+  if (req.query.end === "0") {
+    end = "2150-01-01";
+  } else {
+    end = req.query.end;
+  }
+
+  try {
+    const moneySpent = await sequelize.query(
+      `SELECT
+        user_id AS "id",
+        SUM(quantity * ordered_products.price) AS "total_amount",
+        name
+        FROM ordered_products
+        JOIN users ON user_id=users.id
+        WHERE order_id IS NOT NULL
+          AND ordered_products.updated_at BETWEEN '${start}' AND '${end}'
+        GROUP BY user_id, users.name
+        ORDER BY total_amount DESC
+        LIMIT 20`,
+      {
+        type: sequelize.QueryTypes.SELECT,
+      }
+    );
+    return res.status(200).json(moneySpent);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get("/", tokenExtractor, async (req, res, next) => {
   const user = await User.findByPk(req.decodedToken.id);
   if (!user?.admin) {
@@ -160,7 +238,7 @@ router.get("/:id", tokenExtractor, async (req, res, next) => {
 
 router.post("/", tokenExtractor, async (req, res, next) => {
   const user = await User.findByPk(req.decodedToken.id);
-  if (!user?.admin) {
+  if (!user) {
     return res.status(401).json({ error: "Not authorized" });
   }
 
@@ -177,7 +255,7 @@ router.post("/", tokenExtractor, async (req, res, next) => {
 
 router.patch("/:id", tokenExtractor, async (req, res, next) => {
   const user = await User.findByPk(req.decodedToken.id);
-  if (!user?.admin && req.params.id !== req.decodedToken.id) {
+  if (!user) {
     return res.status(401).json({ error: "Not authorized" });
   }
 
@@ -196,6 +274,9 @@ router.patch("/:id", tokenExtractor, async (req, res, next) => {
       return res
         .status(401)
         .json({ error: "Can't change - product is already purchased" });
+    }
+    if (user.id !== addedProduct.userId && !user.admin) {
+      return res.status(401).json({ error: "Not authorized" });
     }
     addedProduct.set({ ...req.body });
     await addedProduct.save();
@@ -230,6 +311,26 @@ router.get("/sales/:id", tokenExtractor, async (req, res, next) => {
   try {
     const selectedProductOrders = await OrderedProduct.findAll({
       where: { productId: req.params.id, orderId: { [Op.ne]: null } },
+    });
+    if (!selectedProductOrders.length) {
+      return res.status(404).end();
+    }
+
+    return res.status(200).json(selectedProductOrders);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/purchases/:id", tokenExtractor, async (req, res, next) => {
+  const user = await User.findByPk(req.decodedToken.id);
+  if (!user?.admin && user.id !== req.decodedToken.id) {
+    return res.status(401).json({ error: "Not authorized" });
+  }
+
+  try {
+    const selectedProductOrders = await OrderedProduct.findAll({
+      where: { userId: req.params.id, orderId: { [Op.ne]: null } },
     });
     if (!selectedProductOrders.length) {
       return res.status(404).end();

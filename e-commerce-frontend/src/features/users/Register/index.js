@@ -1,5 +1,9 @@
 import styled from "styled-components";
 import InputBox from "./InputBox";
+import { useSelector } from "react-redux";
+import { selectLoggedUser } from "../../login/loginSlice";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const Container = styled.div`
   height: 100vh;
@@ -31,6 +35,15 @@ const Title = styled.h2`
 `;
 
 function Register() {
+  const logged = useSelector(selectLoggedUser);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (logged?.id) {
+      navigate("/");
+    }
+  }, [logged, navigate]);
+
   return (
     <Container>
       <Wrapper>

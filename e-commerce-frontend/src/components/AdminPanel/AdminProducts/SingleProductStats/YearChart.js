@@ -76,7 +76,7 @@ function YearChart({ sales }) {
       },
     ],
     title: {
-      text: "Monthly revenue since the last year",
+      text: "Monthly sales since the last year",
       textStyle: {
         color: theme.color,
         fontSize: "14px",

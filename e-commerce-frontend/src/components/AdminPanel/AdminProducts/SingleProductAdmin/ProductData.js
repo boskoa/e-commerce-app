@@ -14,7 +14,7 @@ import {
   PseudoButton,
 } from "../../../../features/users/UserSettings/Avatar";
 
-const Container = styled.div`
+export const Container = styled.div`
   display: flex;
   gap: 20px;
   width: 100%;
@@ -25,9 +25,10 @@ const Container = styled.div`
   }
 `;
 
-const ProductInfo = styled.div`
+export const ProductInfo = styled.div`
   display: flex;
   flex-wrap: wrap;
+  align-content: start;
   gap: 20px;
 
   @media only screen and (max-width: 600px) {
@@ -35,18 +36,18 @@ const ProductInfo = styled.div`
   }
 `;
 
-const InputContainer = styled.div`
+export const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5px;
   max-width: 200px;
 `;
 
-const Label = styled.label`
+export const Label = styled.label`
   font-size: 12px;
 `;
 
-export const Image = styled.img`
+const Image = styled.img`
   width: 200px;
   height: 200px;
   object-fit: cover;
@@ -62,7 +63,7 @@ export const Error = styled.div`
   width: 100%;
 `;
 
-const ImageContainer = styled.div`
+export const ImageContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;

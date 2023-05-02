@@ -24,6 +24,48 @@ export const getAllCategories = createAsyncThunk(
   }
 );
 
+export const updateCategory = createAsyncThunk(
+  "categories/updateCategory",
+  async (data) => {
+    const { token, newData, id } = data;
+    const config = {
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    };
+    const response = await axios.patch(`${BASE_URL}/${id}`, newData, config);
+    return response.data;
+  }
+);
+
+export const createCategory = createAsyncThunk(
+  "categories/createCategory",
+  async (data) => {
+    const { token, newData } = data;
+    const config = {
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    };
+    const response = await axios.post(BASE_URL, newData, config);
+    return response.data;
+  }
+);
+
+export const deleteCategory = createAsyncThunk(
+  "categories/deleteCategory",
+  async (data) => {
+    const { token, id } = data;
+    const config = {
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    };
+    const response = await axios.delete(`${BASE_URL}/${id}`, config);
+    return response.data;
+  }
+);
+
 const categoriesSlice = createSlice({
   name: "categories",
   initialState,
@@ -40,6 +82,45 @@ const categoriesSlice = createSlice({
         categoriesAdapter.upsertMany(state, action.payload);
       })
       .addCase(getAllCategories.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(updateCategory.pending, (state) => {
+        state.error = null;
+        state.loading = true;
+      })
+      .addCase(updateCategory.fulfilled, (state, action) => {
+        state.error = null;
+        state.loading = false;
+        categoriesAdapter.upsertOne(state, action.payload);
+      })
+      .addCase(updateCategory.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(createCategory.pending, (state) => {
+        state.error = null;
+        state.loading = true;
+      })
+      .addCase(createCategory.fulfilled, (state, action) => {
+        state.error = null;
+        state.loading = false;
+        categoriesAdapter.upsertOne(state, action.payload);
+      })
+      .addCase(createCategory.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(deleteCategory.pending, (state) => {
+        state.error = null;
+        state.loading = true;
+      })
+      .addCase(deleteCategory.fulfilled, (state, action) => {
+        state.error = null;
+        state.loading = false;
+        categoriesAdapter.removeOne(state, action.payload.id);
+      })
+      .addCase(deleteCategory.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

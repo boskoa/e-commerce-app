@@ -76,7 +76,9 @@ export const deleteOrderedProduct = createAsyncThunk(
 const orderedProductsSlice = createSlice({
   name: "orderedProducts",
   initialState,
-  reducers: {},
+  reducers: {
+    resetOrderedProducts: () => initialState,
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getUsersOrderedProducts.pending, (state) => {
@@ -147,5 +149,7 @@ export function selectOrderedProductsLoading(state) {
 export function selectOrderedProductsError(state) {
   return state.orderedProducts.error;
 }
+
+export const { resetOrderedProducts } = orderedProductsSlice.actions;
 
 export default orderedProductsSlice.reducer;

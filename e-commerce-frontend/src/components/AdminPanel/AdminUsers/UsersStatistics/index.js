@@ -1,40 +1,19 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useState } from "react";
+import {
+  Container,
+  Error,
+  MainContainer,
+} from "../../AdminProducts/ProductsStatistics";
+import Dates from "../../AdminProducts/ProductsStatistics/Dates";
 import { BASE_URL } from "../../../../features/orderedProducts/orderedProductsSlice";
-import Bestsellers from "./Bestsellers";
-import BestEarners from "./BestEarners";
-import styled from "styled-components";
-import Dates from "./Dates";
+import MostItems from "./MostItems";
+import MoneySpent from "./MoneySpent";
 
-export const MainContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: center;
-  gap: 10px;
-`;
-
-export const Container = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-
-  @media only screen and (max-width: 800px) {
-    flex-direction: column;
-    align-items: stretch;
-  }
-`;
-
-export const Error = styled.div`
-  height: 20px;
-  text-align: center;
-  color: red;
-`;
-
-function ProductsStatistics() {
-  const [bestsellers, setBestsellers] = useState([]);
-  const [bestEarners, setBestEarners] = useState([]);
+function UsersStatistics() {
+  const [mostItems, setMostItems] = useState([]);
+  const [moneySpent, setMoneySpent] = useState([]);
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const [error, setError] = useState("");
@@ -64,20 +43,20 @@ function ProductsStatistics() {
   useEffect(() => {
     async function getBestsellers() {
       const response = await axios.get(
-        `${BASE_URL}/bestsellers?start=${startQuery ? startQuery : "0"}&end=${
+        `${BASE_URL}/most-items?start=${startQuery ? startQuery : "0"}&end=${
           endQuery ? endQuery : "0"
         }`
       );
-      setBestsellers(response.data);
+      setMostItems(response.data);
     }
 
     async function getBestEarners() {
       const response = await axios.get(
-        `${BASE_URL}/best-earners?start=${startQuery ? startQuery : "0"}&end=${
+        `${BASE_URL}/money-spent?start=${startQuery ? startQuery : "0"}&end=${
           endQuery ? endQuery : "0"
         }`
       );
-      setBestEarners(response.data);
+      setMoneySpent(response.data);
     }
 
     getBestsellers();
@@ -101,11 +80,11 @@ function ProductsStatistics() {
       />
       <Error>{error}</Error>
       <Container>
-        <Bestsellers bestsellers={bestsellers} />
-        <BestEarners bestEarners={bestEarners} />
+        <MostItems mostItems={mostItems} />
+        <MoneySpent moneySpent={moneySpent} />
       </Container>
     </MainContainer>
   );
 }
 
-export default ProductsStatistics;
+export default UsersStatistics;
