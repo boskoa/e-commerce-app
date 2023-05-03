@@ -60,9 +60,7 @@ function SearchedProducts() {
 
   return (
     <Container>
-      <Title>
-        Search results for products named: {title.split(",").join(" ")}
-      </Title>
+      <Title>Products containing: {title.split(",").join(" ")}</Title>
       <ProductContainer>
         {products.map((p) => (
           <Product key={p.id} product={p} />

@@ -13,7 +13,9 @@ function Completion() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setTimeout(() => navigate("/"), 8000);
+    const index = setTimeout(() => navigate("/"), 5000);
+
+    return () => clearTimeout(index);
   }, [navigate]);
 
   return (

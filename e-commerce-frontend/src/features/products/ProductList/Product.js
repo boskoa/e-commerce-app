@@ -21,6 +21,11 @@ const Container = styled.div`
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.7);
     transform: scale(1.005);
   }
+
+  @media only screen and (max-width: 575px) {
+    flex-direction: column;
+    height: auto;
+  }
 `;
 
 export const Button = styled(SeeAllButton)`

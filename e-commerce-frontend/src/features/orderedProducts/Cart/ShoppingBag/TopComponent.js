@@ -56,7 +56,9 @@ function TopComponent({ setChecked, checkedProducts }) {
 
   return (
     <Top>
-      <TopButton>Continue shopping</TopButton>
+      <TopButton onClick={() => navigate("/products")}>
+        Continue shopping
+      </TopButton>
       <TopButton onClick={handleCheckout} type="checkout">
         Checkout now
       </TopButton>

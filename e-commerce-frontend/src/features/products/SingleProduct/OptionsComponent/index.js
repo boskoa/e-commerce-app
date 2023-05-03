@@ -12,7 +12,8 @@ import {
 } from "../../../orderedProducts/orderedProductsSlice";
 
 const OptionsContainer = styled.div`
-  margin: 20px;
+  margin: 20px auto;
+  padding-right: 10px;
   gap: 20px;
   display: flex;
   flex-direction: column;

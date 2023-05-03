@@ -27,7 +27,7 @@ const Container = styled.div`
   justify-content: start;
   align-items: start;
   gap: 5px;
-  height: 280px;
+  height: 300px;
   width: 240px;
   overflow: hidden;
   color: ${({ theme }) => theme.color};
@@ -52,6 +52,12 @@ const ImageContainer = styled.div`
   height: 190px;
   align-self: stretch;
   position: relative;
+`;
+
+const Description = styled.p`
+  font-size: 14px;
+  align-self: center;
+  margin: 5px;
 `;
 
 function CategoryComponent({ c }) {
@@ -154,6 +160,7 @@ function CategoryComponent({ c }) {
           value={cName}
           onChange={(e) => setCName(e.target.value)}
         />
+        <Description>Number od products: {c.products.length}</Description>
         <CategoryButtonsContainer>
           <TopButton type="checkout" onClick={handleDelete}>
             delete

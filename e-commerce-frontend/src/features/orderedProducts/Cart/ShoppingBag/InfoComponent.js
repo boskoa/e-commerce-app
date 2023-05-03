@@ -109,7 +109,7 @@ function InfoComponent({ p, last, checked, setChecked }) {
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
   const [quantity, setQuantity] = useState(1);
-  const [changed, setChanged] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const loggedUser = useSelector(selectLoggedUser);
   const dispatch = useDispatch();
 
@@ -117,22 +117,14 @@ function InfoComponent({ p, last, checked, setChecked }) {
     dispatch(deleteOrderedProduct({ id: p.id, token: loggedUser.token }));
   }
 
-  function handleUpdate() {
-    dispatch(
-      updateOrderedProduct({
-        newData: { color, size, quantity },
-        id: p.id,
-        token: loggedUser.token,
-      })
-    );
-    setChanged(false);
-  }
-
   useEffect(() => {
-    setColor(p.color);
-    setSize(p.size);
-    setQuantity(p.quantity);
-  }, [p]);
+    if (!loaded) {
+      setColor(p.color);
+      setSize(p.size);
+      setQuantity(p.quantity);
+    }
+    setLoaded(true);
+  }, [p, loaded]);
 
   function handleChecked() {
     if (checked.includes(p.id)) {
@@ -143,12 +135,22 @@ function InfoComponent({ p, last, checked, setChecked }) {
   }
 
   useEffect(() => {
+    function handleUpdate() {
+      dispatch(
+        updateOrderedProduct({
+          newData: { color, size, quantity },
+          id: p.id,
+          token: loggedUser.token,
+        })
+      );
+    }
+
     if (color.length && size.length && quantity > 0) {
       if (p.color !== color || p.size !== size || p.quantity !== quantity) {
-        setChanged(true);
+        handleUpdate();
       }
     }
-  }, [color, size, quantity, p]);
+  }, [color, size, quantity, p, dispatch, loggedUser]);
 
   if (!p.product) {
     return <Spinner />;
@@ -183,9 +185,6 @@ function InfoComponent({ p, last, checked, setChecked }) {
         </Details>
       </ProductDetails>
       <BuyDetails>
-        <Button changed={changed} onClick={handleUpdate}>
-          Update
-        </Button>
         <AmountContainer>
           <Add
             style={{ cursor: "pointer" }}
@@ -198,11 +197,7 @@ function InfoComponent({ p, last, checked, setChecked }) {
           />
         </AmountContainer>
         <Price>${p.product.price}</Price>
-        <Button
-          disabled={changed}
-          changed={checked.includes(p.id)}
-          onClick={handleChecked}
-        >
+        <Button changed={checked.includes(p.id)} onClick={handleChecked}>
           {checked.includes(p.id) ? "Remove" : "Add"}
         </Button>
       </BuyDetails>

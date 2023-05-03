@@ -7,22 +7,27 @@ const Info = styled.div`
   align-items: start;
   justify-content: center;
   gap: 20px;
-  padding-top: 10px;
+  padding: 10px 0;
+  margin: 3px;
+  min-width: 260px;
+  height: 100%;
 `;
 
 const Title = styled.h2`
   font-weight: 600;
-  font-size: 36px;
+  font-size: 30px;
 `;
 
 const Description = styled.p`
-  font-size: 18px;
+  font-size: 16px;
+  max-height: 75px;
+  overflow: hidden;
 `;
 
 const Price = styled.p`
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 800;
-  margin-top: 40px;
+  margin-top: auto;
 `;
 
 function InfoComponent({ product }) {

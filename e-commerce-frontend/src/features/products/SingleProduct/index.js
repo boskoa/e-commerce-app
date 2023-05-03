@@ -16,6 +16,7 @@ const Container = styled.div`
   display: flex;
   align-items: start;
   flex-wrap: wrap;
+  width: 100%;
   gap: 15px;
   color: ${({ theme }) => theme.color};
   transition: all 0.3s;
