@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunke_commerce=self.webpackChunke_commerce||[]).push([[778],{9778:function(e,r,n){n.r(r);var c=n(184);r.default=function(){return(0,c.jsxs)("div",{style:{height:"60vh",display:"flex",flexDirection:"column",alignItems:"center",gap:"30px",margin:"20px"},children:[(0,c.jsx)("h3",{children:"Terms of service"}),(0,c.jsx)("p",{children:"You're responsible for everything."})]})}}}]);
-//# sourceMappingURL=778.b645346d.chunk.js.map

@@ -160,7 +160,7 @@ function CategoryComponent({ c }) {
           value={cName}
           onChange={(e) => setCName(e.target.value)}
         />
-        <Description>Number od products: {c.products.length}</Description>
+        <Description>Number od products: {c.products_count}</Description>
         <CategoryButtonsContainer>
           <TopButton type="checkout" onClick={handleDelete}>
             delete

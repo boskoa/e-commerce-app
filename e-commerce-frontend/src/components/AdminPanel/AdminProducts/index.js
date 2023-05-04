@@ -43,6 +43,12 @@ function AdminProducts() {
           Products statistics
         </Button>
         <Button
+          active={location === "create"}
+          onClick={() => navigate("create")}
+        >
+          New product
+        </Button>
+        <Button
           active={location === "single-stats"}
           onClick={() => navigate("single-stats")}
         >

@@ -143,7 +143,7 @@ router.post("/", tokenExtractor, async (req, res, next) => {
 
   try {
     const product = await Product.create({
-      ...req.body.data,
+      ...req.body,
     });
     if (req.body.categories?.length > 0) {
       for (const cat of req.body.categories) {

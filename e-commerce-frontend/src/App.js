@@ -77,6 +77,9 @@ const AdminAnnouncements = lazy(() =>
 const AdminCategories = lazy(() =>
   import("./components/AdminPanel/AdminCategories")
 );
+const NewProduct = lazy(() =>
+  import("./components/AdminPanel/AdminProducts/NewProduct")
+);
 
 function App() {
   const [theme, setTheme] = useState("light");
@@ -245,6 +248,14 @@ function App() {
                   element: (
                     <Suspense>
                       <ProductsAdmin />
+                    </Suspense>
+                  ),
+                },
+                {
+                  path: "create",
+                  element: (
+                    <Suspense>
+                      <NewProduct />
                     </Suspense>
                   ),
                 },

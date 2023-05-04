@@ -6,6 +6,7 @@ const multer = require("multer");
 const sharp = require("sharp");
 const fs = require("fs");
 const path = require("path");
+const { sequelize } = require("../utils/db");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -40,12 +41,29 @@ const upload = multer({
 
 router.get("/", async (req, res, next) => {
   try {
-    const categories = await Category.findAll({
+    /*const categories = await Category.findAll({
       include: {
         model: Product,
         attributes: ["title"],
       },
-    });
+    });*/
+    const categories = await sequelize.query(
+      `
+      SELECT
+        categories.id,
+        categories.name,
+        categories.created_at,
+        categories.updated_at,
+        COUNT("Product_Categories"."productId") AS products_count
+      FROM categories
+      JOIN "Product_Categories" ON "Product_Categories"."categoryId"=categories.id
+      GROUP BY
+        categories.id
+    `,
+      {
+        type: sequelize.QueryTypes.SELECT,
+      }
+    );
     return res.status(200).json(categories);
   } catch (error) {
     next(error);

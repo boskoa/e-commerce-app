@@ -78,8 +78,12 @@ function Slider() {
     return <Spinner />;
   }
 
-  if (!latestProducts) {
-    return <p style={{ margin: "10px auto" }}>There are no products.</p>;
+  if (!latestProducts.length) {
+    return (
+      <p style={{ margin: "auto", padding: "auto", height: "200px" }}>
+        There are no products.
+      </p>
+    );
   }
 
   return (

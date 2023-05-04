@@ -47,7 +47,7 @@ export const Label = styled.label`
   font-size: 12px;
 `;
 
-const Image = styled.img`
+export const Image = styled.img`
   width: 200px;
   height: 200px;
   object-fit: cover;
@@ -128,9 +128,9 @@ function ProductData() {
   useEffect(() => {
     if (product.id) {
       setTitle(product.title);
-      setCategories(product.categories.map((c) => c.name).join(", "));
-      setColors(product.colors.join(", "));
-      setSizes(product.sizes.join(", "));
+      setCategories(product.categories?.map((c) => c.name).join(", "));
+      setColors(product.colors?.join(", "));
+      setSizes(product.sizes?.join(", "));
       setPrice(product.price);
       setInStock(product.inStock);
       setDescription(product.description);

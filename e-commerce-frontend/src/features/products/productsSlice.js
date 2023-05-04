@@ -13,8 +13,9 @@ const productsAdapter = createEntityAdapter();
 const initialState = productsAdapter.getInitialState({
   loading: false,
   error: null,
-  latest: [],
+  latest: false,
   selected: {},
+  success: false,
 });
 
 export const getAllProducts = createAsyncThunk(
@@ -55,11 +56,29 @@ export const updateProduct = createAsyncThunk(
   }
 );
 
+export const createProduct = createAsyncThunk(
+  "products/createProduct",
+  async (data) => {
+    const { token, newData } = data;
+    const config = {
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    };
+    const response = await axios.post(BASE_URL, { ...newData }, config);
+    return response.data;
+  }
+);
+
 const productsSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    emptyProducts: () => initialState,
+    emptyProducts: (state) => {
+      state.ids = [];
+      state.entities = {};
+    },
+    resetSuccess: (state) => (state.success = false),
   },
   extraReducers: (builder) => {
     builder
@@ -78,6 +97,7 @@ const productsSlice = createSlice({
       })
       .addCase(getLatestProducts.pending, (state) => {
         state.error = null;
+        state.latest = [];
         state.loading = true;
       })
       .addCase(getLatestProducts.fulfilled, (state, action) => {
@@ -87,6 +107,7 @@ const productsSlice = createSlice({
       })
       .addCase(getLatestProducts.rejected, (state, action) => {
         state.loading = false;
+        state.latest = [];
         state.error = action.error.message;
       })
       .addCase(getSelectedProduct.pending, (state) => {
@@ -114,6 +135,22 @@ const productsSlice = createSlice({
       .addCase(updateProduct.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(createProduct.pending, (state) => {
+        state.error = null;
+        state.loading = true;
+        state.success = false;
+      })
+      .addCase(createProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        productsAdapter.upsertOne(state, action.payload);
+        state.success = true;
+      })
+      .addCase(createProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+        state.success = false;
       });
   },
 });
@@ -140,6 +177,10 @@ export function selectSelectedProduct(state) {
   return state.products.selected;
 }
 
-export const { emptyProducts } = productsSlice.actions;
+export function selectCreatedProduct(state) {
+  return state.products.success;
+}
+
+export const { emptyProducts, resetSuccess } = productsSlice.actions;
 
 export default productsSlice.reducer;
