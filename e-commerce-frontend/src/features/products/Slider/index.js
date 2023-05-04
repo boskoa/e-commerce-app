@@ -1,14 +1,10 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@mui/icons-material";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Spinner from "../../../components/Spinner";
-import {
-  getLatestProducts,
-  selectLatestProducts,
-  selectProductsLoading,
-} from "../productsSlice";
+import { selectLatestProducts, selectProductsLoading } from "../productsSlice";
 import SlideComponent from "./SlideComponent";
 
 const Container = styled.div`
@@ -77,13 +73,6 @@ function Slider() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const latestProducts = useSelector(selectLatestProducts);
   const productsLoading = useSelector(selectProductsLoading);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (latestProducts.length < 1) {
-      dispatch(getLatestProducts());
-    }
-  }, [latestProducts, dispatch]);
 
   if (productsLoading) {
     return <Spinner />;
