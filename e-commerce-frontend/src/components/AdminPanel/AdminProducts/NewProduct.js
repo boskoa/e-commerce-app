@@ -135,7 +135,7 @@ function NewProduct() {
             id="colors"
             placeholder="e.g: red, blue, white"
             value={colors}
-            onChange={(e) => setColors(e.target.value.split(", "))}
+            onChange={(e) => setColors(e.target.value)}
           />
         </InputContainer>
         <InputContainer>
@@ -145,7 +145,7 @@ function NewProduct() {
             id="sizes"
             placeholder="e.g: S, M, L, XL"
             value={sizes}
-            onChange={(e) => setSizes(e.target.value.split(", "))}
+            onChange={(e) => setSizes(e.target.value)}
           />
         </InputContainer>
         <InputContainer>
