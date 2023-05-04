@@ -89,6 +89,10 @@ function Slider() {
     return <Spinner />;
   }
 
+  if (!latestProducts) {
+    return <p style={{ margin: "10px auto" }}>There are no products.</p>;
+  }
+
   return (
     <Container>
       <Arrow
