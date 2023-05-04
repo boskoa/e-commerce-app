@@ -71,16 +71,12 @@ function Avatar({ loggedUser }) {
     formData.append("name", name);
     formData.append("file", file);
 
-    await axios.post(
-      `http://localhost:3003/api/avatars/${loggedUser.id}`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `bearer ${loggedUser.token}`,
-        },
-      }
-    );
+    await axios.post(`/api/avatars/${loggedUser.id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `bearer ${loggedUser.token}`,
+      },
+    });
 
     window.location.reload();
   }

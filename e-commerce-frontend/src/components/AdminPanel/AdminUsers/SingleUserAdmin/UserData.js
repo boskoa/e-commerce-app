@@ -54,7 +54,7 @@ function UserData() {
     formData.append("name", name);
     formData.append("file", file);
 
-    await axios.post(`http://localhost:3003/api/avatars/${user.id}`, formData, {
+    await axios.post(`/api/avatars/${user.id}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `bearer ${admin.token}`,

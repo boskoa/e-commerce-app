@@ -92,16 +92,12 @@ function ProductData() {
     formData.append("name", name);
     formData.append("file", file);
 
-    await axios.post(
-      `http://localhost:3003/api/products/product-image/${product.id}`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `bearer ${admin.token}`,
-        },
-      }
-    );
+    await axios.post(`/api/products/product-image/${product.id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `bearer ${admin.token}`,
+      },
+    });
 
     window.location.reload();
   }
