@@ -66,8 +66,8 @@ function NewProduct() {
         return () => clearTimeout(index);
       }
       if (creationSuccess) {
-        navigate(`/${admin.id}/admin-panel/products/all`);
         dispatch(resetSuccess);
+        navigate(`/${admin.id}/admin-panel/products/all`);
       }
     }
   }, [loading, creationError, creationSuccess, navigate, dispatch, admin]);
