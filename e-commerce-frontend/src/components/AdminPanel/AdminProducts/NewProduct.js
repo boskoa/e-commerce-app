@@ -59,6 +59,10 @@ function NewProduct() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    return () => dispatch(resetSuccess);
+  }, [dispatch]);
+
+  useEffect(() => {
     if (!loading) {
       if (creationError) {
         setError("Product creation failed");

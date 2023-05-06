@@ -56,7 +56,7 @@ router.get("/", async (req, res, next) => {
         categories.updated_at,
         COUNT("Product_Categories"."productId") AS products_count
       FROM categories
-      JOIN "Product_Categories" ON "Product_Categories"."categoryId"=categories.id
+      LEFT JOIN "Product_Categories" ON "Product_Categories"."categoryId"=categories.id
       GROUP BY
         categories.id
     `,
