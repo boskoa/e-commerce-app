@@ -77,7 +77,7 @@ function CategoryComponent({ c }) {
     dispatch(
       updateCategory({
         token: admin.token,
-        newData: { cName },
+        newData: { name: cName },
         id: c.id,
       })
     );
