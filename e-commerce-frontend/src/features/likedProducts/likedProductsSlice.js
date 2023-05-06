@@ -58,7 +58,9 @@ export const removeUsersLike = createAsyncThunk(
 const likedProductsSlice = createSlice({
   name: "likedProducts",
   initialState,
-  reducers: {},
+  reducers: {
+    resetLiked: () => initialState,
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getUsersLikes.pending, (state) => {
@@ -116,5 +118,7 @@ export function selectLikedProductsLoading(state) {
 export function selectLikedProductsError(state) {
   return state.likedProducts.error;
 }
+
+export const { resetLiked } = likedProductsSlice.actions;
 
 export default likedProductsSlice.reducer;

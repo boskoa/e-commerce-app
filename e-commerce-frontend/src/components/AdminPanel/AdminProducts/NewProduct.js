@@ -59,10 +59,6 @@ function NewProduct() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    return () => dispatch(resetSuccess);
-  }, [dispatch]);
-
-  useEffect(() => {
     if (!loading) {
       if (creationError) {
         setError("Product creation failed");
@@ -70,7 +66,7 @@ function NewProduct() {
         return () => clearTimeout(index);
       }
       if (creationSuccess) {
-        dispatch(resetSuccess);
+        dispatch(resetSuccess());
         navigate(`/${admin.id}/admin-panel/products/all`);
       }
     }

@@ -12,9 +12,10 @@ router.get("/popular", async (req, res, next) => {
         [sequelize.fn("SUM", sequelize.col("quantity")), "count_products"],
       ],
       where: { orderId: { [Op.not]: null } },
-      group: "product_id",
+      group: ["product_id", "product.id"],
       order: [["count_products", "DESC"]],
       limit: 6,
+      include: Product,
     });
     return res.status(200).json(popularProducts);
   } catch (error) {

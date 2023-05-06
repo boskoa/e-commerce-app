@@ -14,7 +14,6 @@ import {
 import { createOrderedProduct } from "../../orderedProducts/orderedProductsSlice";
 import { useEffect } from "react";
 import { getSelectedProduct } from "../../products/productsSlice";
-import { selectSelectedProduct } from "../../products/productsSlice";
 
 const Image = styled.img`
   width: 100%;
@@ -85,7 +84,6 @@ const Icon = styled.div`
 
 function PopularProduct({ product, liked }) {
   const loggedUser = useSelector(selectLoggedUser);
-  const productData = useSelector(selectSelectedProduct);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -109,9 +107,9 @@ function PopularProduct({ product, liked }) {
       userId: loggedUser.id,
       productId: product.id,
       quantity: 1,
-      color: productData.colors?.[0],
-      size: productData.sizes?.[0],
-      price: productData.price,
+      color: product.product.colors?.[0],
+      size: product.product.sizes?.[0],
+      price: product.product.price,
     };
 
     dispatch(createOrderedProduct({ token: loggedUser.token, orderedProduct }));

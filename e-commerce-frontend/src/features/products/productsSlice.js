@@ -78,7 +78,9 @@ const productsSlice = createSlice({
       state.ids = [];
       state.entities = {};
     },
-    resetSuccess: (state) => (state.success = false),
+    resetSuccess: (state) => {
+      state.success = false;
+    },
   },
   extraReducers: (builder) => {
     builder

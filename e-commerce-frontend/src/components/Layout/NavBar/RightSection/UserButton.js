@@ -4,6 +4,7 @@ import { logout } from "../../../../features/login/loginSlice";
 import styled from "styled-components";
 import { resetOrderedProducts } from "../../../../features/orderedProducts/orderedProductsSlice";
 import { resetOrders } from "../../../../features/orders/ordersSlice";
+import { resetLiked } from "../../../../features/likedProducts/likedProductsSlice";
 
 const MenuContainer = styled.div`
   position: absolute;
@@ -63,6 +64,7 @@ function UserButton({ currentUser }) {
     dispatch(logout());
     dispatch(resetOrderedProducts());
     dispatch(resetOrders());
+    dispatch(resetLiked());
     navigate("/");
   }
 
