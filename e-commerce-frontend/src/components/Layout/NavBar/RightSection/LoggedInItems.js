@@ -1,4 +1,3 @@
-import { MenuItem } from "./index";
 import { ShoppingCartOutlined } from "@mui/icons-material";
 import { Badge } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +8,7 @@ import {
   selectOrderedProductIds,
 } from "../../../../features/orderedProducts/orderedProductsSlice";
 import { useEffect } from "react";
-import UserButton from "./UserButton";
+import UserButton, { ImageContainer } from "./UserButton";
 import { getUsersLikes } from "../../../../features/likedProducts/likedProductsSlice";
 
 function LoggedInItems({ id }) {
@@ -26,8 +25,13 @@ function LoggedInItems({ id }) {
 
   return (
     <>
-      <MenuItem
-        style={{ position: "absolute", right: "60px", fontSize: "24px" }}
+      <ImageContainer
+        style={{
+          position: "absolute",
+          right: "60px",
+          marginTop: "5px",
+          fontSize: "24px",
+        }}
       >
         <Link to={`/cart/${id}`}>
           <Badge
@@ -41,7 +45,7 @@ function LoggedInItems({ id }) {
             />
           </Badge>
         </Link>
-      </MenuItem>
+      </ImageContainer>
       <UserButton currentUser={currentUser} />
     </>
   );
