@@ -183,7 +183,7 @@ router.patch("/:id", tokenExtractor, async (req, res, next) => {
         if (!category) {
           category = await Category.create({ name: cat });
         }
-        await product.addCategory(category);
+        await product.addCategory(category); //Add code for removing categories
       }
     }
     const newData = { ...req.body };
