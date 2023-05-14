@@ -1,3 +1,8 @@
+env:
+  PORT: ${{secrets.PORT}}
+  DATABASE_URL: ${{secrets.DATABASE_URL}}
+  SECRET: ${{secrets.SECRET}}
+
 name: Deployment pipeline
 
 on:
