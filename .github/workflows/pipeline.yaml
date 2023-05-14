@@ -23,10 +23,25 @@ jobs:
           node-version: 18
       - name: Install dependencies
         run: npm run install-packages
+      - name: Check style
+        run: npm run eslint
       - name: Build
         run: npm run build:ui
+      - name: Jest tests
+        run: cd e-commerce-frontend/ && npm run test
       - name: e2e testing
         uses: cypress-io/github-action@v5
         with:
           start: npm run start
           wait-on: "http://localhost:3003"
+  tag_release:
+    needs: [simple_deployment_pipeline]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Bump version and push tag
+        if: ${{ github.event_name == "push" && !contains(join(toJson(github.event.commits.*.message), " "), "#skip") }}
+        uses: anothrNick/github-tag-action@1.61.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.RAGS_TOKEN }}
+          DEFAULT_BUMP: patch
