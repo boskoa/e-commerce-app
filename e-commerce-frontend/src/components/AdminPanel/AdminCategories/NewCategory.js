@@ -26,7 +26,7 @@ function NewCategory() {
   return (
     <NewContainer>
       <Input value={name} onChange={(e) => setName(e.target.value)} />
-      <TopButton onClick={handleCreate}>create</TopButton>
+      <TopButton onClick={handleCreate}>create category</TopButton>
     </NewContainer>
   );
 }
