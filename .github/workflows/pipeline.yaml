@@ -7,18 +7,18 @@ on:
 
 jobs:
   simple_deployment_pipeline
-  runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 18
-    - name: Install dependencies
-      run: npm install
-    - name: Build
-      run: npm run build
-    - name: e2e testing
-      uses: cypress-io/github-action@v5
-      with:
-        start: npm run start:test
-        wait-on: http://localhost:${{secrets.PORT}}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
+      - name: e2e testing
+        uses: cypress-io/github-action@v5
+        with:
+          start: npm run start:test
+          wait-on: http://localhost:${{secrets.PORT}}
