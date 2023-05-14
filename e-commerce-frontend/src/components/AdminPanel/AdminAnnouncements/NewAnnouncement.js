@@ -45,7 +45,7 @@ function NewAnnouncement() {
         />
         <label htmlFor="active">Active</label>
       </div>
-      <TopButton onClick={handleCreate}>create</TopButton>
+      <TopButton onClick={handleCreate}>create announcement</TopButton>
     </NewContainer>
   );
 }
