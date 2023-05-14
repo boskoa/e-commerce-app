@@ -53,7 +53,7 @@ function Announcement() {
   }, [currentMessage, announcements.length, show]);
 
   return (
-    <Container show={show} content={announcements?.length}>
+    <Container id="announcements" show={show} content={announcements?.length}>
       <Wrapper currentMessage={currentMessage}>
         {announcements.map((a) => (
           <Message key={a.id} text={a?.content} />

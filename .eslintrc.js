@@ -3,11 +3,13 @@ module.exports = {
     node: true,
     commonjs: true,
     es2021: true,
+    "cypress/globals": true,
   },
-  extends: ["eslint:recommended", "prettier"],
+  extends: ["eslint:recommended", "prettier", "plugin:cypress/recommended"],
   parserOptions: {
     ecmaVersion: "latest",
   },
+  plugins: ["react", "jest", "cypress"],
   rules: {
     indent: ["error", 2],
     "linebreak-style": ["error", "unix"],
