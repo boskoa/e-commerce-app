@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
     "build:ui": "rm -rf build && cd ./e-commerce-frontend/ && npm run build && cp -r build .. && rm -rf build",
+    "install-packages": "npm install && cd ./e-commerce-frontend/ && npm install",
     "migration:down": "node utils/rollback.js",
     "start": "node index.js",
     "start:test": "NODE_ENV=test node index.js",
