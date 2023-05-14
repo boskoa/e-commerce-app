@@ -103,7 +103,7 @@ function NewProduct() {
     <Container>
       <TopContainer>
         <TopButton type="checkout" onClick={handleProductCreate}>
-          Create
+          Create product
         </TopButton>
         <Error>{error}</Error>
       </TopContainer>
