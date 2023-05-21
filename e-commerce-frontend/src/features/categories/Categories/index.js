@@ -15,7 +15,7 @@ const Container = styled.div`
   flex-wrap: wrap;
   padding: 20px;
   justify-content: space-between;
-  max-height: ${({ showAll, maxHeight }) => (showAll ? maxHeight : "56vh")};
+  max-height: ${({ showAll, maxHeight }) => (showAll ? maxHeight : "410px")};
   overflow: hidden;
   gap: 1.6vh;
   transition: all 0.5s;
@@ -34,7 +34,7 @@ function Categories() {
   return (
     <Container
       showAll={showAll}
-      maxHeight={`${categories.length * 55}vh`}
+      maxHeight={`${categories.length * 425}px`}
       ref={categoriesRef}
     >
       {categories.map((c) => (

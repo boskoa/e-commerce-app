@@ -6,7 +6,7 @@ const Container = styled.div`
   position: relative;
   flex: 1;
   margin: 5px;
-  height: 50vh;
+  height: 370px;
   min-width: 200px;
   transition: all 0.3s;
 
