@@ -13,6 +13,7 @@ const Slide = styled.div`
   @media only screen and (max-width: 560px) {
     flex-direction: column;
     align-items: center;
+    min-height: 700px;
   }
 `;
 
@@ -21,22 +22,33 @@ const ImgContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media only screen and (max-width: 560px) {
+    flex: 0;
+  }
 `;
 
 const Image = styled.img`
   height: 80vh;
   max-width: 100%;
   object-fit: cover;
+
+  @media only screen and (max-width: 560px) {
+    height: 50vh;
+  }
 `;
 
 const InfoContainer = styled.div`
   flex: 1;
   padding: 40px 30px;
+  max-width: 100%;
+  overflow: hidden;
 `;
 
 const Title = styled.h2`
   font-size: 40px;
   max-height: 100px;
+  overflow: hidden;
 `;
 
 const Description = styled.p`
@@ -44,6 +56,8 @@ const Description = styled.p`
   font-size: 20px;
   font-weight: 500;
   letter-spacing: 3px;
+  max-height: 50px;
+  overflow: hidden;
 `;
 
 function SlideComponent({ p, i }) {
