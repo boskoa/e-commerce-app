@@ -35,7 +35,8 @@ const InfoContainer = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 60px;
+  font-size: 40px;
+  max-height: 100px;
 `;
 
 const Description = styled.p`
